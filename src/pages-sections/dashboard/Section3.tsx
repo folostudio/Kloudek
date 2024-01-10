@@ -24,7 +24,7 @@ const Section3: FC = () => {
           <Card2
             title="Weekly Sales"
             percentage="25.25%"
-            amount={currency(10240, 0)}
+            amount={currency(10240)}
           >
             <ApexChart
               type="bar"
@@ -52,7 +52,7 @@ const Section3: FC = () => {
           <Card2
             title="Total Order"
             percentage="2.65%"
-            amount={currency(12260, 0)}
+            amount={currency(12260)}
           >
             <ApexChart
               type="area"
@@ -68,7 +68,7 @@ const Section3: FC = () => {
           <Card2
             title="Market Share"
             percentage="2.65%"
-            amount={currency(14260, 0)}
+            amount={currency(14260)}
           >
             <ApexChart
               height={130}
