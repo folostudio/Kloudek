@@ -39,7 +39,7 @@ const SellerPackageCard: FC<SellerPackageCardProps> = ({ listItem }) => {
         {packageName} Package
       </H3>
 
-      <PackageHeading fontSize={60}>{currency(price, 0)}</PackageHeading>
+      <PackageHeading fontSize={60}>{currency(price)}</PackageHeading>
 
       <Box mt={1} mb={2}>
         {features.map((item, index) => (
