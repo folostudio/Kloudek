@@ -127,7 +127,7 @@ const AccentChairs = () => {
     </ShopLayout1>
   );
 };
-
+  
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const paths = await api.getSlugs();
 
