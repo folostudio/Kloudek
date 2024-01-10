@@ -15,7 +15,6 @@ import { H6 } from "./Typography";
 import { FlexBox } from "./flex-box";
 import useSettings from "hooks/useSettings";
 import Scrollbar from "./Scrollbar";
-import ReactFaceBook from "./ReactFaceBook";
 
 // custom styled components
 const MainContainer = styled(Box)(({ theme }) => ({

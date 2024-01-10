@@ -18,15 +18,15 @@ const cacheRTL = createCache({
 const RTL: FC<RTLProps> = ({ children }) => {
   const { settings } = useSettings();
 
-  useEffect(() => {
-    document.dir = settings.direction;
-  }, [settings.direction]);
+//   useEffect(() => {
+//     document.dir = settings.direction;
+//   }, [settings.direction]);
 
-  if (settings.direction === "rtl") {
-    return <CacheProvider value={cacheRTL}>{children}</CacheProvider>;
-  }
+//   if (settings.direction === "rtl") {
+//     return <CacheProvider value={cacheRTL}>{children}</CacheProvider>;
+//   }
 
-  return <>{children}</>;
-};
+   return <>{children}</>;
+ };
 
 export default RTL;
