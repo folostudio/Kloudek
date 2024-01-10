@@ -22,8 +22,8 @@ const Section1: FC<Props> = ({ topPickList, mainCarousel }) => {
   };
 
   // dynamically change arrow icon
-  const left = settings.direction === "ltr" ? "left" : "right";
-  const right = settings.direction === "ltr" ? "right" : "left";
+  const left = '';
+  const right = '';
 
   return (
     <Container sx={{ pt: "3rem" }}>
@@ -32,8 +32,8 @@ const Section1: FC<Props> = ({ topPickList, mainCarousel }) => {
           <Carousel
             visibleSlides={1}
             totalSlides={mainCarousel.length}
-            leftButtonStyle={{ ...arrowButtonStyle, [left]: 8 }}
-            rightButtonStyle={{ ...arrowButtonStyle, [right]: 8 }}
+            // leftButtonStyle={{ ...arrowButtonStyle, [left]: 8 }}
+            // rightButtonStyle={{ ...arrowButtonStyle, [right]: 8 }}
           >
             {mainCarousel.map((product) => (
               <CarouselCard3 product={product} key={product.id} />

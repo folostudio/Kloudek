@@ -22,7 +22,7 @@ const MuiTheme: FC<MuiThemeProps> = ({ children }) => {
 
   const themeOptions = customThemeOptions(publicRuntimeConfig, pathname);
   let theme = createTheme(
-    merge({}, { ...themeOptions, direction: settings.direction })
+    merge({}, { ...themeOptions,  })
   );
   theme = responsiveFontSizes(theme);
 

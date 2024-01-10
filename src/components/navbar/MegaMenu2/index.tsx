@@ -55,14 +55,14 @@ const MegaMenu2: FC<MegaMenuProps> = ({ title, menuList }) => {
                 onMouseEnter={() => setOpenList(item)}
               >
                 {item}
-                <ChevronRight
+                {/* <ChevronRight
                   fontSize="small"
                   sx={{
                     transform: `rotate(${
                       settings.direction === "rtl" ? "180deg" : "0"
                     })`,
                   }}
-                />
+                /> */}
               </CategoryListItem>
             ))}
           </CategoryList>
