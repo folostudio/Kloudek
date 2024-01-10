@@ -61,7 +61,7 @@ type ProductDetailsProps = {
       image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
       kloudek_code: 'SF-01',
       material: 'Vair',
-      name: 'Zeus',
+      name: 'Zeros',
       note: '',
       rental_price: 10283000,
       seat: '4',
@@ -127,7 +127,7 @@ const AccentChairs = () => {
     </ShopLayout1>
   );
 };
-  
+
 // export const getStaticPaths: GetStaticPaths = async () => {
 //   const paths = await api.getSlugs();
 

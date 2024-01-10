@@ -25,13 +25,14 @@ import { useAppContext } from "contexts/AppContext";
 // ========================================================
 
 const ProductCard3Kloudek = (props: any) => {
-  const [favorite, setFavorite] = useState(false);
- 
+  // const [favorite, setFavorite] = useState(false);
+  // console.log(props);
+    const product = props || {}
   
     const router = useRouter()
     const path = router?.pathname;
     const {state, dispatch} = useAppContext()
-    const handleDetail = (pd : any) => {
+    const handleDetail = (pd: any ) => {
       dispatch({
         type1: "DETAIL",
         payload: pd
@@ -40,16 +41,16 @@ const ProductCard3Kloudek = (props: any) => {
     
   return (
     <Box >
-      <Link onClick={() => handleDetail(props && props)}  href={`${path}/${props?.name}`}>
+      <Link onClick={() => handleDetail(product && product)}  href={`${path}/${product?.name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <img  className="product-img" width={400} height={350} alt={props?.name} src={props?.image[0]} />
+          <img  className="product-img" width={400} height={350} alt={product?.name} src={product?.image[0]} />
         </HoverBox>
       </Link>
 
       <FlexBetween  mt={2}>
         <Box>
-          <H4 onClick={() => router.push(`${path}/${props?.name}`)} fontWeight="600" fontSize="14px" mb={0.5} title={props?.name} ellipsis>
-            {props?.name}
+          <H4 onClick={() => router.push(`${path}/${product?.name}`)} fontWeight="600" fontSize="14px" mb={0.5} title={product?.name} ellipsis>
+            {product?.name}
           </H4>
 
           {/* {!hideReview && <BazaarRating value={rating} color="warn" readOnly />} */}
@@ -57,10 +58,10 @@ const ProductCard3Kloudek = (props: any) => {
           <FlexBox gap={1} alignItems="center">
             <Box fontWeight="600" color="primary.main">
               {/* {calculateDiscount(props?.selling_price, props?.off)} */}
-              {currency(props?.selling_price)}
+              {currency(product?.selling_price)}
             </Box>
             <Box color="grey.600" fontWeight="600">
-                {currency(props?.rental_price)}/ tháng
+                {currency(product?.rental_price)}/ tháng
               </Box>
 {/* 
             {!!off && (

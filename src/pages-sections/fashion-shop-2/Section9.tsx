@@ -7,7 +7,7 @@ import { FlexRowCenter } from "components/flex-box";
 import Brand from "models/Brand.model";
 
 // ======================================================================
-type Section9Props = { brands: Brand[] };
+type Section9Props = { brands: any[] };
 // ======================================================================
 
 const Section9: FC<Section9Props> = ({ brands }) => {

@@ -8,7 +8,7 @@ import ProductCard1 from "components/product-cards/ProductCard1";
 import CategorySectionCreator from "components/CategorySectionCreator";
 
 // =============================================================
-type Props = { flashDeals: Product[] };
+type Props = { flashDeals: any[] };
 // =============================================================
 
 const Section2: FC<Props> = ({ flashDeals }) => {
