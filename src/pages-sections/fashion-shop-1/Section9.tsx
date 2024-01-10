@@ -9,8 +9,8 @@ import Product from "models/Product.model";
 type Props = { products: any[] };
 // =============================================================
 
-const Section9 : any = ({ products }) => {
-  const trendings = products;
+const Section9 : any = (props: any) => {
+  const trendings = props?.products;
   return (
     <Box mt={2}>
       <Grid container spacing={2}>

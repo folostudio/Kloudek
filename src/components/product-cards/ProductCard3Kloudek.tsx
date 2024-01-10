@@ -57,10 +57,10 @@ const ProductCard3Kloudek = (props: any) => {
           <FlexBox gap={1} alignItems="center">
             <Box fontWeight="600" color="primary.main">
               {/* {calculateDiscount(props?.selling_price, props?.off)} */}
-              {currency(props.selling_price)}
+              {currency(props?.selling_price)}
             </Box>
             <Box color="grey.600" fontWeight="600">
-                {currency(props.rental_price)}/ tháng
+                {currency(props?.rental_price)}/ tháng
               </Box>
 {/* 
             {!!off && (
