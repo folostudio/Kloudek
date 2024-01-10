@@ -36,7 +36,7 @@ const ProductCard3: FC<ProductCardProps> = ({
 
   return (
     <Box >
-      <Link href={`/product/${slug}`}>
+      <Link href={`/furniture-rental/living-room/sofas-sectionals`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
           <LazyImage  className="product-img" width={270} height={270} alt={title} src={imgUrl} />
         </HoverBox>

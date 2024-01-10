@@ -18,7 +18,7 @@ const SEO: FC<SEOProps> = ({
     <Head>
       <title>{`${sitename} | ${title}`}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content="thiết kế website, FoloStudio, folostudio, Folo Studio, website, portfolio, blog, web bán hàng" />
+      <meta name="keywords" content="Kloudek , Nội thất" />
     </Head>
   );
 };

@@ -117,7 +117,7 @@ const ProductCard1: FC<ProductCardProps> = ({
   return (
     <StyledBazaarCard hoverEffect={hoverEffect}>
       <ImageWrapper>
-        <Link href={`/product/${slug}`}>
+        <Link href={`/furniture-rental/living-room/sofas-sectionals`}>
           <img
             style={{objectFit:'cover', height:'100%', width:'100%'}}
             src={imgUrl}
