@@ -9,13 +9,13 @@ import Product from "models/Product.model";
 type Props = { products: any[] };
 // =============================================================
 
-const Section9: FC<Props> = ({ products }) => {
+const Section9 : any = ({ products }) => {
   const trendings = products;
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
         <Grid item container md={12} xs={12} spacing={2}>
-          {trendings?.map((item, index) => (
+          {trendings?.map((item: any, index: any) => (
             <Grid item xs={12} sm={4} md={2.4} key={index}>
               <ProductCard3Kloudek
                 china_code= {item?.china_code}

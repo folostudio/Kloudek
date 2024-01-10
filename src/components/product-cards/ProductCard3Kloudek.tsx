@@ -26,7 +26,7 @@ import { useAppContext } from "contexts/AppContext";
 
 const ProductCard3Kloudek = (props: any) => {
   const [favorite, setFavorite] = useState(false);
-  console.log(props);
+ 
   
     const router = useRouter()
     const path = router?.pathname;
@@ -40,7 +40,7 @@ const ProductCard3Kloudek = (props: any) => {
     
   return (
     <Box >
-      <Link onClick={() => handleDetail(props)}  href={`${path}/${props?.name}`}>
+      <Link onClick={() => handleDetail(props && props)}  href={`${path}/${props?.name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
           <img  className="product-img" width={400} height={350} alt={props?.name} src={props?.image[0]} />
         </HoverBox>
