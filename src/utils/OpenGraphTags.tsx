@@ -5,16 +5,16 @@ const OpenGraphTags: React.FC = () => {
     <React.Fragment>
       <meta
         property="og:url"
-        content="https://folostudio.com/"
+        content="https://kloudek.com/"
       />
       {/* thumbnail And title for social media */}
       <meta property="og:type" content="website" />
-      <meta property="og:title" content="FoloStudio Thiết kế website" />
+      <meta property="og:title" content="Kloudek nội thất" />
       <meta
         property="og:description"
-        content="FoloStudio chuyên thiết kế website bán hàng, Blog, Portfolio. thiết kế website bằng công nghệ hiện đại Nextjs"
+        content="Kloudek bán nội thất, cho thuê"
       />
-      <meta property="og:image" content="/assets/images/landing/FoloStudio.png" />
+      <meta property="og:image" content="/logoKloudek.png" />
     </React.Fragment>
   );
 };

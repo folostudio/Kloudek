@@ -45,9 +45,9 @@ const App = (props: MyAppProps) => {
         <meta charSet="utf-8" />
         <meta
           name="description"
-          content="FoloStudio Thiết kế webite"
+          content="Kloudek"
         />
-        <meta name="keywords" content="thiết kế website, FoloStudio, folostudio, website giá rẻ, website, portfolio, blog, web bán hàng" />
+        <meta name="keywords" content="Kloudek, kloudek, nội thất, cho thuê nội thất" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
         <OpenGraphTags />

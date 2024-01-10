@@ -19,7 +19,7 @@ import { FlexBox } from "components/flex-box";
 import Sidenav from "components/Sidenav";
 import StarIcon from '@mui/icons-material/Star';
 import Avatar from '@mui/material/Avatar';
-import avatar1 from '../../../public/assets/images/avatars/avatar-home.jpg'
+// import avatar1 from '../../../public/assets/images/avatars/avatar-home.jpg'
 const headerHeight = 72;
 
 const slideFromTop = keyframes`
@@ -84,11 +84,11 @@ const Header = () => {
             <FlexBox height={headerHeight} alignItems="center">
               <Scroll to="top" duration={400} smooth={true} isDynamic>
                 <Box sx={{ cursor: "pointer", display:'flex', alignItems:'center',gap:2 }}>
-                <Avatar
+                {/* <Avatar
                   alt="Remy Sharp"
                   src={avatar1.src}
                   sx={{ width: 56, height: 56 }}
-                />
+                /> */}
                   <Typography color='whitesmoke' fontSize={20} fontWeight={600}>FOLO STUDIO</Typography>
                 </Box>
               </Scroll>

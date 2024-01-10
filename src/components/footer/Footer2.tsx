@@ -38,7 +38,7 @@ const Footer2: FC = () => {
         }}
       >
         <Link href="/">
-          <BazaarImage mb={2.5} src="/avatar-home/jpg" alt="logo" />
+          <BazaarImage mb={2.5} src="" alt="logo" />
         </Link>
 
         <Grid container spacing={6}>

@@ -47,7 +47,7 @@ const Footer3: FC<Props> = ({ sx, id, bgcolor }) => {
     <StyledFooter id={id} sx={sx} bgcolor={bgcolor}>
       <Container>
         <Link href="/">
-          <BazaarImage mb={2.5} src="/avatar-home.jpg" alt="logo" />
+          <BazaarImage mb={2.5} src="" alt="logo" />
         </Link>
 
         <Grid container spacing={6}>
