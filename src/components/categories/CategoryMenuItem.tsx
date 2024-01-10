@@ -47,12 +47,12 @@ const CategoryMenuItem: FC<CategoryMenuItemProps> = (props) => {
         <MenuItem className="category-dropdown-link">
           {rest.icon && <rest.icon fontSize="small" color="inherit" />}
           <span className="title">{title}</span>
-          {caret &&
+          {/* {caret &&
             (settings.direction === "ltr" ? (
               <ChevronRight fontSize="small" />
             ) : (
               <ChevronLeft fontSize="small" />
-            ))}
+            ))} */}
         </MenuItem>
       </Link>
 
