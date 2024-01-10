@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Container, styled, Tab, Tabs } from "@mui/material";
 import ShopLayout1 from "components/layouts/ShopLayout1";
@@ -7,6 +7,7 @@ import Product from "models/Product.model";
 import { BlogCard2 } from "components/blog-cards";
 
 import Section9 from "pages-sections/fashion-shop-1/Section9";
+import { useAppContext } from "contexts/AppContext";
 
 // styled component
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -107,8 +108,12 @@ type ProductDetailsProps = {
   ]
 
 const SofasSectionals = () => {
-
-
+  const {state, dispatch} = useAppContext()
+  console.log(state);
+  
+  // useEffect(() => {
+  //   if(!state.allProduct) return dispatch({type3 :"RENDER", payload: false})
+  // },[state.allProduct])
   const router = useRouter();
 
   // Show a loading state when the fallback is rendered
@@ -119,7 +124,7 @@ const SofasSectionals = () => {
   return (
     <ShopLayout1>
       <Box sx={{ my: 4, mx:1 }}>
-      <Section9 products={object} />
+      <Section9 products={state?.allProduct?.sofas_sectionals} />
 
 
 

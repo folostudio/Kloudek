@@ -19,6 +19,11 @@ import Section9 from "pages-sections/fashion-shop-2/Section9";
 import api from "utils/__api__/fashion-shop";
 import Service from "models/Service.model";
 import Product from "models/Product.model";
+import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../src/firebase";
+import { useEffect, useState } from "react";
+import { useAppContext } from "contexts/AppContext";
 const articles = [
   {
     id: "20a83049-bc4b-41cc-9a29-0b2b69a7fd08",
@@ -444,6 +449,40 @@ type FashionShop1Props = {
 // =======================================================
 
 const FashionShop1: NextPage<FashionShop1Props> = (props) => {
+  const {state, dispatch} = useAppContext()
+  const render = state?.render
+  console.log(state);
+  
+  const [sanpham, setSanpham] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Lấy danh sách sản phẩm từ Firestore
+        const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
+        // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
+
+        // Tạo mảng mới chứa dữ liệu sản phẩm
+        // const newSanpham = [];
+        // querySnapshot.forEach((doc) => {
+        //   newSanpham.push(doc.data());
+        // });
+        // Cập nhật state sanpham
+        // setSanpham(newSanpham);
+        // console.log(querySnapshot.data());
+        dispatch({
+          type2 : "ALL_PRODUCT",
+          payload: querySnapshot.data()
+        })
+        dispatch({
+          type3: "RENDER",
+          payload: true
+        })
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        };
+        fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
+    }, []);
   return (
     <ShopLayout1 showTopbar={false}>
       <SEO title="" description="Kloudek, kloudek, nội thất giá rẻ, bán nội thất, nội thất, cho thuê nội thất"/>

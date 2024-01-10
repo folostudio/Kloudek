@@ -43,7 +43,7 @@ const ProductCard3Kloudek = (props: any) => {
     <Box >
       <Link onClick={() => handleDetail(product && product)}  href={`${path}/${product?.name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <img  className="product-img" width={400} height={350} alt={product?.name} src={product?.image[0]} />
+          <img  className="product-img" width='100%'  height={350} style={{objectFit:'contain'}} alt={product?.name} src={product?.image[0]} />
         </HoverBox>
       </Link>
 

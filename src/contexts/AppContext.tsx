@@ -9,7 +9,10 @@ import {
 import SettingsProvider from "./SettingContext";
 
 // =================================================================================
-type InitialState = { cart: CartItem[], detail: any[] };
+type InitialState = {
+  render: any;
+  allProduct: any; cart: CartItem[], detail: any[] 
+};
 
 export type CartItem = {
   image: any;
@@ -22,16 +25,16 @@ export type CartItem = {
   id: string | number;
 };
 
-type CartActionType = { type: "CHANGE_CART_AMOUNT"; payload: any, type1: "DETAIL" };
+type CartActionType = { type: "CHANGE_CART_AMOUNT"; payload: any, type1: "DETAIL", type2: "ALL_PRODUCT", type3:"RENDER" };
 type ActionType = CartActionType;
 
 // =================================================================================
-
+const RENDER = false
+const INITIAL_ALL_PRODUCT = null
 const INITIAL_CART = [
- 
 ];
 const INITIAL_DETAIL = []
-const INITIAL_STATE = { cart: INITIAL_CART, detail : INITIAL_DETAIL };
+const INITIAL_STATE = { cart: INITIAL_CART, detail : INITIAL_DETAIL, allProduct: INITIAL_ALL_PRODUCT, render : RENDER };
 
 interface ContextProps {
   state: InitialState;
@@ -44,7 +47,7 @@ const AppContext = createContext<ContextProps>({
 });
 
 const reducer = (state: InitialState, action: ActionType) => {
-  switch (action.type || action.type1) {
+  switch (action.type || action.type1 || action.type2 || action.type3) {
     case "CHANGE_CART_AMOUNT":
       let cartList = state.cart;
       let cartItem = action.payload;
@@ -70,6 +73,12 @@ const reducer = (state: InitialState, action: ActionType) => {
         const rs = []
         rs.push(pd)
         return { ...state , detail: rs}
+      case "ALL_PRODUCT" :
+        const result = action.payload
+        return {...state, allProduct : result}
+      case "RENDER" :
+        const pl = action.payload
+        return {...state, render : pl}
     default: {
       return state;
     }
