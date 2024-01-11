@@ -62,12 +62,12 @@ export default function ProductList(props: ProductListProps) {
     <Box py={4}>
       <H3 mb={2}>Product List</H3>
 
-      <SearchArea
+      {/* <SearchArea
         handleSearch={() => {}}
         buttonText="Add Product"
         searchPlaceholder="Search Product..."
         handleBtnClick={() => Router.push("/admin/products/create")}
-      />
+      /> */}
 
       <Card>
         <Scrollbar autoHide={false}>
@@ -83,11 +83,11 @@ export default function ProductList(props: ProductListProps) {
                 onRequestSort={handleRequestSort}
               />
 
-              <TableBody>
+              {/* <TableBody>
                 {filteredList.map((product, index) => (
                   <ProductRow product={product} key={index} />
                 ))}
-              </TableBody>
+              </TableBody> */}
             </Table>
           </TableContainer>
         </Scrollbar>

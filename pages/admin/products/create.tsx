@@ -40,11 +40,11 @@ export default function CreateProduct() {
     <Box py={4}>
       <H3 mb={2}>Add New Product</H3>
 
-      <ProductForm
+      {/* <ProductForm
         initialValues={INITIAL_VALUES}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
-      />
+      /> */}
     </Box>
   );
 }

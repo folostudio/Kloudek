@@ -55,11 +55,11 @@ export default function EditProduct() {
     <Box py={4}>
       <H3 mb={2}>Edit Product</H3>
 
-      <ProductForm
+      {/* <ProductForm
         initialValues={product}
         validationSchema={validationSchema}
         handleFormSubmit={handleFormSubmit}
-      />
+      /> */}
     </Box>
   );
 }
