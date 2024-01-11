@@ -41,7 +41,7 @@ const ProductCard3Kloudek = (props: any) => {
     
   return (
     <Box >
-      <Link onClick={() => handleDetail(product && product)}  href={`${path}/${product?.name}`}>
+      <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
           <img  className="product-img" width='100%'  height={350} style={{objectFit:'contain'}} alt={product?.name} src={product?.image[0]} />
         </HoverBox>
@@ -49,8 +49,8 @@ const ProductCard3Kloudek = (props: any) => {
 
       <FlexBetween  mt={2}>
         <Box>
-          <H4 onClick={() => router.push(`${path}/${product?.name}`)} fontWeight="600" fontSize="14px" mb={0.5} title={product?.name} ellipsis>
-            {product?.name}
+          <H4 onClick={() => router.push(`/product/${product?.final_name}`)} fontWeight="600" fontSize="14px" mb={0.5} title={product?.final_name} ellipsis>
+            {product?.final_name}
           </H4>
 
           {/* {!hideReview && <BazaarRating value={rating} color="warn" readOnly />} */}

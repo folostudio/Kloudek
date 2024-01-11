@@ -22,38 +22,36 @@ type ProductCardProps = {
 };
 // ========================================================
 
-const ProductCard3: FC<ProductCardProps> = ({
-  slug,
-  title,
-  price,
-  imgUrl,
-  rating,
-  off = 20,
-  hideReview,
-  hideFavoriteIcon,
-}) => {
+const ProductCard3: any = (props) => {
   const [favorite, setFavorite] = useState(false);
+  const product = props?.product
+ ;
+  
 
   return (
     <Box >
       <Link href={`/furniture-rental/living-room/sofas-sectionals`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <LazyImage  className="product-img" width={270} height={270} alt={title} src={imgUrl} />
+          <img  className="product-img" width='100%'  alt={product?.final_name} src='https://www.moctinhhoa.vn/content/images/thumbs/0002050_sf308-ghe-sofa-da-pu-3-cho-ngoi.jpeg' />
         </HoverBox>
       </Link>
 
       <FlexBetween  mt={2}>
         <Box>
-          <H4 fontWeight="600" fontSize="14px" mb={0.5} title={title} ellipsis>
-            {title}
+          <H4 fontWeight="600" fontSize="14px" mb={0.5} title={product?.final_name} ellipsis>
+            {product?.final_name}
           </H4>
 
           {/* {!hideReview && <BazaarRating value={rating} color="warn" readOnly />} */}
 
           <FlexBox gap={1} alignItems="center">
             <Box fontWeight="600" color="primary.main">
-              {calculateDiscount(price, off)}
+              {/* {calculateDiscount(props?.selling_price, props?.off)} */}
+              {currency(product?.selling_price)}
             </Box>
+            <Box color="grey.600" fontWeight="600">
+                {currency(product?.rental_price)}/ tháng
+              </Box>
 {/* 
             {!!off && (
               <Box color="grey.600" fontWeight="600">

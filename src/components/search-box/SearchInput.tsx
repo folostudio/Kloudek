@@ -10,32 +10,37 @@ import {
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import { SearchOutlinedIcon, SearchResultCard } from "./styled";
 import api from "utils/__api__/products";
+import { useRouter } from "next/router";
+import { useAppContext } from "contexts/AppContext";
 
 const SearchInput: FC = () => {
+  const router = useRouter()
   const parentRef = useRef();
   const [_, startTransition] = useTransition();
   const [resultList, setResultList] = useState<string[]>([]);
-
+  const {dispatch} = useAppContext()
   const getProducts = async (searchText: string) => {
     const data = await api.searchProducts(searchText);
     setResultList(data);
   };
+  const [value, setValue] = useState('')
 
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    startTransition(() => {
-      const value = e.target?.value;
-
-      if (!value) setResultList([]);
-      else getProducts(value);
-    });
-  };
+  
 
   const handleDocumentClick = () => setResultList([]);
-
-  useEffect(() => {
-    window.addEventListener("click", handleDocumentClick);
-    return () => window.removeEventListener("click", null);
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    router.push('/search')
+    dispatch({
+    type4: "SEARCH",
+    payload: value
+    })
+    
+  }
+  // useEffect(() => {
+  //   window.addEventListener("click", handleDocumentClick);
+  //   return () => window.removeEventListener("click", null);
+  // }, []);
 
   return (
     <Box
@@ -45,11 +50,12 @@ const SearchInput: FC = () => {
       mx="auto"
       {...{ ref: parentRef }}
     >
+      <form onSubmit={(e) =>handleSubmit(e)}>
       <TextField
         fullWidth
         variant="outlined"
         placeholder="Searching for..."
-        onChange={handleSearch}
+        onChange={(e) => setValue(e.target.value)}
         InputProps={{
           sx: {
             height: 44,
@@ -63,7 +69,8 @@ const SearchInput: FC = () => {
           },
           endAdornment: (
             <Button
-              color="primary"
+            onClick={(e) =>handleSubmit(e)}
+              color='warning'
               disableElevation
               variant="contained"
               sx={{
@@ -78,6 +85,7 @@ const SearchInput: FC = () => {
           startAdornment: <SearchOutlinedIcon fontSize="small" />,
         }}
       />
+      </form>
 
       {resultList.length > 0 && (
         <SearchResultCard elevation={2}>

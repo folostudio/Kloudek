@@ -1,28 +1,32 @@
-import { FC, useState } from "react";
-import { Button, Card, Grid, MenuItem, TextField } from "@mui/material";
+import { FC, useEffect, useState } from "react";
+import { Avatar, Button, Box, Card, Grid, MenuItem, TextField, Typography, FormLabel, Chip } from "@mui/material";
 import { Formik } from "formik";
 import DropZone from "components/DropZone";
 import { FlexBox } from "components/flex-box";
 import BazaarImage from "components/BazaarImage";
 import { UploadImageBox, StyledClear } from "../StyledComponents";
-//Firebase
-import { arrayUnion, doc, setDoc } from "firebase/firestore"; 
+// Back-End
+import { arrayRemove, arrayUnion, doc, setDoc, getDoc, updateDoc } from "firebase/firestore"; 
 import { auth, db, storage } from "../../../../src/firebase";
 import { getStorage, getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-
+import * as yup from "yup";
+import { useSnackbar } from "notistack";
+import { v4 as uuidv4 } from 'uuid';
+import { Paragraph } from "components/Typography";
 // ================================================================
-type ProductFormProps = {
+type EditForm = {
   initialValues: any;
-  handleFormSubmit: (values: any) => void;
-  validationSchema: any;
-  setSpecifications: (values : any) => void;
-  setImgUrl: (values : any) => void;
+  title: any;
+  setOpen: (values: any) => void;
+  setRender: (values: any) => void;
 };
 // ================================================================
 
-const ProductForm: FC<ProductFormProps> = (props) => {
-  const { initialValues, validationSchema, handleFormSubmit, setSpecifications, setImgUrl } = props;
+const EditForm: FC<EditForm> = (props) => {
+  const { initialValues, title, setOpen, setRender } = props;
+  const { enqueueSnackbar } = useSnackbar();
   const [files, setFiles] = useState([]);
+  const [areThereImage, setAreThereImage] = useState(false);
 
   const [specification, setSpecification] = useState([]); // Mảng ban đầu với một phần tử rỗng
 
@@ -33,11 +37,11 @@ const ProductForm: FC<ProductFormProps> = (props) => {
       updatedSpecification[index] = event.target.value;
       return updatedSpecification;
     });
-    setSpecifications((prevSpecification) => {
-      const updatedSpecification = [...prevSpecification];
-      updatedSpecification[index] = event.target.value;
-      return updatedSpecification;
-    });
+    // setSpecifications((prevSpecification) => {
+    //   const updatedSpecification = [...prevSpecification];
+    //   updatedSpecification[index] = event.target.value;
+    //   return updatedSpecification;
+    // });
   };
 
   const handleAddSpecificationField = () => {
@@ -51,12 +55,24 @@ const ProductForm: FC<ProductFormProps> = (props) => {
     updatedSpecification.splice(index, 1);
     setSpecification(updatedSpecification);
   };
+    
+  const validationSchema = yup.object().shape({
+    // name: yup.string().required("required"),
+    // category: yup.array().min(1).required("required"),
+    // description: yup.string().required("required"),
+    // stock: yup.number().required("required"),
+    // price: yup.number().required("required"),
+    // sale_price: yup.number().required("required"),
+    // tags: yup.string().required("required"),
+    
+  });
 
   // HANDLE UPDATE NEW IMAGE VIA DROP ZONE
   const handleChangeDropZone = (newFiles) => {
     if(!newFiles){
       return
     }
+    setAreThereImage(true);
     // Create previews for new files
     const filesWithPreviews = newFiles.map((file) => ({
       ...file,
@@ -88,7 +104,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
         console.log('File available at', downloadURL);
         // Add the download URL to the array
         downloadURLs.push(downloadURL);
-        setImgUrl(downloadURLs);
+        // setImgUrl(downloadURLs);
       }
     );
   });
@@ -98,10 +114,89 @@ const ProductForm: FC<ProductFormProps> = (props) => {
     setFiles((prevFiles) => prevFiles.filter((file) => file !== fileToDelete));
   };
 
-  // console.log(initialValues);
+  const handleFormSubmit = async (values: typeof initialValues) => {
+    const { china_code, color, dimensions, final_code, final_name, historical_cost, id, image, kloudek_code, material, name, note, rental_price, seat, selling_price, specification } = initialValues;
+    let updatedObject = {}
+    if(areThereImage == true){
+      updatedObject = {
+        china_code: values.china_code,
+        color: values.color,
+        dimensions: [values.depth, values.width, values.height],
+        final_code: values.final_code,
+        final_name: values.final_name,
+        historical_cost: values.historical_cost,
+        id: values.id,
+        image: files,
+        kloudek_code: values.kloudek_code,
+        material: values.material,
+        name: values.name,
+        note: values.note,
+        rental_price: values.rental_price,
+        seat: values.seat,
+        selling_price: values.selling_price,
+        specification: specification
+      };
+    }else{
+      updatedObject = {
+        china_code: values.china_code,
+        color: values.color,
+        dimensions: [values.depth, values.width, values.height],
+        final_code: values.final_code,
+        final_name: values.final_name,
+        historical_cost: values.historical_cost,
+        id: values.id,
+        image: values.image,
+        kloudek_code: values.kloudek_code,
+        material: values.material,
+        name: values.name,
+        note: values.note,
+        rental_price: values.rental_price,
+        seat: values.seat,
+        selling_price: values.selling_price,
+        specification: specification
+      };
+    }
+
+      const result = window.confirm("Bạn có chắc cập nhật sản phẩm");
+  
+    if (result) {
+      try {
+        const roomRef = doc(db, "rent_for_home", 'living_room');
+  
+        // Get the current data of the document
+        const roomSnapshot = await getDoc(roomRef);
+        const currentData = roomSnapshot.data();
+  
+        // Find the index of the object to be updated
+        const indexToUpdate = currentData.sofas_sectionals.findIndex(
+          sofa => sofa.id === values.id
+        );
+  
+        if (indexToUpdate !== -1) {
+          // Update the object in the array with the new values
+          currentData.sofas_sectionals[indexToUpdate] = updatedObject;
+  
+          // Update the document with the modified array
+          await updateDoc(roomRef, {
+            sofas_sectionals: currentData.sofas_sectionals
+          });
+  
+          alert("Cập nhật sản phẩm thành công");
+        } else {
+          alert("Không tìm thấy sản phẩm để cập nhật");
+        }
+      } catch (error) {
+        console.log('Có lỗi khi cập nhật sản phẩm', error);
+        alert("Cập nhật sản phẩm không thành công");
+      }
+    }
+    setOpen(false)
+    setRender(true)
+    enqueueSnackbar("Chỉnh sửa sản phẩm thành công", { variant: "success" });
+  };
 
   return (
-    <Card sx={{ p: 6 }}>
+    <Card sx={{ p: 2 }}>
       <Formik
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
@@ -117,7 +212,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
         }) => (
           <form onSubmit={handleSubmit}>
             <Grid container spacing={3}>
-            <Grid item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="name"
@@ -148,7 +243,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                 />
               </Grid>
 
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="china_code"
@@ -179,7 +274,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                 />
               </Grid>
 
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="final_code"
@@ -210,7 +305,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                 />
               </Grid>
 
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="material"
@@ -241,7 +336,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                 />
               </Grid>
 
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="width"
@@ -272,7 +367,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                 />
               </Grid>
 
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="color"
@@ -303,7 +398,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                   helperText={(touched.historical_cost && errors.historical_cost) as string}
                 />
               </Grid>
-              <Grid spacing={3} item sm={6} xs={12}>
+              <Grid item sm={6} xs={12}>
                 <TextField
                   fullWidth
                   name="selling_price"
@@ -337,7 +432,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
               </Grid>
 
               {specification.map((value, index: number) => (
-                <Grid key={index} container spacing={1} item xs={12} md={12}>
+                <Grid key={index} container spacing={1} item xs={12}>
                   <Grid item xs={11}>
                     <TextField
                       fullWidth
@@ -348,7 +443,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                       type="text"
                       placeholder={`Đặt điểm ${index + 1}`}
                       onBlur={handleBlur}
-                      value={values[`specification_${index}`]}
+                      value={values[`specification_${index + 1}`]}
                       onChange={(event) => handleSpecificationChange(index, event)}
                       error={!!touched[`specification_${index}`] && !!errors[`specification_${index}`]}
                       helperText={(touched[`specification_${index}`] && errors[`specification_${index}`]) as string}
@@ -376,7 +471,7 @@ const ProductForm: FC<ProductFormProps> = (props) => {
               </Grid>
                 
               <Grid item xs={12}>
-              <TextField
+                <TextField
                   fullWidth
                   name="note"
                   color="info"
@@ -391,6 +486,21 @@ const ProductForm: FC<ProductFormProps> = (props) => {
                   onChange={handleChange}
                   error={!!touched.note && !!errors.note}
                   helperText={(touched.note && errors.note) as string} />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Chip label={`Ảnh đã lưu - ${values.image.length}`} color="info" variant="outlined" />
+              </Grid>
+              <Grid container item xs={12}>
+                {values.image.map((item, index) => 
+                  <Grid key={index} item xs={1}>
+                    <Avatar src={item} sx={{ borderRadius: "8px", marginRight: 1, width: 50, height: 50 }} />
+                  </Grid>
+                )}
+              </Grid>
+
+              <Grid item xs={12}>
+                <Chip label="Cập nhật ảnh mới" color="info" variant="outlined" />
               </Grid>
 
               <Grid item xs={12}>
@@ -420,4 +530,4 @@ const ProductForm: FC<ProductFormProps> = (props) => {
   );
 };
 
-export default ProductForm;
+export default EditForm;

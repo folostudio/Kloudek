@@ -24,13 +24,12 @@ const Section2: FC<Props> = ({ flashDeals }) => {
 
   return (
     <Box
-   
+  
     >
       <Carousel
         totalSlides={flashDeals.length}
         visibleSlides={visibleSlides}
         infinite={true}
-        
       >
         {flashDeals.map((item,index) => (
           <Box  py={0.5} key={index}>

@@ -29,7 +29,7 @@ const StyledBazaarCard = styled(BazaarCard)({
 });
 
 const ImageWrapper = styled(Box)(({ theme }) => ({
-  height:500,
+  height:450,
   textAlign: "center",
   position: "relative",
   display: "inline-block",

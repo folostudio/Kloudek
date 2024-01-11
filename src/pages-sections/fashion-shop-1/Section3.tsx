@@ -18,7 +18,7 @@ const Section3 = () => {
         <br/>
         <br/>
         <Box sx={{marginLeft:{ md:10, xs:0}}}>
-        <img style={{maxWidth:'100%'}} src="/sofa.jpg" alt="sofa"/>
+        <img style={{width:'100%'}} src="/sofa.jpg" alt="sofa"/>
         </Box>
       </Box>
       <Box  sx={{display:'flex', flexDirection:'column', marginLeft:{md:10, xs:0}, my:4,}}>
@@ -28,7 +28,7 @@ const Section3 = () => {
         <br/>
         <br/>
         <Box sx={{marginRight:{ md:10, xs:0}}}>
-        <img style={{maxWidth:'100%'}} src="/denngu.jpg" alt="sofa"/>
+        <img style={{width:'100%'}} src="/denngu.jpg" alt="sofa"/>
         </Box>
       </Box>
     </Box>

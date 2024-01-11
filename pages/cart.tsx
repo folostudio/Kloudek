@@ -35,7 +35,7 @@ const Cart: NextPage = () => {
             <ProductCard7 key={index} {...item} />
           ))}
             <div onClick={() => setSelectedValue('a')}>
-            <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue', mb:2, ":hover":{cursor:'pointer'}  }}>
+            <Box sx={{ backgroundColor: selectedValue === 'a'? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "a" ? '1px solid blue' : 'none', mb:2, ":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
                 checked={selectedValue === 'a'}
@@ -58,7 +58,7 @@ const Cart: NextPage = () => {
             </Box>
             </div>
             <div onClick={() => setSelectedValue('b')}>
-            <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
+            <Box sx={{ backgroundColor: selectedValue === 'b'? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "b" ? '1px solid blue' : 'none',mb:2,":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
                 checked={selectedValue === 'b'}
@@ -78,7 +78,7 @@ const Cart: NextPage = () => {
               </div>
             </Box>
             </div>
-           <div onClick={()=> setSelectedValue('c')}>
+           {/* <div onClick={()=> setSelectedValue('c')}>
            <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2 ,":hover":{cursor:'pointer'} }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
@@ -98,8 +98,8 @@ const Cart: NextPage = () => {
               <Typography fontWeight={500} mb={1}>- Chức năng này chưa thể sử dụng khi chưa có khoá api chính thức từ vnpay</Typography>
               </div>
             </Box>
-           </div>
-            <div onClick={() => setSelectedValue('d')}>
+           </div> */}
+            {/* <div onClick={() => setSelectedValue('d')}>
             <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
@@ -119,9 +119,9 @@ const Cart: NextPage = () => {
               <Typography fontWeight={500} mb={1}>- Chức năng này chưa thể sử dụng</Typography>
               </div>
             </Box>
-            </div>
+            </div> */}
            <div onClick={() => setSelectedValue('e')}>
-           <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2 ,":hover":{cursor:'pointer'} }}>
+           <Box sx={{ backgroundColor: selectedValue === 'e' ? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "e" ? '1px solid blue' : 'none',mb:2 ,":hover":{cursor:'pointer'} }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
                 checked={selectedValue === 'e'}
@@ -143,7 +143,7 @@ const Cart: NextPage = () => {
               </div>
             </Box>
            </div>
-           <div onClick={() => setSelectedValue('f')}>
+           {/* <div onClick={() => setSelectedValue('f')}>
            <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
@@ -164,7 +164,7 @@ const Cart: NextPage = () => {
               <Typography fontWeight={500} mb={1}>- 5pjdVDU </Typography>
               </div>
             </Box>
-           </div>
+           </div> */}
         </Grid>
 
         {/* CHECKOUT FORM */}

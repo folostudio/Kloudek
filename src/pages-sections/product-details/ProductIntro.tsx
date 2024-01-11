@@ -24,7 +24,7 @@ const ProductIntro = ({product} ) => {
 console.log(settings);
 // updateSettings({"a":3})
   
-  const { id, rental_price, name, image, slug, selling_price, qty } = product || settings;
+  const { id, rental_price, name, image, slug, selling_price, qty, final_name } = product || settings;
   
   
   const [selectedValue, setSelectedValue] = useState('a');
@@ -83,20 +83,20 @@ console.log(settings);
   const handleCartAmountChange = (amount: number) => () => {
     if(selectedValue === "b") {
       updateSettings({
-        price : selling_price, qty: amount, name,  image, id, slug, rental_price, brand : "Mua"
+        price : selling_price, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"
       })
       dispatch({
         type: "CHANGE_CART_AMOUNT",
-        payload: { price : selling_price, qty: amount, name,  image, id, slug, rental_price, brand : "Mua"},
+        payload: { price : selling_price, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
       });
     }
    if(selectedValue === "a") {
     updateSettings({
-      price: totalRent, qty: amount, name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
+      price: totalRent, qty: amount, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
     })
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price: totalRent, qty: amount, name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
+      payload: { price: totalRent, qty: amount, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
     });
    }
   };
@@ -107,7 +107,7 @@ console.log(settings);
         <Grid item md={6} xs={12} alignItems="center">
           <FlexBox mx='auto' mb={6} sx={{width:{md:500, xs:'100%'}}}>
             <img
-              alt={name}
+              alt={final_name}
               loading="eager"
               src={image && image[selectedImage]}
               style={{ objectFit: "contain", borderRadius: '5px', maxHeight:'400px', maxWidth:'100%' }}
@@ -139,7 +139,7 @@ console.log(settings);
         </Grid>
 
         <Grid item md={6} xs={12} alignItems="center">
-          <H1 mb={1}>{name}</H1>
+          <H1 mb={1}>{final_name}</H1>
 
           <FlexBox alignItems="center" mb={1}>
             <Box>Choose how you want it</Box>

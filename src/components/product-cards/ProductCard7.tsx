@@ -33,7 +33,8 @@ type ProductCardProps = {
   price: number;
   image?: string;
   id: string | number;
-  brand : any
+  brand : any,
+  final_name: any
 };
 // =========================================================
 
@@ -44,7 +45,8 @@ const ProductCard7: FC<ProductCardProps> = ({
   price,
   image,
   slug,
-  brand
+  brand,
+  final_name
 }) => {
   const { dispatch } = useAppContext();
   // handle change cart
@@ -76,7 +78,7 @@ const ProductCard7: FC<ProductCardProps> = ({
       <FlexBox p={2} rowGap={2} width="100%" flexDirection="column">
         {/* <Link href={`/product/${slug}`}> */}
           <Span ellipsis fontWeight="600" fontSize={18}>
-            {name}
+            {final_name}
           </Span>
         {/* </Link> */}
         <Typography>Phân loại :{brand} </Typography>

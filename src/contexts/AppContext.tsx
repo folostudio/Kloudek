@@ -10,11 +10,13 @@ import SettingsProvider from "./SettingContext";
 
 // =================================================================================
 type InitialState = {
+  search: any;
   render: any;
   allProduct: any; cart: CartItem[], detail: any[] 
 };
 
 export type CartItem = {
+  final_name: ReactNode;
   image: any;
   brand: ReactNode;
   qty: number;
@@ -25,16 +27,17 @@ export type CartItem = {
   id: string | number;
 };
 
-type CartActionType = { type: "CHANGE_CART_AMOUNT"; payload: any, type1: "DETAIL", type2: "ALL_PRODUCT", type3:"RENDER" };
+type CartActionType = { type: "CHANGE_CART_AMOUNT"; payload: any, type1: "DETAIL", type2: "ALL_PRODUCT", type3:"RENDER", type4: "SEARCH" };
 type ActionType = CartActionType;
 
 // =================================================================================
+const SEARCH = ''
 const RENDER = false
 const INITIAL_ALL_PRODUCT = null
 const INITIAL_CART = [
 ];
 const INITIAL_DETAIL = []
-const INITIAL_STATE = { cart: INITIAL_CART, detail : INITIAL_DETAIL, allProduct: INITIAL_ALL_PRODUCT, render : RENDER };
+const INITIAL_STATE = { cart: INITIAL_CART, detail : INITIAL_DETAIL, allProduct: INITIAL_ALL_PRODUCT, render : RENDER, search : SEARCH };
 
 interface ContextProps {
   state: InitialState;
@@ -47,7 +50,7 @@ const AppContext = createContext<ContextProps>({
 });
 
 const reducer = (state: InitialState, action: ActionType) => {
-  switch (action.type || action.type1 || action.type2 || action.type3) {
+  switch (action.type || action.type1 || action.type2 || action.type3 || action.type4) {
     case "CHANGE_CART_AMOUNT":
       let cartList = state.cart;
       let cartItem = action.payload;
@@ -79,6 +82,9 @@ const reducer = (state: InitialState, action: ActionType) => {
       case "RENDER" :
         const pl = action.payload
         return {...state, render : pl}
+      case "SEARCH" :
+        const re = action.payload
+        return {...state, search : re}
     default: {
       return state;
     }

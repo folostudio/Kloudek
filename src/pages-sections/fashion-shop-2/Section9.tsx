@@ -10,7 +10,7 @@ import Brand from "models/Brand.model";
 type Section9Props = { brands: any[] };
 // ======================================================================
 
-const Section9: FC<Section9Props> = ({ brands }) => {
+const Section9 = (props : any) => {
   const width = useWindowSize();
   const [visibleSlides, setVisibleSlides] = useState(6);
 
@@ -28,17 +28,17 @@ const Section9: FC<Section9Props> = ({ brands }) => {
       <Carousel
         autoPlay={true}
         showArrow={false}
-        totalSlides={brands.length}
+        totalSlides={props?.brands.length}
         visibleSlides={visibleSlides}
         sx={{ ":hover": { cursor: "grab" } }}
         interval={1500}
       >
-        {brands.map((item) => (
+        {props?.brands.map((item: any, index: any) => (
           <FlexRowCenter
             maxWidth={110}
             height="100%"
             margin="auto"
-            key={item.id}
+            key={index}
           >
             <BazaarImage
               alt="brand"

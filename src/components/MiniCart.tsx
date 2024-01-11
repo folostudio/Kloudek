@@ -48,14 +48,14 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
     <Box width="100%" maxWidth={480}>
       <Box
         overflow="auto"
-        height={`calc(100vh - ${!!cartList.length ? "80px - 3.25rem" : "0px"})`}
+        height={`calc(100vh - ${!!cartList?.length ? "80px - 3.25rem" : "0px"})`}
       >
         <FlexBetween mx={3} height={74}>
           <FlexBox gap={1} alignItems="center" color="secondary.main">
             <CartBag color="inherit" />
 
             <Paragraph lineHeight={0} fontWeight={600}>
-              {cartList.length} item
+              {cartList?.length} item
             </Paragraph>
           </FlexBox>
 
@@ -95,7 +95,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
           <FlexBox
             py={2}
             px={2.5}
-            key={item.id}
+            key={item?.id}
             alignItems="center"
             borderBottom={`1px solid ${palette.divider}`}
           >
@@ -103,21 +103,21 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
               <Button
                 color="primary"
                 variant="outlined"
-                onClick={handleCartAmountChange(item.qty + 1, item)}
+                onClick={handleCartAmountChange(item?.qty + 1, item)}
                 sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
               >
                 <Add fontSize="small" />
               </Button>
 
               <Box fontWeight={600} fontSize="15px" my="3px">
-                {item.qty}
+                {item?.qty}
               </Box>
 
               <Button
                 color="primary"
                 variant="outlined"
-                disabled={item.qty === 1}
-                onClick={handleCartAmountChange(item.qty - 1, item)}
+                disabled={item?.qty === 1}
+                onClick={handleCartAmountChange(item?.qty - 1, item)}
                 sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
               >
                 <Remove fontSize="small" />
@@ -126,7 +126,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
 
             <Link href={`#`}>
               <Avatar
-                alt={item.name}
+                alt={item?.name}
                 src={item?.image[0]}
                 sx={{ mx: 2, width: 76, height: 76 }}
               />
@@ -143,12 +143,12 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
               <Typography>Phân loại: {item?.brand}</Typography>
               <Link href={`/product/${item.slug}`}>
                 <H5 ellipsis fontSize="14px" className="title">
-                  {item.name}
+                  {item?.final_name}
                 </H5>
               </Link>
 
               <Tiny color="grey.600">
-                {currency(item.price)} x {item.qty}
+                {currency(item?.price)} x {item?.qty}
               </Tiny>
 
               <Box

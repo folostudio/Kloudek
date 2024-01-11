@@ -22,7 +22,7 @@ import Product from "models/Product.model";
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../src/firebase";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "contexts/AppContext";
 const articles = [
   {
@@ -450,10 +450,12 @@ type FashionShop1Props = {
 
 const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   const {state, dispatch} = useAppContext()
-  const render = state?.render
-  console.log(state);
+  const render = state.render
+
   
   const [sanpham, setSanpham] = useState(null);
+  console.log(sanpham);
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -469,20 +471,23 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         // Cập nhật state sanpham
         // setSanpham(newSanpham);
         // console.log(querySnapshot.data());
-        dispatch({
-          type2 : "ALL_PRODUCT",
-          payload: querySnapshot.data()
-        })
-        dispatch({
-          type3: "RENDER",
-          payload: true
-        })
+      //  setSanpham(querySnapshot.data())
+       dispatch({
+        type2 : "ALL_PRODUCT",
+        payload: querySnapshot.data()
+      })
+     setSanpham(querySnapshot.data())
+      dispatch({
+        type3: "RENDER",
+        payload: true
+      })
         } catch (error) {
             console.error("Error fetching data:", error);
         }
         };
         fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
     }, []);
+    
   return (
     <ShopLayout1 showTopbar={false}>
       <SEO title="" description="Kloudek, kloudek, nội thất giá rẻ, bán nội thất, nội thất, cho thuê nội thất"/>
@@ -491,7 +496,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         <Section1 />
       
         {/* FLASH DEALS */}
-        <Section6 products={props.trendingItems} />
+        <Section6 products={sanpham?.sofas_sectionals} /> 
         <Section2 flashDeals={props.flashDealsData} />
      
 
