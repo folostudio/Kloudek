@@ -105,12 +105,12 @@ console.log(settings);
     <Box width="100%">
       <Grid container spacing={2}  justifyContent="space-around">
         <Grid item md={6} xs={12} alignItems="center">
-          <FlexBox mx='auto' mb={6} sx={{width:{md:500, xs:'100%'}}}>
+          <FlexBox mx='auto' mb={6} sx={{width:{md:500, xs:'100%',justifyContent:'center'}}}>
             <img
               alt={final_name}
               loading="eager"
               src={image && image[selectedImage]}
-              style={{ objectFit: "contain", borderRadius: '5px', maxHeight:'400px', maxWidth:'100%' }}
+              style={{ objectFit: "contain", borderRadius: '8px', maxHeight:'400px', maxWidth:'100%' }}
             />
           </FlexBox>
 

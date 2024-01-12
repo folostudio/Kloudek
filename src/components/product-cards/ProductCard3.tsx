@@ -8,6 +8,8 @@ import LazyImage from "components/LazyImage";
 import BazaarRating from "components/BazaarRating";
 import { FlexBetween, FlexBox } from "components/flex-box";
 import { calculateDiscount, currency } from "lib";
+import { useAppContext } from "contexts/AppContext";
+import router from "next/router";
 
 // ========================================================
 type ProductCardProps = {
@@ -26,19 +28,25 @@ const ProductCard3: any = (props) => {
   const [favorite, setFavorite] = useState(false);
   const product = props?.product
  ;
-  
+ const {state, dispatch} = useAppContext()
+ const handleDetail = (pd: any ) => {
+   dispatch({
+     type1: "DETAIL",
+     payload: pd
+   })
+ }
 
   return (
-    <Box >
-      <Link href={`/furniture-rental/living-room/sofas-sectionals`}>
+    <Box>
+      <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <img  className="product-img" width='100%'  alt={product?.final_name} src='https://www.moctinhhoa.vn/content/images/thumbs/0002050_sf308-ghe-sofa-da-pu-3-cho-ngoi.jpeg' />
+          <img  className="product-img" style={{maxWidth:'100%', objectFit:'contain', borderRadius:'5px'}}  alt={product?.final_name} src={product?.image} />
         </HoverBox>
       </Link>
 
-      <FlexBetween  mt={2}>
+      <FlexBetween  mt={1}>
         <Box>
-          <H4 fontWeight="600" fontSize="14px" mb={0.5} title={product?.final_name} ellipsis>
+          <H4 onClick={() => router.push(`/product/${product?.final_name}`)} fontWeight="600" fontSize="14px" mb={0.5} title={product?.final_name} ellipsis>
             {product?.final_name}
           </H4>
 
