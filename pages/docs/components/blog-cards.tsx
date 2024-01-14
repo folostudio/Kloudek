@@ -27,7 +27,7 @@ const BlogCards = () => {
             </Grid>
           ))}
 
-          {articles.map((item) => (
+          {/* {articles.map((item) => (
             <Grid item md={4} xs={12} key={item.id}>
               <BlogCard2
                 date="21 SEP"
@@ -36,7 +36,7 @@ const BlogCards = () => {
                 description={item.description}
               />
             </Grid>
-          ))}
+          ))} */}
         </Grid>
       </Container>
     </DocsLayout>
