@@ -33,7 +33,7 @@ type ProductDetailsProps = {
 // ===============================================================
 const SofasSectionals = () => {
   const {state, dispatch} = useAppContext()
-
+  const [sanpham, setSanpham] = useState(null)
   const router = useRouter();
 
   // Show a loading state when the fallback is rendered
@@ -61,10 +61,7 @@ const SofasSectionals = () => {
         type2 : "ALL_PRODUCT",
         payload: querySnapshot.data()
       })
-      dispatch({
-        type3: "RENDER",
-        payload: true
-      })
+      setSanpham(querySnapshot.data())
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -75,7 +72,7 @@ const SofasSectionals = () => {
     <ShopLayout1>
       <SEO title="sofa & sectionals" description="sofa"/>
       <Box sx={{ my: 4, mx:1 }}>
-      <Section9 products={state?.allProduct?.sofas_sectionals} />
+      <Section9 products={sanpham?.sofas_sectionals} />
       </Box>
     </ShopLayout1>
   );

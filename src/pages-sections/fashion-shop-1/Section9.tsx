@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import CategorySectionCreator from "components/CategorySectionCreator";
 import ProductCard12 from "components/product-cards/ProductCard12";
@@ -8,84 +8,16 @@ import Product from "models/Product.model";
 // =============================================================
 type Props = { products: any[] };
 // =============================================================
-const object = [
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-]
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 const Section9 = (props : any) => {
- 
+  const [page, setPage] = useState(1);
+  const trendings = props?.products?.slice(page > 1 ? page*10 : 0, page *10 +10);
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+   setPage(value)
+    
+  }
   
-  const trendings = props?.products;
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
@@ -115,6 +47,11 @@ const Section9 = (props : any) => {
           ))}
         </Grid>
       </Grid>
+     <Box py={3} display='flex' justifyContent='center'>
+     <Stack spacing={2}>
+      <Pagination onChange={handleChange} page={page} count={Math.round(props?.products?.length/10)} shape="rounded" />
+    </Stack>
+     </Box>
     </Box>
   );
 };

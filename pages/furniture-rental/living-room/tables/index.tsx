@@ -13,31 +13,17 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../src/firebase";
 
 // styled component
-const StyledTabs = styled(Tabs)(({ theme }) => ({
-  minHeight: 0,
-  marginTop: 80,
-  marginBottom: 24,
-  borderBottom: `1px solid ${theme.palette.text.disabled}`,
-  "& .inner-tab": {
-    minHeight: 40,
-    fontWeight: 600,
-    textTransform: "capitalize",
-  },
-}));
+
 
 // ===============================================================
-type ProductDetailsProps = {
-  product: Product;
-  relatedProducts: Product[];
-  frequentlyBought: Product[];
-};
+
 // ===============================================================
 
 
   
 const Tables = () => {
   const {state, dispatch} = useAppContext()
-
+  const [sanpham, setSanpham] = useState(null)
   const router = useRouter();
 
   // Show a loading state when the fallback is rendered
@@ -65,10 +51,7 @@ const Tables = () => {
         type2 : "ALL_PRODUCT",
         payload: querySnapshot.data()
       })
-      dispatch({
-        type3: "RENDER",
-        payload: true
-      })
+      setSanpham(querySnapshot.data())
         } catch (error) {
             console.error("Error fetching data:", error);
         }
@@ -80,7 +63,7 @@ const Tables = () => {
     <ShopLayout1>
     <SEO title="sofa & sectionals" description="tables"/>
     <Box sx={{ my: 4, mx:1 }}>
-    <Section9 products={state?.allProduct?.tables} />
+    <Section9 products={sanpham?.tables} />
     </Box>
   </ShopLayout1>
   );

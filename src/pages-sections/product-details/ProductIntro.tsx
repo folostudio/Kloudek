@@ -45,6 +45,38 @@ console.log(settings);
       value: 4,
       label: '4 tháng',
     },
+    {
+      value: 5,
+      label: '5 tháng',
+    },
+    {
+      value: 6,
+      label: '6 tháng',
+    },
+    {
+      value: 7,
+      label: '7 tháng',
+    },
+    {
+      value: 8,
+      label: '8 tháng',
+    },
+    {
+      value: 9,
+      label: '9 tháng',
+    },
+    {
+      value: 10,
+      label: '10 tháng',
+    },
+    {
+      value: 11,
+      label: '11 tháng',
+    },
+    {
+      value: 12,
+      label: '12 tháng',
+    },
   ];
   const currencies1 = [
     {
@@ -69,6 +101,14 @@ console.log(settings);
     if(e === 2) return setTotalRent(rental_price*2)
     if(e === 3) return setTotalRent(rental_price*3)
     if(e === 4) return setTotalRent(rental_price*4)
+    if(e === 5) return setTotalRent(rental_price*5)
+    if(e === 6) return setTotalRent(rental_price*6)
+    if(e === 7) return setTotalRent(rental_price*7)
+    if(e === 8) return setTotalRent(rental_price*8)
+    if(e === 9) return setTotalRent(rental_price*9)
+    if(e === 10) return setTotalRent(rental_price*10)
+    if(e === 11) return setTotalRent(rental_price*11)
+    if(e === 12) return setTotalRent(rental_price*12)
   };
   
   
