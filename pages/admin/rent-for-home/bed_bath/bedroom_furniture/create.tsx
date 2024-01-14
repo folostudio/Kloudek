@@ -57,8 +57,8 @@ export default function CreateProduct() {
 
   const handleFormSubmit = async (values: typeof INITIAL_VALUES) => {
     try {
-      const result = await updateDoc(doc(db, 'rent_for_home', 'living_room'), {
-        sofas_sectionals: arrayUnion({
+      const result = await updateDoc(doc(db, 'rent_for_home', 'bed_bath'), {
+        bedroom_furniture: arrayUnion({
           id: uuidv4(),
           name: values.name,
           final_name: values.final_name,
@@ -100,7 +100,7 @@ export default function CreateProduct() {
           height: '',
       })
       setImgUrl([])
-      router.push("/admin/rent-for-home/living-room/sofas-sectionals")
+      router.push("/admin/rent-for-home/bed_bath/bedroom_furniture")
     } catch (error) {
       console.log('Có lỗi khi lưu dữ liệu: ', error);
       enqueueSnackbar("Thêm sản phẩm thất bại", { variant: "error" });

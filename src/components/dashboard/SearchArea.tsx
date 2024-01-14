@@ -18,8 +18,8 @@ const SearchArea: FC<SearchAreaProps> = (props) => {
   const downSM = useMediaQuery((theme: Theme) => theme.breakpoints.down("sm"));
 
   return (
-    <FlexBox mb={2} gap={2} justifyContent="space-between" flexWrap="wrap">
-      <SearchInput placeholder={searchPlaceholder} />
+    <FlexBox mb={2} gap={2} justifyContent="right" flexWrap="wrap">
+      {/* <SearchInput placeholder={searchPlaceholder} /> */}
 
       <Button
         color="info"

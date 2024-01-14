@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import { GetStaticProps } from "next";
 import { Box, Card, Stack, Table, TableContainer } from "@mui/material";
 import TableBody from "@mui/material/TableBody";
@@ -12,16 +12,25 @@ import useMuiTable from "hooks/useMuiTable";
 import { OrderRow } from "pages-sections/admin";
 import api from "utils/__api__/dashboard";
 import Order from "models/Order.model";
+// Back-End
+import { collection, doc, getDoc, getDocs } from "firebase/firestore"; 
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from "../../../src/firebase";
 
 // TABLE HEADING DATA LIST
 const tableHeading = [
-  { id: "id", label: "Order ID", align: "left" },
-  { id: "qty", label: "Qty", align: "left" },
-  { id: "purchaseDate", label: "Purchase Date", align: "left" },
-  { id: "billingAddress", label: "Billing Address", align: "left" },
-  { id: "amount", label: "Amount", align: "left" },
-  { id: "status", label: "Status", align: "left" },
-  { id: "action", label: "Action", align: "center" },
+  { id: "purchaseDate", label: "Ngày", align: "left" },
+  // { id: "id", label: "Mã đơn", align: "left" },
+  { id: "name", label: "Tên khách hàng", align: "left" },
+  { id: "email", label: "Email", align: "left" },
+  { id: "phoneNumber", label: "Sđt", align: "left" },
+  { id: "address", label: "Địa chỉ", align: "left" },
+  { id: "products", label: "Sản phẩm", align: "left" },
+  { id: "qty", label: "Số lượng", align: "left" },
+  { id: "price", label: "Giá tiền", align: "left" },
+  { id: "sum", label: "Tổng", align: "left" },
+  { id: "note", label: "Ghi chú", align: "left" },
+  { id: "action", label: "Chỉnh sửa", align: "center" },
 ];
 
 // =============================================================================
@@ -33,14 +42,26 @@ type OrderListProps = { orders: Order[] };
 // =============================================================================
 
 export default function OrderList({ orders }: OrderListProps) {
-  // RESHAPE THE ORDER LIST BASED TABLE HEAD CELL ID
-  const filteredOrders = orders.map((item) => ({
+
+  const [listOrder, setListOrder] = useState([]);
+  const [render, setRender] = useState(false)
+
+    // RESHAPE THE ORDER LIST BASED TABLE HEAD CELL ID
+  const filteredOrders = listOrder[0]?.list.map((item: any) => ({
     id: item.id,
-    qty: item.items.length,
-    purchaseDate: item.createdAt,
-    billingAddress: item.shippingAddress,
-    amount: item.totalPrice,
-    status: item.status,
+    slug: item.name,
+    // DataView: item.DataView,
+    date: item.date,
+    name: item.name,
+    note: item.note,
+    email: item.email,
+    phone: item.phone,
+    address: item.address,
+    description: item.description,
+    products: item.products,
+    quantity: item.quantity,
+    price: item.price,
+    sum: item.sum,
   }));
 
   const {
@@ -57,9 +78,28 @@ export default function OrderList({ orders }: OrderListProps) {
     defaultOrder: "desc",
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+        let allProduct = []
+        try {
+            // Lấy danh sách sản phẩm từ Firestore
+            const querySnapshot = await getDocs(collection(db, "orders"));
+
+            querySnapshot.forEach((doc) => {
+                allProduct.push(doc.data())
+                setListOrder(allProduct);
+            });
+            
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    };
+    fetchData();
+  }, [render]);
+
   return (
     <Box py={4}>
-      <H3 mb={2}>Orders</H3>
+      <H3 mb={2}>Đơn hàng</H3>
 
       <SearchArea
         handleSearch={() => {}}

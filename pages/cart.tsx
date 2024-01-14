@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NextPage } from "next";
+import { useSnackbar } from "notistack";
 import { Box, Button, Card, Divider, Grid, Radio, TextField, Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import MenuItem from "@mui/material/MenuItem";
@@ -14,15 +15,133 @@ import { currency } from "lib";
 import { useState } from "react";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+//Back-End
+import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDocs, collection } from "firebase/firestore"; 
+import { auth, db } from '../src/firebase';
+import emailjs from '@emailjs/browser';
+import { v4 as uuidv4 } from 'uuid';
+
+
+//----------------------------------------------------------------------
+
+
 const Cart: NextPage = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [formData, setFormData] = useState({
+    name: '',
+    phoneNumber: '',
+    email: '',
+    address: '',
+    note: '',
+    voucher: '',
+  });
+  const date = new Date().toLocaleDateString()
   const [selectedValue, setSelectedValue] = useState('a');
-  const { state } = useAppContext();
+  const { state, dispatch } = useAppContext();
   const cartList: CartItem[] = state.cart;
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
   };
+
   const getTotalPrice = () =>
     cartList.reduce((accum, item) => accum + item.price * item.qty, 0);
+
+  const handleInputChange = (field) => (event) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+  };
+
+  console.log(cartList);
+  
+
+  const handleSend = async () => {
+    if (formData.name == '') {
+      enqueueSnackbar("Vui lòng nhập tên", { variant: "error" });
+      return
+    }
+    if (formData.phoneNumber == '') {
+      enqueueSnackbar("Vui lòng nhập số điện thoại", { variant: "error" });
+      return
+    }
+    if (formData.email == '') {
+      enqueueSnackbar("Vui lòng nhập email", { variant: "error" });
+      return
+    }
+    if (formData.address == '') {
+      enqueueSnackbar("Vui lòng nhập địa chỉ", { variant: "error" });
+      return
+    }
+    const emailContent = `
+      Thông tin : 
+
+        Tên: ${formData.name}
+        Sđt: ${formData.phoneNumber}
+        Email: ${formData.email}
+        Địa chỉ: ${formData.address}
+        Ghi chú: ${formData.note}
+
+      Giỏ hàng:
+      ${cartList.map((item, index) => `
+        Stt: ${index++}
+        Sản phẩm: ${item.name}
+        Số lượng: ${item.qty}
+        Giá: ${item.price}
+      `).join('\n')}
+      
+      Tổng: ${currency(getTotalPrice())}
+    `;
+    try {
+      // Use emailjs to send the email
+      const response = await emailjs.send(
+        'service_bgfjwrd',
+        'template_xyxq2jo',
+        { message: emailContent },
+        'vfSIhikzKR7galOsC'
+      );
+
+      await updateDoc(doc(db, 'orders', 'am09mJfmXgULicYqNbm5'), {
+        list: arrayUnion({
+          id: uuidv4(),
+          date: Timestamp.fromDate(new Date(date)),
+          name: formData.name,
+          phone: formData.phoneNumber,
+          email: formData.email,
+          address: formData.address,
+          note: formData.note,
+          voucher: formData.voucher,
+          products: cartList.map(item => item.name),
+          quantity: cartList.map(item => item.qty),
+          price: cartList.map(item => item.price),
+          sum: Number(getTotalPrice())
+        })
+      })
+
+      dispatch({
+        type: "CHANGE_CART_AMOUNT",
+        payload: "resetCart",
+      })
+      enqueueSnackbar("Đặt hàng thành công", { variant: "success" });
+      localStorage.removeItem("productCart")
+      setFormData({
+        name: '',
+        phoneNumber: '',
+        email: '',
+        address: '',
+        note: '',
+        voucher: '',
+      });
+      // Handle the response, you can log it or show a success message
+      // console.log(response);
+      // Optionally, reset the form or perform other actions
+    } catch (error) {
+      enqueueSnackbar("Có lỗi khi đặt hàng", { variant: "error" });
+      // Handle errors, you can log them or show an error message
+      console.error(error);
+    }
+  }
 
   return (
     <CheckoutNavLayout>
@@ -109,7 +228,7 @@ const Cart: NextPage = () => {
                 name="radio-buttons"
                 inputProps={{ 'aria-label': 'D' }}
               />
-                 <img width={30} src="/assets/images/visa.jpg" alt="vnpay"/>
+                  <img width={30} src="/assets/images/visa.jpg" alt="vnpay"/>
                 <Box ml={2}>
                 <Typography fontWeight={500}>Visa</Typography>
               <Typography fontWeight={500}>Thanh toán tự động bằng thẻ visa</Typography>
@@ -120,8 +239,8 @@ const Cart: NextPage = () => {
               </div>
             </Box>
             </div> */}
-           <div onClick={() => setSelectedValue('e')}>
-           <Box sx={{ backgroundColor: selectedValue === 'e' ? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "e" ? '1px solid blue' : 'none',mb:2 ,":hover":{cursor:'pointer'} }}>
+            <div onClick={() => setSelectedValue('e')}>
+            <Box sx={{ backgroundColor: selectedValue === 'e' ? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "e" ? '1px solid blue' : 'none',mb:2 ,":hover":{cursor:'pointer'} }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
                 checked={selectedValue === 'e'}
@@ -130,7 +249,7 @@ const Cart: NextPage = () => {
                 name="radio-buttons"
                 inputProps={{ 'aria-label': 'E' }}
               />
-                 <img width={30} src="/assets/images/noidia.png" alt="vnpay"/>
+                <img width={30} src="/assets/images/noidia.png" alt="vnpay"/>
                 <Box ml={2}>
                 <Typography fontWeight={500}>Thẻ nội địa việt nam</Typography>
               <Typography fontWeight={500}>Thanh toán tự đồng bằng thẻ ngân hàng nội địa</Typography>
@@ -142,9 +261,9 @@ const Cart: NextPage = () => {
               <Typography fontWeight={500} mb={1}>- Tên chủ thẻ NGUYEN VAN A</Typography>
               </div>
             </Box>
-           </div>
-           {/* <div onClick={() => setSelectedValue('f')}>
-           <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
+          </div>
+          {/* <div onClick={() => setSelectedValue('f')}>
+          <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
                 checked={selectedValue === 'f'}
@@ -153,7 +272,7 @@ const Cart: NextPage = () => {
                 name="radio-buttons"
                 inputProps={{ 'aria-label': 'F' }}
               />
-                 <img width={30} src="/assets/images/paypal.png" alt="paypal"/>
+                  <img width={30} src="/assets/images/paypal.png" alt="paypal"/>
                 <Box ml={2}>
                 <Typography fontWeight={500}>Paypal</Typography>
               <Typography fontWeight={500}>Thanh toán tự động qua paypal</Typography>
@@ -199,6 +318,8 @@ const Cart: NextPage = () => {
               size="small"
               variant="outlined"
               placeholder="Họ và tên"
+              value={formData.name}
+              onChange={handleInputChange('name')}
             />
             <TextField
               fullWidth
@@ -206,6 +327,8 @@ const Cart: NextPage = () => {
               size="small"
               variant="outlined"
               placeholder="Số điện thoại"
+              value={formData.phoneNumber}
+              onChange={handleInputChange('phoneNumber')}
               sx={{my:1}}
             />
             <TextField
@@ -214,6 +337,8 @@ const Cart: NextPage = () => {
               size="small"
               variant="outlined"
               placeholder="Email"
+              value={formData.email}
+              onChange={handleInputChange('email')}
             />
             <TextField
               fullWidth
@@ -221,6 +346,8 @@ const Cart: NextPage = () => {
               size="small"
               variant="outlined"
               placeholder="Địa chỉ"
+              value={formData.address}
+              onChange={handleInputChange('address')}
             />
             <TextField
               variant="outlined"
@@ -229,6 +356,8 @@ const Cart: NextPage = () => {
               fullWidth
               multiline
               sx={{ mb: 2 }}
+              value={formData.note}
+              onChange={handleInputChange('note')}
             />
 
             <Divider sx={{ mb: 2 }} />
@@ -239,6 +368,8 @@ const Cart: NextPage = () => {
               label="Voucher"
               variant="outlined"
               placeholder="Voucher"
+              value={formData.voucher}
+              onChange={handleInputChange('voucher')}
             />
 
             <Button
@@ -297,7 +428,7 @@ const Cart: NextPage = () => {
               sx={{ mt: 2 }}
             /> */}
 
-            <Button variant="outlined" color="primary" fullWidth sx={{ my: 2 }}>
+            <Button variant="outlined" color="primary" fullWidth sx={{ my: 2 }} onClick={handleSend}>
               Thanh toán
             </Button>
 

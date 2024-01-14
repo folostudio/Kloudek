@@ -78,16 +78,16 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ handleDrawerToggle }) => {
             </ToggleWrapper>
           )}
 
-          <CustomButton
+          {/* <CustomButton
             onClick={() => router.push("/")}
             startIcon={<Globe sx={{ color: "grey.900" }} />}
           >
             Browse Website
-          </CustomButton>
+          </CustomButton> */}
 
           <Box flexGrow={1} />
 
-          <FlexBox alignItems="center" gap={2}>
+          {/* <FlexBox alignItems="center" gap={2}>
             <StyledInputBase
               placeholder="Search anything..."
               startAdornment={<Search sx={{ color: "grey.500", mr: 1 }} />}
@@ -95,7 +95,7 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ handleDrawerToggle }) => {
 
             <NotificationsPopover />
             <AccountPopover />
-          </FlexBox>
+          </FlexBox> */}
         </StyledToolBar>
       </Container>
     </DashboardNavbarRoot>

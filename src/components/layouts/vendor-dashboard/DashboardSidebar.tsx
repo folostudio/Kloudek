@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { Avatar, Box, Theme, useMediaQuery } from "@mui/material";
+import { Avatar, Box, Button, Theme, useMediaQuery } from "@mui/material";
 import LayoutDrawer from "../LayoutDrawer";
 import Scrollbar from "components/Scrollbar";
 import { FlexBetween } from "components/flex-box";
@@ -148,17 +148,22 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
         open={showMobileSideBar ? true : false}
         onClose={setShowMobileSideBar}
       >
-        <Box p={2} maxHeight={TOP_HEADER_AREA}>
+        <Box position="relative" p={2} maxHeight={TOP_HEADER_AREA}>
           <Image
             alt="Logo"
-            width={105}
-            height={50}
-            src="/assets/images/logo.svg"
+            width={50}
+            height={60}
+            src="/logoKloudek.png"
             style={{ marginLeft: 8 }}
           />
         </Box>
 
         {content}
+        <Button
+          sx={{ position: "absolute", bottom: 0, width: "100%", p: 4 }}
+        >
+          Đăng xuất
+        </Button>
       </LayoutDrawer>
     );
   }
@@ -177,8 +182,8 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
         <Avatar
           src={
             COMPACT
-              ? "/assets/images/bazaar-white-sm.svg"
-              : "/assets/images/logo.svg"
+              ? "/assets/images/kloudek_logo.png"
+              : "/assets/images/kloudek_logo.png"
           }
           sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
         />
@@ -192,6 +197,11 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
       </FlexBetween>
 
       {content}
+        <Button
+          sx={{ position: "absolute", bottom: 0, width: "100%", p: 4 }}
+        >
+          Đăng xuất
+        </Button>
     </SidebarWrapper>
   );
 };

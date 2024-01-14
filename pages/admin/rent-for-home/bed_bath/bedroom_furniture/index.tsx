@@ -10,7 +10,7 @@ import VendorDashboardLayout from "components/layouts/vendor-dashboard";
 import { H3 } from "components/Typography";
 import useMuiTable from "hooks/useMuiTable";
 import Scrollbar from "components/Scrollbar";
-import ProductRow from "pages-sections/admin/rent_for_home/living_room/sofas_sectionals/ProductRow";
+import { ProductRow } from "pages-sections/admin";
 import api from "utils/__api__/dashboard";
 import Product from "models/Product.model";
 // Back-End
@@ -54,7 +54,7 @@ export default function ProductList(props: ProductListProps) {
   const [render, setRender] = useState(false);
 
   // RESHAPE THE PRODUCT LIST BASED TABLE HEAD CELL ID
-  const filteredProducts = sanpham[6]?.sofas_sectionals.map((item) => ({
+  const filteredProducts = sanpham[1]?.bedroom_furniture.map((item: any) => ({
     id: item.id,
     name: item.name,
     final_name: item.final_name,
@@ -104,13 +104,13 @@ export default function ProductList(props: ProductListProps) {
 
   return (
     <Box py={4}>
-      <H3 mb={2}>Sofas & Sectionals</H3>
+      <H3 mb={2}>Bedroom Furniture</H3>
 
       <SearchArea
         handleSearch={() => {}}
         buttonText="Thêm sản phẩm"
         searchPlaceholder="Search Product..."
-        handleBtnClick={() => Router.push("/admin/rent-for-home/living-room/sofas-sectionals/create")}
+        handleBtnClick={() => Router.push("/admin/rent-for-home/bed_bath/bedroom_furniture/create")}
       />
 
       <Card>
