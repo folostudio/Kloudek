@@ -15,7 +15,7 @@ const Section8: FC<Section8Props> = ({ blogs }) => {
         Latest Articles
       </H2>
 
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         {blogs.map((item) => (
           <Grid item md={4} xs={12} key={item.id}>
             <BlogCard2
@@ -26,7 +26,7 @@ const Section8: FC<Section8Props> = ({ blogs }) => {
             />
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Container>
   );
 };
