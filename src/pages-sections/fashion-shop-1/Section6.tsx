@@ -10,7 +10,7 @@ type Props = { products: any[] };
 // =============================================================
 
 const Section6: FC<Props> = ({ products }) => {
-  const trendings = products?.slice(0, 9);
+  const trendings = products?.slice(0, 10);
 
   return (
     <Box mt={2}>

@@ -5,7 +5,8 @@ import { Box, Card, styled } from "@mui/material";
 import { NavLink3 } from "components/nav-link";
 import { FlexRowCenter } from "components/flex-box";
 import { H4, Paragraph } from "components/Typography";
-
+import router from "next/router";
+import { useAppContext } from "contexts/AppContext";
 // custom styled components
 const ImageBox = styled(Box)({
   cursor: "pointer",
@@ -35,11 +36,18 @@ type BlogCard2Props = {
 };
 // =====================================================
 
-const BlogCard2: FC<BlogCard2Props> = ({ image, title, date, description }) => {
+const BlogCard2 = ({product}) => {
+  const {state, dispatch} = useAppContext()
+  const handleDetail = (pd: any ) => {
+    dispatch({
+      type1: "DETAIL",
+      payload: pd
+    })
+  }
   return (
-    <Card sx={{ borderRadius: 0, boxShadow: 2, backgroundColor:'#EEE5DE', pb:4 }}>
+    <Card  sx={{ borderRadius: 0, boxShadow: 2, backgroundColor:'#EEE5DE', pb:4 }}>
       <ImageBox  m={2} maxHeight={300}>
-        <Image width={580} height={342} src={image} alt="blog-1" />
+        <img width={580} height={342} src={product?.image[0]} alt="blog-1" />
 
         {/* <DateBox>
           <Paragraph width="min-content" lineHeight={1} fontWeight={600}>
@@ -48,16 +56,16 @@ const BlogCard2: FC<BlogCard2Props> = ({ image, title, date, description }) => {
         </DateBox> */}
       </ImageBox>
 
-      <Box px={2} pt={1} pb={3}>
-        <Link href="#">
-          <H4 fontWeight={700}>{title}</H4>
+      <Box onClick={() => handleDetail(product && product)} px={2} pt={1} pb={3}>
+        <Link href={`/product/${product?.final_name}`}>
+          <H4 fontWeight={700}>{product?.final_name}</H4>
         </Link>
 
         <Paragraph mt={0.5} mb={3}>
-          {description}
+          {/* {product?.specification} */}
         </Paragraph>
 
-        <NavLink3 text="Read More" href="#" />
+        <NavLink3 text="Read More" href={`/product/${product?.final_name}`} />
       </Box>
     </Card>
   );

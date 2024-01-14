@@ -46,6 +46,7 @@
     "lodash": "^4.17.21",
     "next": "13.2.3",
     "next-i18next": "^13.2.2",
+    "nookies": "^2.5.2",
     "notistack": "^3.0.1",
     "nprogress": "^0.2.0",
     "pure-react-carousel": "^1.30.1",

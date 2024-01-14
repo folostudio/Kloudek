@@ -83,28 +83,17 @@ type ProductCardProps = {
 };
 // ========================================================
 
-const ProductCard1: FC<ProductCardProps> = ({
-  id,
-  slug,
-  title,
-  price,
-  imgUrl,
-  rating = 5,
-  hideRating,
-  hoverEffect,
-  discount = 5,
-  showProductSize,
-}) => {
+const ProductCard1 = (props : any) => {
+  const product = props?.product
   const { enqueueSnackbar } = useSnackbar();
   const { state, dispatch } = useAppContext();
-  const [openModal, setOpenModal] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+ 
+    console.log(product);
+    
 
-  const toggleIsFavorite = () => setIsFavorite((fav) => !fav);
-  const toggleDialog = useCallback(() => setOpenModal((open) => !open), []);
-  const cartItem: CartItem | undefined = state.cart.find(
-    (item) => item.slug === slug
-  );
+  // const cartItem: CartItem | undefined = state.cart.find(
+  //   (item) => item.slug === slug
+  // );
 
   const handleCartAmountChange = (product: CartItem, type?: "remove") => () => {
     dispatch({ type: "CHANGE_CART_AMOUNT", payload: product });
@@ -113,15 +102,20 @@ const ProductCard1: FC<ProductCardProps> = ({
       enqueueSnackbar("Remove from Cart", { variant: "error" });
     else enqueueSnackbar("Added to Cart", { variant: "success" });
   };
-
+  const handleDetail = (pd: any ) => {
+    dispatch({
+      type1: "DETAIL",
+      payload: pd
+    })
+  }
   return (
-    <StyledBazaarCard hoverEffect={hoverEffect}>
+    <StyledBazaarCard >
       <ImageWrapper>
-        <Link href={`/furniture-rental/living-room/sofas-sectionals`}>
+      <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
           <img
             style={{objectFit:'cover', height:'100%', width:'100%'}}
-            src={imgUrl}
-            alt={title}
+            src={product?.image && product?.image[0]}
+            alt={product?.final_name}
           />
         </Link>
       </ImageWrapper>
@@ -134,29 +128,29 @@ const ProductCard1: FC<ProductCardProps> = ({
           
         <FlexBox sx={{position:'absolute', bottom:10, left:20}}>
           <Box flex="1 1 0" minWidth="0px" mr={1}>
-            <Link href={`/product/${slug}`}>
+            <Link href={`/product/${product?.final_name}`}>
               <H3
                 mb={1}
-                title={title}
+                title={product?.final_name}
                 fontSize="14px"
                 fontWeight="600"
                 className="title"
                 color="text.secondary"
               >
-                {title}
+                {product?.final_name}
               </H3>
             </Link>
             <FlexBox  alignItems="center" gap={1} mt={0.5}>
-              <Box fontWeight="600" color="primary.main">
-                {calculateDiscount(price, discount)}
+            <Box fontWeight="600" color="primary.main">
+              {/* {calculateDiscount(props?.selling_price, props?.off)} */}
+              {currency(product?.selling_price)}
+            </Box>
+            <Box color="grey.600" fontWeight="600">
+                {currency(product?.rental_price)}/ tháng
               </Box>
-
-           
             </FlexBox>
           </Box>
-
         </FlexBox>
-     
     </StyledBazaarCard>
   );
 };

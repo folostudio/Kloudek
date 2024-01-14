@@ -10,7 +10,6 @@ import Twitter from "components/icons/Twitter";
 import Youtube from "components/icons/Youtube";
 import Facebook from "components/icons/Facebook";
 import Instagram from "components/icons/Instagram";
-
 // styled component
 const StyledLink = styled(Link)(({ theme }) => ({
   display: "block",
@@ -39,7 +38,6 @@ const Footer1: FC = () => {
                   color="white"
                 >
                   KLOUDEK 
-                  
                 </Box>
 
                 <div>
@@ -116,6 +114,7 @@ const Footer1: FC = () => {
                   lineHeight="1"
                   color="white"
                 >
+                 
                   ĐỊA CHỈ LIÊN HỆ
                 </Box>
 
@@ -128,7 +127,7 @@ const Footer1: FC = () => {
                 </Box>
 
                 <Box py={0.6} mb={2} color="grey.500">
-                  Phone: 1111 - 11111
+                    <Link href='tel:+84868869086'> Phone: 086 8869086</Link>
                 </Box>
 
                 <FlexBox className="flex" mx={-0.625}>

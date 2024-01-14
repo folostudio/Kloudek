@@ -454,6 +454,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
 
   
   const [sanpham, setSanpham] = useState(null);
+  const [prsection2, setProsection2] = useState(null)
   console.log(sanpham);
   
   useEffect(() => {
@@ -461,6 +462,8 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
       try {
         // Lấy danh sách sản phẩm từ Firestore
         const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
+        const productsection2 = await getDoc(doc(db, "rent_for_home", "bed_bath"));
+        setProsection2(productsection2.data())
         // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
 
         // Tạo mảng mới chứa dữ liệu sản phẩm
@@ -497,7 +500,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
       
         {/* FLASH DEALS */}
         <Section6 products={sanpham?.sofas_sectionals} /> 
-        <Section2 flashDeals={props.flashDealsData} />
+        <Section2 flashDeals={prsection2?.bedroom} />
      
 
         {/* NEW ARRIVALS */}
@@ -505,7 +508,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
 
         {/* DEALS OF THE WEEK GRID CAROUSEL */}
         <Section9 brands={brandList} />
-        <Section4 blogs={articles} />
+        <Section4 products={sanpham?.tables} />
 
         {/* HOT DEALS CAROUSEL */}
         {/* <Section5 hotDealList={props.hotDealList} /> */}

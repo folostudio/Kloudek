@@ -14,7 +14,7 @@ type Props = { flashDeals: any[] };
 const Section2: FC<Props> = ({ flashDeals }) => {
   const [visibleSlides, setVisibleSlides] = useState(3);
   const width = useWindowSize();
-
+  const result = flashDeals?.slice(0, 4)
   useEffect(() => {
     if (width < 500) setVisibleSlides(1);
     else if (width < 650) setVisibleSlides(2);
@@ -24,23 +24,17 @@ const Section2: FC<Props> = ({ flashDeals }) => {
 
   return (
     <Box
-  
     >
       <Carousel
-        totalSlides={flashDeals.length}
+        totalSlides={result?.length}
         visibleSlides={visibleSlides}
         infinite={true}
+        autoPlay
       >
-        {flashDeals.map((item,index) => (
-          <Box  py={0.5} key={index}>
+        {result?.map((item,index) => (
+          <Box  py={0.5} mx={0.5} key={index}>
             <ProductCard1
-              id={item.id}
-              slug={item.slug}
-              title={item.title}
-              price={item.price}
-              rating={item.rating}
-              imgUrl={item.thumbnail}
-              discount={item.discount}
+              product={item}
             />
           </Box>
         ))}

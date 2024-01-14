@@ -22,7 +22,6 @@ import { useAppContext } from 'contexts/AppContext';
 const ProductDetail = () => {
   const [selectedOption, setSelectedOption] = useState(0);
     const {state } = useAppContext()    
-    
   const handleOptionClick = (_, value: any) => setSelectedOption(value);
   return (
     <ShopLayout1>

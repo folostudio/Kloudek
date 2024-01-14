@@ -10,7 +10,12 @@ import Carousel from "components/carousel/Carousel";
 type Section8Props = { blogs: any[] };
 // =======================================
 
-const Section8: FC<Section8Props> = ({ blogs }) => {
+const Section8 = (props : any) => {
+
+  
+  const product = props?.products?.slice(0,6)
+
+  
   const width = useWindowSize();
   const [visibleSlides, setVisibleSlides] = useState(4);
 
@@ -28,17 +33,14 @@ const Section8: FC<Section8Props> = ({ blogs }) => {
       <Carousel
         infinite={true}
         visibleSlides={visibleSlides}
-        totalSlides={blogs.length}
+        totalSlides={product?.length}
         autoPlay={false}
       >
 
-        {blogs.map((item, index) => (
+        {product?.map((item:any, index: any) => (
             <BlogCard2
             key={index}
-              title={item.title}
-              date={item.createdAt}
-              image={item.thumbnail}
-              description={item.description}
+              product={item}
             />
         ))}
      

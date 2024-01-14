@@ -164,7 +164,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
           <Link href="/">
             <Image height={80} src="/logoKloudek.png" alt="logo" />
           </Link>
-          <Link style={{marginRight:15, marginLeft:15, display:'flex',alignItems:'center', fontSize:15}} href='#'><LocalPhoneIcon color='warning' />Hotline: 4444444</Link>
+          <Link style={{marginRight:15, marginLeft:15, display:'flex',alignItems:'center', fontSize:15}} href='tel:+84868869086'><LocalPhoneIcon color='warning' />Hotline: 086 8869086</Link>
           <Link style={{display:'flex', alignItems:'center',fontSize:15}} href='#'><LocationOnIcon color='warning'/>Find a Showroom</Link>
           {/* SHOW DROP DOWN CATEGORY BUTTON WHEN HEADER FIXED */}
           {/* {isFixed && (

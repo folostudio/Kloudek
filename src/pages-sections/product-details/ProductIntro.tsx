@@ -114,9 +114,10 @@ console.log(settings);
             />
           </FlexBox>
 
-          <FlexBox overflow="auto">
+          <Box sx={{display:'flex', justifyContent:'center', gap:2}} overflow="auto">
             {image?.map((url: any, ind: any) => (
-              <FlexRowCenter
+              url ? (
+                <FlexRowCenter
                 key={ind}
                 width={64}
                 height={64}
@@ -124,18 +125,19 @@ console.log(settings);
                 bgcolor="white"
                 border="1px solid"
                 borderRadius="10px"
-                ml={ind === 0 ? "auto" : 0}
+             
                 style={{ cursor: "pointer" }}
                 onClick={handleImageClick(ind)}
-                mr={ind === image.length - 1 ? "auto" : "10px"}
+               
                 borderColor={
                   selectedImage === ind ? "primary.main" : "grey.400"
                 }
               >
                 <Avatar src={url} alt="avatar" variant="square" sx={{ height: 40 }} />
               </FlexRowCenter>
+              ) : ''
             ))}
-          </FlexBox>
+          </Box>
         </Grid>
 
         <Grid item md={6} xs={12} alignItems="center">

@@ -50,6 +50,7 @@ const App = (props: MyAppProps) => {
         <meta name="keywords" content="Kloudek, kloudek, nội thất, cho thuê nội thất" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+        
         <OpenGraphTags />
         {/* <script
             async 

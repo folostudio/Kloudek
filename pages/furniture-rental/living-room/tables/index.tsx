@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Container, styled, Tab, Tabs } from "@mui/material";
 import ShopLayout1 from "components/layouts/ShopLayout1";
@@ -7,6 +7,10 @@ import Product from "models/Product.model";
 import { BlogCard2 } from "components/blog-cards";
 
 import Section9 from "pages-sections/fashion-shop-1/Section9";
+import { useAppContext } from "contexts/AppContext";
+import SEO from "components/SEO";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../../src/firebase";
 
 // styled component
 const StyledTabs = styled(Tabs)(({ theme }) => ({
@@ -30,103 +34,55 @@ type ProductDetailsProps = {
 // ===============================================================
 
 
-const object = [
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeros',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-  {
-    china_code: 'SF-002',
-    color: 'Nâu',
-    dimensions: ['1530', '1030', '650'],
-    final_code: 'SF-002/SF-01/MB',
-    final_name: 'Zeus sofa',
-    historical_cost: 4520,
-    id: 'a46a0f8e-fbf6-4ca4-9e72-041f35d27d03',
-    image:['https://f.imgs.vietnamnet.vn/2017/12/06/14/3-loi-khuyen-thiet-ke-noi-that-nha-o-dep-mat-1.jpg','https://cdn.noithatxinh.vn/Images/Product/ban-ghe-an-dep-ba2111-3JC21r.jpg'],
-    kloudek_code: 'SF-01',
-    material: 'Vair',
-    name: 'Zeus',
-    note: '',
-    rental_price: 10283000,
-    seat: '4',
-    selling_price: 61698000,
-    specification: ['Vải: vải viên thịt cừu xuất khẩu, Gỗ thông nhập xuất từ Nga, chất liệu bảo 4 mặt, dây kéo, dây kéo YKK nhập khẩu từ Nhật Bản, 38 lò xo thép carbon cao mạ vàng', '']
-  },
-]
   
 const Tables = () => {
-
+  const {state, dispatch} = useAppContext()
 
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState(0);
-
-  const handleOptionClick = (_, value: number) => setSelectedOption(value);
 
   // Show a loading state when the fallback is rendered
   if (router.isFallback) {
     return <h1>Loading...</h1>;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Lấy danh sách sản phẩm từ Firestore
+        const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
+        // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
+
+        // Tạo mảng mới chứa dữ liệu sản phẩm
+        // const newSanpham = [];
+        // querySnapshot.forEach((doc) => {Z
+        //   newSanpham.push(doc.data());
+        // });
+        // Cập nhật state sanpham
+        // setSanpham(newSanpham);
+        // console.log(querySnapshot.data());
+      //  setSanpham(querySnapshot.data())
+       dispatch({
+        type2 : "ALL_PRODUCT",
+        payload: querySnapshot.data()
+      })
+      dispatch({
+        type3: "RENDER",
+        payload: true
+      })
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        };
+        fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
+    }, []);
 
   return (
     <ShopLayout1>
-      <Box sx={{ my: 4, mx:1 }}>
-      <Section9 products={object} />
-
-
-
-      </Box>
-    </ShopLayout1>
+    <SEO title="sofa & sectionals" description="tables"/>
+    <Box sx={{ my: 4, mx:1 }}>
+    <Section9 products={state?.allProduct?.tables} />
+    </Box>
+  </ShopLayout1>
   );
 };
 

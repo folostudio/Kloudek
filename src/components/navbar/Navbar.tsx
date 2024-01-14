@@ -29,6 +29,9 @@ import InputLabel from '@mui/material/InputLabel';
 
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Translation } from "react-i18next";
+import Script from 'next/script'
+
 // NavList props interface
 type Navs = {
   url: string;
@@ -131,10 +134,17 @@ const Navbar: FC<NavbarProps> = ({
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value);
   };
+  
 
   const { settings } = useSettings();
-
+  const handleTransition = () => {
+    // document.addEventListener("translate", (event) => {
+    //   const translatedText = event.detail.translatedText;
+      
+    // })
+  }
   const renderNestedNav = (list: any[] = [], isRoot = false) => {
+   
     return list.map((nav: NavList) => {
       if (isRoot) {
         // show megamenu
@@ -231,7 +241,7 @@ const Navbar: FC<NavbarProps> = ({
   };
 
   return (
-    <NavBarWrapper hoverEffect={false} elevation={elevation} border={border}>
+    <NavBarWrapper hoverEffect={false} elevation={elevation} border={2}>
       {!hideCategories ? (
         <InnerContainer>
         
@@ -262,31 +272,36 @@ const Navbar: FC<NavbarProps> = ({
           <FlexBox gap={3}>
             {/* <Typography>Test</Typography>
             <Typography>Test1</Typography> */}
-            <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
-        <InputLabel id="demo-simple-select-standard-label">Ngôn ngữ</InputLabel>
-        <Select
+            {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
+        <InputLabel id="demo-simple-select-standard-label">Ngôn ngữ</InputLabel> */}
+        {/* <Select
           labelId="demo-simple-select-standard-label"
           id="demo-simple-select-standard"
           value={age}
           onChange={handleChange}
           label="Ngôn ngữ"
-        >
+        > */}
           {/* <MenuItem value="">
             <em>None</em>
           </MenuItem> */}
-          <MenuItem value="Việt Nam">Việt Nam</MenuItem>
-          <MenuItem value='EngLish'>EngLish</MenuItem>
-        </Select>
-      </FormControl>
+          {/* <MenuItem value="Việt Nam">Việt Nam</MenuItem>
+          <MenuItem onClick={handleTransition} value='EngLish'>EngLish</MenuItem> */}
+     
+        {/* </Select> */}
+      
+      
+      {/* </FormControl> */}
           </FlexBox>
+          
         </InnerContainer>
       ) : (
         <InnerContainer sx={{ justifyContent: "center" }}>
           <FlexBox gap={4}>{renderNestedNav(navbarNavigations, true)}</FlexBox>
         </InnerContainer>
       )}
-    
+      
     </NavBarWrapper>
+
   );
 };
 

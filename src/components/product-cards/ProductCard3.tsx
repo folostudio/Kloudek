@@ -24,7 +24,7 @@ type ProductCardProps = {
 };
 // ========================================================
 
-const ProductCard3: any = (props) => {
+const ProductCard3: any = (props : any) => {
   const [favorite, setFavorite] = useState(false);
   const product = props?.product
  ;
@@ -40,7 +40,7 @@ const ProductCard3: any = (props) => {
     <Box>
       <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
         <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <img  className="product-img" style={{maxWidth:'100%', objectFit:'contain', borderRadius:'5px'}}  alt={product?.final_name} src={product?.image} />
+          <img  className="product-img" style={{maxWidth:'100%', objectFit:'contain', borderRadius:'5px'}}  alt={product?.final_name} src={product?.image[0]} />
         </HoverBox>
       </Link>
 

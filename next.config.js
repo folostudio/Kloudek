@@ -2,6 +2,7 @@
 
 module.exports = {
   // i18n,
+ 
   devIndicators: {},
   publicRuntimeConfig: {
     // Available on both server and client
