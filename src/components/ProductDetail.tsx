@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ProductIntro from "pages-sections/product-details/ProductIntro";
 import ShopLayout1 from 'components/layouts/ShopLayout1';
-import { Box, Tab, Tabs, styled } from '@mui/material';
+import { Box, Container, Tab, Tabs, styled } from '@mui/material';
 import ProductDescription from 'pages-sections/product-details/ProductDescription';
 import ProductReview from 'pages-sections/product-details/ProductReview';
 import { useAppContext } from 'contexts/AppContext';
@@ -11,7 +11,9 @@ import { useAppContext } from 'contexts/AppContext';
     marginTop: 80,
     marginBottom: 24,
     borderBottom: `1px solid ${theme.palette.text.disabled}`,
+
     "& .inner-tab": {
+      minWidth:'50%',
       minHeight: 40,
       fontWeight: 600,
       textTransform: "capitalize",
@@ -27,20 +29,24 @@ const ProductDetail = () => {
     <ShopLayout1>
     <Box sx={{ my: 4, mx:1 }}>
     <ProductIntro product={state?.detail[0]}/>
+    <Container>
     <StyledTabs
           textColor="primary"
           value={selectedOption}
           indicatorColor="primary"
           onChange={handleOptionClick}
         >
-          <Tab className="inner-tab" label="Chi tiết sản phẩm" />
-          <Tab className="inner-tab" label="Why Kloudek" />
+        
+         <Tab className="inner-tab" label="Chi tiết sản phẩm" />
+          <Tab className="inner-tab" label="Why Feather?" />
+       
         </StyledTabs>
 
         <Box mb={6}>
           {selectedOption === 0 && <ProductDescription product={state?.detail[0]} />}
           {selectedOption === 1 && <ProductReview />}
         </Box>
+    </Container>
     </Box>
   </ShopLayout1>
   )

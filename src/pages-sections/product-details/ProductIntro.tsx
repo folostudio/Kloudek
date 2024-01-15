@@ -1,10 +1,10 @@
 import Link from "next/link";
 import { FC, useState } from "react";
 import { Add, Remove } from "@mui/icons-material";
-import { Avatar, Box, Button, Chip, Grid, Typography } from "@mui/material";
+import { Avatar, Box, Button, Chip, Container, Grid, Typography } from "@mui/material";
 import LazyImage from "components/LazyImage";
 import BazaarRating from "components/BazaarRating";
-import { H1, H2, H3, H6 } from "components/Typography";
+import { H1, H2, H3, H5, H6 } from "components/Typography";
 import { useAppContext } from "contexts/AppContext";
 import { FlexBox, FlexRowCenter } from "../../components/flex-box";
 import Product from "models/Product.model";
@@ -24,9 +24,14 @@ const ProductIntro = ({product} ) => {
 console.log(settings);
 // updateSettings({"a":3})
   
-  const { id, rental_price, name, image, slug, selling_price, qty, final_name } = product || settings;
+  const { id, rental_price, name, image, slug, selling_price, qty, final_name, color } = product || settings;
   
-  
+  const toLowerCaseColor = color?.toLowerCase().normalize('NFD')
+  .replace(/[\u0300-\u036f]/g, '')
+  .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+  const finalColor = toLowerCaseColor === 'xanh' ? 'green' : toLowerCaseColor === 'do' ? 'red' : toLowerCaseColor === 'nau' ? 'brown' : toLowerCaseColor === 'den' ?
+  'black' : toLowerCaseColor === 'trang' ? 'white' : toLowerCaseColor === 'xam' ? 'grey' : toLowerCaseColor === 'kem' ? '#FAF0E6' : toLowerCaseColor === 'da' ? '#FFFAF0' :
+  toLowerCaseColor === 'xanh ngoc' ? '#32CD32' : toLowerCaseColor === 'xanh bien' ? 'blue' : toLowerCaseColor === 'be' ? '#DDDDDD' : toLowerCaseColor === ' nau nhat' ? '#FFD39B' : ''
   const [selectedValue, setSelectedValue] = useState('a');
   const currencies = [
     {
@@ -123,38 +128,30 @@ console.log(settings);
   const handleCartAmountChange = (amount: number) => () => {
     if(selectedValue === "b") {
       updateSettings({
-        price : selling_price, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"
+        price : selling_price, qty: amount,color: color, name,final_name,  image, id, slug, rental_price, brand : "Mua"
       })
       dispatch({
         type: "CHANGE_CART_AMOUNT",
-        payload: { price : selling_price, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
+        payload: { price : selling_price,color: color, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
       });
     }
    if(selectedValue === "a") {
     updateSettings({
-      price: totalRent, qty: amount, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
+      price: totalRent, qty: amount,color: color, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
     })
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price: totalRent, qty: amount, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
+      payload: { price: totalRent, qty: amount,color: color, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
     });
    }
   };
 
   return (
-    <Box width="100%">
-      <Grid container spacing={2}  justifyContent="space-around">
-        <Grid item md={6} xs={12} alignItems="center">
-          <FlexBox mx='auto' mb={6} sx={{width:{md:500, xs:'100%',justifyContent:'center'}}}>
-            <img
-              alt={final_name}
-              loading="eager"
-              src={image && image[selectedImage]}
-              style={{ objectFit: "contain", borderRadius: '8px', maxHeight:'400px', maxWidth:'100%' }}
-            />
-          </FlexBox>
-
-          <Box sx={{display:'flex', justifyContent:'center', gap:2}} overflow="auto">
+    <Container>
+      <Grid container spacing={3}>
+        <Grid item md={8} xs={12}>
+          <Box  mb={6} gap={2} sx={{display:'flex', flexDirection:{md:'row', xs:'column-reverse'}}}>
+          <Box sx={{display:'flex', justifyContent:{xs:'center',md:'flex-start'}, flexDirection:{md:'column',xs:'row'}, gap:1}} >
             {image?.map((url: any, ind: any) => (
               url ? (
                 <FlexRowCenter
@@ -178,11 +175,20 @@ console.log(settings);
               ) : ''
             ))}
           </Box>
+           <Box mx='auto'>
+           <img
+              alt={final_name}
+              loading="eager"
+              src={image && image[selectedImage]}
+              style={{ borderRadius: '8px', maxWidth:'100%', maxHeight:600 }}
+            />
+           </Box>
+          </Box>
         </Grid>
-
-        <Grid item md={6} xs={12} alignItems="center">
-          <H1 mb={1}>{final_name}</H1>
-
+        <Grid item md={4} xs={12}>
+          <H1 >{final_name}</H1>
+          <H5>Color : {color}</H5>
+          <Box sx={{borderRadius:9999, width:30,height:30, backgroundColor: finalColor , border:1,my:1}}></Box>
           <FlexBox alignItems="center" mb={1}>
             <Box>Choose how you want it</Box>
             {/* <H6>Xiaomi</H6> */}
@@ -391,8 +397,9 @@ console.log(settings);
             </Link>
           </FlexBox> */}
         </Grid>
+      
       </Grid>
-    </Box>
+      </Container>
   );
 };
 

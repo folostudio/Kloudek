@@ -1,4 +1,4 @@
-import { ReactElement, ReactNode } from "react";
+import { ReactElement, ReactNode, useEffect } from "react";
 import Head from "next/head";
 import { NextPage } from "next";
 import Router from "next/router";
@@ -36,7 +36,30 @@ export interface MyAppProps extends AppProps {
 
 const App = (props: MyAppProps) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
+  const googleTranslateElementInit = () => {
+    new window.google.translate.TranslateElement(
+      {
+        pageLanguage: "vi",
+        includedLanguages: 'en,vi',
+        autoDisplay: false,
+        layout: google.translate.TranslateElement.InlineLayout.FLOATING,
+        customTranslations: {
+          "hello": "xin chào",
+        },
+      },
+      "google_translate_element"
+    );
+    document.getElementById("google_translate_element").hide()
+  };
+  useEffect(() => {
+    var addScript = document.createElement("script");
+    addScript.setAttribute(
+      "src",
+      "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    );
+    document.body.appendChild(addScript);
+    window.googleTranslateElementInit = googleTranslateElementInit;
+  }, []);
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (

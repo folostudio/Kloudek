@@ -270,6 +270,7 @@ const Navbar: FC<NavbarProps> = ({
           {/* Horizontal menu */}
           <FlexBox gap={4}>{renderNestedNav(navbarNavigations, true)}</FlexBox>
           <FlexBox gap={3}>
+          <div id="google_translate_element"></div>
             {/* <Typography>Test</Typography>
             <Typography>Test1</Typography> */}
             {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>

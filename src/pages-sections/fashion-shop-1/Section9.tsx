@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import { Box, Collapse, Container, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import CategorySectionCreator from "components/CategorySectionCreator";
 import ProductCard12 from "components/product-cards/ProductCard12";
 import ProductCard3Kloudek from "components/product-cards/ProductCard3Kloudek";
@@ -10,20 +10,70 @@ type Props = { products: any[] };
 // =============================================================
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
+import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 const Section9 = (props : any) => {
   const [page, setPage] = useState(1);
   const trendings = props?.products?.slice(page > 1 ? page*10 : 0, page *10 +10);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
    setPage(value)
-    
   }
+  const [open, setOpen] = useState(true);
+
   
+  const handleClick = () => {
+    setOpen(!open);
+  };
   return (
-    <Box mt={2}>
+    <Container sx={{mt:2}}>
       <Grid container spacing={2}>
-        <Grid item container md={12} xs={12} spacing={2}>
+      <Grid item md={2}>
+      <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={handleClick}>
+        <ListItemText primary="Color" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItemButton sx={{ pl: 4 }}>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItemButton>
+        </List>
+      </Collapse>
+    </List>
+      <List
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', mt:1 }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <ListItemButton onClick={handleClick}>
+        <ListItemText primary="Material" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+            {trendings?.map((item: any, index: any) => (
+              <Box key={index}>
+              
+              <ListItemText  primary={item?.color} />
+              </Box>
+          
+            ))}
+            
+      
+        </List>
+      </Collapse>
+    </List>
+          </Grid>
+        <Grid item container md={10} xs={12} spacing={1}>
           {trendings?.map((item: any, index: any) => (
-            <Grid item xs={12} sm={4} md={2.4} key={index}>
+            <Grid item xs={12} sm={4} md={3} key={index}>
               <ProductCard3Kloudek
                 china_code={item?.china_code}
                 color={item?.color}
@@ -46,13 +96,14 @@ const Section9 = (props : any) => {
             </Grid>
           ))}
         </Grid>
+       
       </Grid>
      <Box py={3} display='flex' justifyContent='center'>
      <Stack spacing={2}>
       <Pagination onChange={handleChange} page={page} count={Math.round(props?.products?.length/10)} shape="rounded" />
     </Stack>
      </Box>
-    </Box>
+    </Container>
   );
 };
 
