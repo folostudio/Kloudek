@@ -58,6 +58,7 @@ const reducer = (state: InitialState, action: ActionType) => {
 
       if (cartItem.qty < 1) {
         const filteredCart = cartList.filter((item) => item.id !== cartItem.id);
+        localStorage.removeItem("cart")
         return { ...state, cart: filteredCart };
       }
 

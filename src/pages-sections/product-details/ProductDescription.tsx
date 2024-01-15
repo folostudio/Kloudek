@@ -6,10 +6,12 @@ import { H3 } from "components/Typography";
 type ProductDescriptionProps = {};
 // ======================================================
 
-const ProductDescription = () => {
+const ProductDescription = (props : any) => {
+
+  const product = props?.product
   return (
     <Box>
-      <Grid container>
+      <Grid container spacing={2}>
         <Grid item sm={6} md={6} xs={12}>
         <H3 mb={2}>Description:</H3>
       <Typography fontWeight={500}>
@@ -19,28 +21,25 @@ const ProductDescription = () => {
         </Grid>
         <Grid item sm={3} md={3} xs={12}>
           <H3 mb={2}>Specifications</H3>
-          <Typography fontWeight={500} my={1}>Frame Material: 100% sustainably sourced bamboo</Typography>
-          <Typography fontWeight={500} my={1}>Seat Material- Upholstered; durable charcoal woven fabric</Typography>
-          <Typography fontWeight={500} my={1}>Made in an ISO 14001 Environment Management certified facility</Typography>
-          <Typography fontWeight={500} my={1}>Natural variation in wood tone & grain may occur</Typography>
+          <Typography fontWeight={500} my={1}>{product?.specification}</Typography>
         </Grid>
         <Grid item sm={3} md={3} xs={12}>
           <H3 mb={2}>Dimensions</H3>
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
-            <Typography fontWeight={500}>Width</Typography>
-            <Typography fontWeight={500}>27.07</Typography>
+            <Typography fontWeight={500}>Length</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[0]}</Typography>
           </Box>
           <Box sx={{display:'flex', justifyContent:'space-between',my:1}}>
             <Typography fontWeight={500}>Width</Typography>
-            <Typography fontWeight={500}>27.07</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[1]}</Typography>
           </Box>
           <Box sx={{display:'flex', justifyContent:'space-between', my:1}}>
-            <Typography fontWeight={500}>Width</Typography>
-            <Typography fontWeight={500}>27.07</Typography>
+            <Typography fontWeight={500}>Height</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[2]}</Typography>
           </Box>
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
-            <Typography fontWeight={500}>Width</Typography>
-            <Typography fontWeight={500}>27.07</Typography>
+            <Typography fontWeight={500}>Depth</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[3] ? product?.dimensions[3] : ''}</Typography>
           </Box>
         </Grid>
       </Grid>

@@ -38,7 +38,7 @@ const ProductDetail = () => {
         </StyledTabs>
 
         <Box mb={6}>
-          {selectedOption === 0 && <ProductDescription />}
+          {selectedOption === 0 && <ProductDescription product={state?.detail[0]} />}
           {selectedOption === 1 && <ProductReview />}
         </Box>
     </Box>
