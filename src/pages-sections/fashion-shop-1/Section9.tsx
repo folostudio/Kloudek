@@ -127,7 +127,7 @@ const Section9 = (props: any) => {
           onChange={handleChangePrice}
         >
           <MenuItem value='increase'>Giá tăng dần</MenuItem>
-          <MenuItem value='increase'>Giá giảm dần</MenuItem>
+          <MenuItem value='decrease'>Giá giảm dần</MenuItem>
         </Select>
       </FormControl>
     </Box>
@@ -289,7 +289,7 @@ const Section9 = (props: any) => {
                   }
 
                   return true; // If no filters, include all items
-                }).sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'increase' ? b.selling_price - a.selling_price : a.selling_price)
+                }).sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'decrease' ? b.selling_price - a.selling_price : a.selling_price)
                 .map((filteredItem, index) => (
                   <Grid item xs={12} sm={4} md={3} key={index}>
                     <ProductCard3Kloudek
@@ -313,7 +313,7 @@ const Section9 = (props: any) => {
                     />
                   </Grid>
                 ))
-            : trendings?.sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'increase' ? b.selling_price - a.selling_price : a.selling_price ).map((item: any, index: any) => (
+            : trendings?.sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'decrease' ? b.selling_price - a.selling_price : a.selling_price ).map((item: any, index: any) => (
                 <Grid item xs={12} sm={4} md={3} key={index}>
                   <ProductCard3Kloudek
                     china_code={item?.china_code}
