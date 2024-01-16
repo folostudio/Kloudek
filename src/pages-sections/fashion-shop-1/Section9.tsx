@@ -1,28 +1,39 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Collapse, Container, Grid, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import CategorySectionCreator from "components/CategorySectionCreator";
 import ProductCard12 from "components/product-cards/ProductCard12";
 import ProductCard3Kloudek from "components/product-cards/ProductCard3Kloudek";
 import Product from "models/Product.model";
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 
 // =============================================================
 type Props = { products: any[] };
 // =============================================================
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
-import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
+
 const Section9 = (props : any) => {
+
   const [page, setPage] = useState(1);
   const trendings = props?.products?.slice(page > 1 ? page*10 : 0, page *10 +10);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-   setPage(value)
+    setPage(value)
   }
-  const [open, setOpen] = useState(true);
 
-  
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  const [openColor, setOpenColor] = useState(false);
+  const [openMaterial, setOpenMaterial] = useState(false);
+  const handleColor = () => { setOpenColor(!openColor) };
+  const handleMaterial = () => { setOpenMaterial(!openMaterial) };
+
+  const handleColorOnClick = (value) => {
+    alert(value);
+  }
+
+  const handleMaterialOnClick = (value) => {
+    alert(value);
+  }
+
+
   return (
     <Container sx={{mt:2}}>
       <Grid container spacing={2}>
@@ -32,18 +43,30 @@ const Section9 = (props : any) => {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={handleClick}>
+      <ListItemButton onClick={handleColor}>
         <ListItemText primary="Color" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        {openColor ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <StarBorder />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
+      <Collapse in={openColor} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding sx={{maxHeight: '300px',overflowY: 'auto'}}>
+          {props?.products?.map((item: any, index: any) => {
+            // Chuyển đổi chữ cái đầu thành in hoa còn lại là chữ thường
+            const formattedColor = item?.color ? item?.color.charAt(0).toUpperCase() + item?.color.slice(1).toLowerCase() : '';
+            // Kiểm tra nếu giá trị đã xuất hiện trước đó trong mảng
+            const isDuplicate = props.products.slice(0, index).some((prevItem: any) => (
+            prevItem?.color?.toLowerCase() === item?.color?.toLowerCase()
+          ));
+          // Nếu không trùng nhau, render phần tử
+          if (!isDuplicate) {
+            return (
+              <Box key={index} sx={{ px: 2 }}>
+                <ListItemText primary={formattedColor} onClick={() => handleColorOnClick(formattedColor)} style={{cursor: 'pointer'}}/>
+              </Box>
+            );
+          }
+          // Nếu trùng nhau, trả về null để không render phần tử này
+          return null;
+        })}
         </List>
       </Collapse>
     </List>
@@ -52,21 +75,30 @@ const Section9 = (props : any) => {
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton onClick={handleClick}>
+      <ListItemButton onClick={handleMaterial}>
         <ListItemText primary="Material" />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        {openMaterial ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
-      <Collapse in={open} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-            {trendings?.map((item: any, index: any) => (
-              <Box key={index}>
-              
-              <ListItemText  primary={item?.color} />
-              </Box>
-          
-            ))}
-            
-      
+      <Collapse in={openMaterial} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding sx={{maxHeight: '300px',overflowY: 'auto'}}>
+            {props?.products?.map((item: any, index: any) => {
+              // Chuyển đổi chữ cái đầu thành in hoa còn lại là chữ thường
+              const formattedMaterial = item?.material ? item?.material.charAt(0).toUpperCase() + item?.material.slice(1).toLowerCase() : '';
+              // Kiểm tra nếu giá trị đã xuất hiện trước đó trong mảng
+              const isDuplicate = props.products.slice(0, index).some((prevItem: any) => (
+                prevItem?.material?.toLowerCase() === item?.material?.toLowerCase()
+              ));
+              // Nếu không trùng nhau, render phần tử
+              if (!isDuplicate) {
+                return (
+                  <Box key={index} sx={{ px: 2 }}>
+                    <ListItemText primary={formattedMaterial} onClick={() => handleMaterialOnClick(formattedMaterial)} style={{cursor: 'pointer'}}/>
+                  </Box>
+                );
+              }
+            // Nếu trùng nhau, trả về null để không render phần tử này
+            return null;
+          })}
         </List>
       </Collapse>
     </List>
@@ -96,13 +128,12 @@ const Section9 = (props : any) => {
             </Grid>
           ))}
         </Grid>
-       
       </Grid>
-     <Box py={3} display='flex' justifyContent='center'>
-     <Stack spacing={2}>
-      <Pagination onChange={handleChange} page={page} count={Math.round(props?.products?.length/10)} shape="rounded" />
-    </Stack>
-     </Box>
+      <Box py={3} display='flex' justifyContent='center'>
+        <Stack spacing={2}>
+          <Pagination onChange={handleChange} page={page} count={Math.round(props?.products?.length/10)} shape="rounded" />
+        </Stack>
+      </Box>
     </Container>
   );
 };

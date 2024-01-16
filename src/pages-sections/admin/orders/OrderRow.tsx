@@ -109,11 +109,8 @@ const OrderRow: FC<OrderRowProps> = ({ order }) => {
         ))}
       </StyledTableCell>
 
-      <StyledTableCell align="left">{sum}</StyledTableCell>
-
+    <StyledTableCell align="left">{sum}</StyledTableCell>
       <StyledTableCell align="center">
-      
-
         <StyledIconButton>
           <Delete onClick={handleDelete}/>
         </StyledIconButton>

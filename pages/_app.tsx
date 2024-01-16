@@ -66,10 +66,8 @@ const App = (props: MyAppProps) => {
     <CacheProvider value={emotionCache}>
       <Head>
         <meta charSet="utf-8" />
-        <meta
-          name="description"
-          content="Kloudek"
-        />
+        <link rel="icon" type="image/x-icon" href="/logoKloudek.png"></link>
+        <meta name="description" content="Kloudek" />
         <meta name="keywords" content="Kloudek, kloudek, nội thất, cho thuê nội thất" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />

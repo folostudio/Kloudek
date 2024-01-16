@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { Avatar, Box, Button, Theme, useMediaQuery } from "@mui/material";
 import LayoutDrawer from "../LayoutDrawer";
@@ -149,13 +150,15 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
         onClose={setShowMobileSideBar}
       >
         <Box position="relative" p={2} maxHeight={TOP_HEADER_AREA}>
-          <Image
-            alt="Logo"
-            width={50}
-            height={60}
-            src="/logoKloudek.png"
-            style={{ marginLeft: 8 }}
-          />
+          <Link href="/">
+              <Image
+                width={50}
+                height={60}
+                src="/logoKloudek.png"
+                style={{ marginLeft: 8 }}
+                alt="logo"
+              />
+          </Link>
         </Box>
 
         {content}
@@ -179,14 +182,15 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
         maxHeight={TOP_HEADER_AREA}
         justifyContent={COMPACT ? "center" : "space-between"}
       >
-        <Avatar
-          src={
-            COMPACT
-              ? "/assets/images/kloudek_logo.png"
-              : "/assets/images/kloudek_logo.png"
-          }
-          sx={{ borderRadius: 0, width: "auto", marginLeft: COMPACT ? 0 : 1 }}
-        />
+        <Link href="/">
+          <Image
+            width={50}
+            height={60}
+            src="/logoKloudek.png"
+            style={{ marginLeft: 8 }}
+            alt="logo"
+          />
+        </Link>
 
         <ChevronLeftIcon
           color="disabled"
