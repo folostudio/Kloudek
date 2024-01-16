@@ -88,7 +88,6 @@ const ProductCard1 = (props : any) => {
   const { enqueueSnackbar } = useSnackbar();
   const { state, dispatch } = useAppContext();
  
-    console.log(product);
     
 
   // const cartItem: CartItem | undefined = state.cart.find(

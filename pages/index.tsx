@@ -127,7 +127,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   const {state, dispatch} = useAppContext()
   const [sanpham, setSanpham] = useState(null);
   const [prsection2, setProsection2] = useState(null)
-  
+  const [render, setRender] = useState(true)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -158,11 +158,18 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
             console.error("Error fetching data:", error);
         }
         };
+        const renderTimeOut =  setTimeout(() => {
+          setRender(!render)
+        },1500)
         fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
+        return () => clearTimeout(renderTimeOut)
     }, []);
     
   return (
- 
+     <Box>
+     {render ? <Box sx={{width:'100vw', height:'100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>
+     <img src="/assets/images/logorender.png" width='100%' alt="logo" />
+     </Box> :
      <ShopLayout1 showTopbar={false}>
       <SEO title="" description="Kloudek, kloudek, nội thất giá rẻ, bán nội thất, nội thất, cho thuê nội thất"/>
       <Box sx={{ backgroundColor: "#ffffff", overFlow: "hidden", mx:{md:2, xs:0} }}>
@@ -189,6 +196,8 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         {/* <Setting /> */}
       </Box>
     </ShopLayout1>
+     }
+     </Box>
   
   );
 };
