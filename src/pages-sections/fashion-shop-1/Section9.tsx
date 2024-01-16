@@ -9,6 +9,11 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  SelectChangeEvent,
 } from "@mui/material";
 import CategorySectionCreator from "components/CategorySectionCreator";
 import ProductCard12 from "components/product-cards/ProductCard12";
@@ -31,12 +36,18 @@ const Section9 = (props: any) => {
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
+  const [sortPrice, setSortPrice] = useState('');
   const [openColor, setOpenColor] = useState(false);
   const [openMaterial, setOpenMaterial] = useState(false);
   const [savedColor, setSavedColor] = useState("");
   const [savedMaterial, setSavedMaterial] = useState("");
   const [listFilter, setListFilter] = useState([]);
+
+
+  //  hàm xử lý sắp xếp giá
+  const handleChangePrice = (event: SelectChangeEvent) => {
+    setSortPrice(event.target.value as string);
+  };
   const handleColor = () => {
     setOpenColor(!openColor);
     setSavedColor("");
@@ -103,6 +114,24 @@ const Section9 = (props: any) => {
 
   return (
     <Container sx={{ mt: 2 }}>
+       {/* sắp xếp giá */}
+      <Box sx={{display:'flex', justifyContent:'flex-end'}}>
+      <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Giá</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={sortPrice}
+          label="Theo giá"
+          onChange={handleChangePrice}
+        >
+          <MenuItem value='increase'>Giá tăng dần</MenuItem>
+          <MenuItem value='increase'>Giá giảm dần</MenuItem>
+        </Select>
+      </FormControl>
+    </Box>
+      </Box>
       <Grid container spacing={2}>
         <Grid
           item
@@ -260,7 +289,7 @@ const Section9 = (props: any) => {
                   }
 
                   return true; // If no filters, include all items
-                })
+                }).sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'increase' ? b.selling_price - a.selling_price : a.selling_price)
                 .map((filteredItem, index) => (
                   <Grid item xs={12} sm={4} md={3} key={index}>
                     <ProductCard3Kloudek
@@ -284,7 +313,7 @@ const Section9 = (props: any) => {
                     />
                   </Grid>
                 ))
-            : trendings?.map((item: any, index: any) => (
+            : trendings?.sort((a,b) => sortPrice == 'increase'? a.selling_price - b.selling_price : sortPrice == 'increase' ? b.selling_price - a.selling_price : a.selling_price ).map((item: any, index: any) => (
                 <Grid item xs={12} sm={4} md={3} key={index}>
                   <ProductCard3Kloudek
                     china_code={item?.china_code}
