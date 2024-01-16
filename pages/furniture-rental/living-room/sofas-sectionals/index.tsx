@@ -1,10 +1,9 @@
-import { FC, useEffect, useRef, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { Box, Container, styled, Tab, Tabs } from "@mui/material";
 import ShopLayout1 from "components/layouts/ShopLayout1";
 
 import Product from "models/Product.model";
-import { BlogCard2 } from "components/blog-cards";
 
 import Section9 from "pages-sections/fashion-shop-1/Section9";
 import { useAppContext } from "contexts/AppContext";
@@ -46,17 +45,6 @@ const SofasSectionals = () => {
       try {
         // Lấy danh sách sản phẩm từ Firestore
         const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
-        // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
-
-        // Tạo mảng mới chứa dữ liệu sản phẩm
-        // const newSanpham = [];
-        // querySnapshot.forEach((doc) => {Z
-        //   newSanpham.push(doc.data());
-        // });
-        // Cập nhật state sanpham
-        // setSanpham(newSanpham);
-        // console.log(querySnapshot.data());
-      //  setSanpham(querySnapshot.data())
        dispatch({
         type2 : "ALL_PRODUCT",
         payload: querySnapshot.data()
@@ -78,14 +66,7 @@ const SofasSectionals = () => {
   );
 };
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   const paths = await api.getSlugs();
 
-//   return {
-//     paths: paths, //indicates that no page needs be created at build time
-//     fallback: "blocking", //indicates the type of fallback
-//   };
-// };
 
 
 

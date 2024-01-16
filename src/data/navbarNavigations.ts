@@ -108,7 +108,8 @@ const megaMenus = [
 const megaMenus1 = [
   [
     {
-      title: "Living Room",
+      title: "Living Room", 
+      url : "/furniture-rental/living-room",
       child: [
         { title: "Sofas & Sectionals", url: "/furniture-rental/living-room/sofas-sectionals" },
         { title: "Chairs", url: "/furniture-rental/living-room/chairs" },

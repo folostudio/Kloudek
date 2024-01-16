@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { Box, Grid, List, ListItem, styled } from "@mui/material";
+import { Box, Grid, Link, List, ListItem, styled } from "@mui/material";
 import { H6 } from "components/Typography";
 import { NavLink } from "components/nav-link";
 import BazaarCard from "components/BazaarCard";
@@ -39,7 +39,9 @@ const StyledNavLink = styled(NavLink)({
 
 // ===============================================================
 type Nav = { title: string; url: string };
-type Navs = { title: string; child: Nav[] };
+type Navs = {
+  url: string; title: string; child: Nav[] 
+};
 
 type MegaMenuProps = { menuList: Array<Navs[]>; title: string };
 // ===============================================================
@@ -81,9 +83,9 @@ const MegaMenu: FC<MegaMenuProps> = ({ title, menuList }) => {
                 {category.map((item) => {
                   return (
                     <List key={item.title}>
-                      <H6 mb={0.5} fontWeight='bold' fontSize={20} pl={4}>
+                      <Link href={item?.url} sx={{mb:0.5, fontWeight:'bold', fontSize:20, pl:4, color:'black', textDecoration:'none',}}>
                         {item.title}
-                      </H6>
+                      </Link>
 
                       {item.child.map((sub) => {
                         return (

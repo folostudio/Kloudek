@@ -14,6 +14,7 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
 import CategorySectionCreator from "components/CategorySectionCreator";
 import ProductCard12 from "components/product-cards/ProductCard12";
@@ -27,9 +28,18 @@ import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 type Props = { products: any[] };
 // =============================================================
 
-const Section9 = (props: any) => {
+const Section9LivingRoom = (props: any) => {
+  const sofas_Sectionals = props?.products?.sofas_sectionals ;
+  const chairs =  props?.products?.chairs;
+  const tables = props?.products?.tables;
+  console.log(sofas_Sectionals);
+  
+  const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs] : []
+  
+  const [allproduct, setAllProduct] = useState(sanpham1)
+
   const [page, setPage] = useState(1);
-  const trendings = props?.products?.slice(
+  const trendings = allproduct?.slice(
     page > 1 ? page * 10 : 0,
     page * 10 + 10
   );
@@ -39,6 +49,7 @@ const Section9 = (props: any) => {
   const [sortPrice, setSortPrice] = useState('');
   const [openColor, setOpenColor] = useState(false);
   const [openMaterial, setOpenMaterial] = useState(false);
+  const [openItemType, setOpenItemType] = useState(false)
   const [savedColor, setSavedColor] = useState("");
   const [savedMaterial, setSavedMaterial] = useState("");
   const [listFilter, setListFilter] = useState([]);
@@ -48,6 +59,9 @@ const Section9 = (props: any) => {
   const handleChangePrice = (event: SelectChangeEvent) => {
     setSortPrice(event.target.value as string);
   };
+  const handleItemType = () => {
+    setOpenItemType(!openItemType)
+  }
   const handleColor = () => {
     setOpenColor(!openColor);
     setSavedColor("");
@@ -114,6 +128,38 @@ const Section9 = (props: any) => {
 
   return (
     <Container sx={{ mt: 2 }}>
+      <Grid  container>
+        <Grid  item md={2}  px={2} py={1} xs={6}>
+          <Box onClick={() => setAllProduct(sofas_Sectionals)} sx={{display:'flex', justifyContent:'center', alignItems:'center',":hover":{cursor:'pointer'} }}>
+            <img src="/assets/images/sofas.jpg" alt="sofa" width='100%' height={150} />
+          </Box>
+        </Grid>
+        <Grid item md={2} px={2} py={1} xs={6}>
+        <Box onClick={() => setAllProduct(tables)} sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+            <img src="/assets/images/consoles-tables.jpg" alt="sofa" width='100%'height={150} />
+          </Box>
+        </Grid>
+        <Grid item md={2} px={2} py={1} xs={6}>
+        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+            <img src="/assets/images/consoles.jpg" alt="sofa" width='100%' height={150}/>
+          </Box>
+        </Grid>
+        <Grid item md={2} px={2} py={1} xs={6}>
+        <Box onClick={() => setAllProduct(chairs)} sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+            <img src="/assets/images/gheluoi.jpeg" alt="sofa" width='100%' height={150}/>
+          </Box>
+        </Grid>
+        <Grid item md={2} px={2} py={1} xs={6}>
+        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+            <img src="/assets/images/side-tables.jpg" alt="sofa" width='100%' height={150}/>
+          </Box>
+        </Grid>
+        <Grid item md={2} px={2} py={1} xs={6}>
+        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+            <img src="/assets/images/ottoman.jpg" alt="sofa" width='100%' height={150}/>
+          </Box>
+        </Grid>
+      </Grid>
        {/* sắp xếp giá */}
       <Box sx={{display:'flex', justifyContent:{md:'flex-end', xs:'flex-start'}}}>
       <Box sx={{ minWidth: 120 }}>
@@ -137,7 +183,7 @@ const Section9 = (props: any) => {
           item
           xs={12}
           sx={{
-            direction: { md: "row",},
+            direction: { md: "row" },
             wrap: { md: "nowrap" },
             height: "50px",
             alignContent: "center",
@@ -158,9 +204,33 @@ const Section9 = (props: any) => {
         <Grid
           item
           md={2}
-          sx={{ direction: { md: "row", }, wrap: { md: "nowrap" } }}
+          sx={{ direction: { md: "row" }, wrap: { md: "nowrap" } }}
         >
          <Box sx={{display:'flex', flexDirection:{md :'column', xs:'row'}, gap:2}}>
+         <List
+            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+          >
+            <ListItemButton onClick={handleItemType}>
+              <ListItemText primary="Loại sản phẩm" />
+              {openColor ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openItemType} timeout="auto" unmountOnExit>
+              <List
+                component="div"
+                disablePadding
+                sx={{ maxHeight: "300px", overflowY: "auto" }}
+              >
+                <Box onClick={() => setAllProduct(sofas_Sectionals)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Sofas & Sectional</Box>
+                <Box onClick={() => setAllProduct(chairs)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Chairs</Box>
+                <Box onClick={() => setAllProduct(tables)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tables</Box>
+                <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tvs</Box>
+                <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>TV stands</Box>
+                <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Decor</Box>
+              </List>
+            </Collapse>
+          </List>
          <List
             sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
             component="nav"
@@ -176,14 +246,14 @@ const Section9 = (props: any) => {
                 disablePadding
                 sx={{ maxHeight: "300px", overflowY: "auto" }}
               >
-                {props?.products?.map((item: any, index: any) => {
+                {allproduct?.map((item: any, index: any) => {
                   // Chuyển đổi chữ cái đầu thành in hoa còn lại là chữ thường
                   const formattedColor = item?.color
                     ? item?.color.charAt(0).toUpperCase() +
                       item?.color.slice(1).toLowerCase()
                     : "";
                   // Kiểm tra nếu giá trị đã xuất hiện trước đó trong mảng
-                  const isDuplicate = props.products
+                  const isDuplicate = allproduct
                     .slice(0, index)
                     .some(
                       (prevItem: any) =>
@@ -193,7 +263,7 @@ const Section9 = (props: any) => {
                   // Nếu không trùng nhau, render phần tử
                   if (!isDuplicate) {
                     return (
-                      <Box key={index} sx={{ px: 2 }}>
+                      <Box key={index} sx={{ px: 2, ":hover":{color:'red'} }}>
                         <ListItemText
                           primary={formattedColor}
                           onClick={() => handleColorOnClick(formattedColor)}
@@ -213,7 +283,7 @@ const Section9 = (props: any) => {
               width: "100%",
               maxWidth: 360,
               bgcolor: "background.paper",
-             
+            
             }}
             component="nav"
             aria-labelledby="nested-list-subheader"
@@ -228,14 +298,14 @@ const Section9 = (props: any) => {
                 disablePadding
                 sx={{ maxHeight: "300px", overflowY: "auto" }}
               >
-                {props?.products?.map((item: any, index: any) => {
+                {allproduct?.map((item: any, index: any) => {
                   // Chuyển đổi chữ cái đầu thành in hoa còn lại là chữ thường
                   const formattedMaterial = item?.material
                     ? item?.material.trim().charAt(0).toUpperCase() +
                       item?.material.slice(1).toLowerCase()
                     : "";
                   // Kiểm tra nếu giá trị đã xuất hiện trước đó trong mảng
-                  const isDuplicate = props.products
+                  const isDuplicate = allproduct
                     .slice(0, index)
                     .some(
                       (prevItem: any) =>
@@ -245,7 +315,7 @@ const Section9 = (props: any) => {
                   // Nếu không trùng nhau, render phần tử
                   if (!isDuplicate) {
                     return (
-                      <Box key={index} sx={{ px: 2 }}>
+                      <Box key={index} sx={{ px: 2,":hover":{color:'red'} }}>
                         <ListItemText
                           primary={formattedMaterial}
                           onClick={() =>
@@ -266,7 +336,7 @@ const Section9 = (props: any) => {
         </Grid>
         <Grid item container md={10} xs={12} spacing={1}>
           {listFilter.length > 0
-            ? props?.products
+            ? allproduct
                 ?.filter((item) => {
                   // Check if Color filter exists in listFilter
                   const colorFilter = listFilter.find(
@@ -345,7 +415,7 @@ const Section9 = (props: any) => {
           <Pagination
             onChange={handleChange}
             page={page}
-            count={Math.round(props?.products?.length / 10)}
+            count={Math.round(allproduct?.length / 10)}
             shape="rounded"
           />
         </Stack>
@@ -354,4 +424,4 @@ const Section9 = (props: any) => {
   );
 };
 
-export default Section9;
+export default Section9LivingRoom;
