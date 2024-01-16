@@ -42,7 +42,7 @@ const ProfileEditor: NextPage<Props> = ({ user }) => {
   });
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values);
+ 
   };
 
   // SECTION TITLE HEADER LINK

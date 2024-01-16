@@ -59,7 +59,7 @@ const SofasSectionals = () => {
   return (
     <ShopLayout1>
       <SEO title="sofa & sectionals" description="sofa"/>
-      <Box sx={{ my: 4, mx:1 }}>
+      <Box sx={{ my: 4}}>
       <Section9 products={sanpham?.sofas_sectionals} />
       </Box>
     </ShopLayout1>

@@ -23,7 +23,7 @@ const Translation = () => {
   const router = useRouter();
   const { t } = useTranslation("common");
   const [language, setLanguage] = useState(router.locale);
-  console.log(router);
+
   
   const { pathname, asPath, query } = router;
 

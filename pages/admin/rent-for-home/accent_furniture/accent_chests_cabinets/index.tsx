@@ -100,7 +100,7 @@ export default function ProductList(props: ProductListProps) {
     fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
 }, [render]);
 
-// console.log(sanpham);
+
 
   return (
     <Box py={4}>

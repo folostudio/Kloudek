@@ -143,7 +143,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         // });
         // Cập nhật state sanpham
         // setSanpham(newSanpham);
-        // console.log(querySnapshot.data());
+
       //  setSanpham(querySnapshot.data())
        dispatch({
         type2 : "ALL_PRODUCT",

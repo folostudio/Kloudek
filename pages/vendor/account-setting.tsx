@@ -70,7 +70,7 @@ export default function AccountSetting() {
   };
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values.city);
+ 
   };
 
   return (

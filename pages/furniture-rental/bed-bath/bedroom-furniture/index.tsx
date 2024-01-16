@@ -73,8 +73,8 @@ const BedroomFurniture = () => {
     }, []);
   return (
     <ShopLayout1>
-      <SEO title="sofa & sectionals" description="sofa"/>
-      <Box sx={{ my: 4, mx:1 }}>
+      <SEO title="bedroom-furniture" description="bedroom"/>
+      <Box sx={{ my: 4}}>
       <Section9 products={state?.allProduct?.bedroom} />
       </Box>
     </ShopLayout1>

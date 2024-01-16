@@ -18,7 +18,7 @@ const SocialLinksForm: FC = () => {
   };
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+
   };
 
   return (

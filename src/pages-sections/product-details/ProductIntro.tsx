@@ -21,7 +21,7 @@ type ProductIntroProps = { product: any };
 
 const ProductIntro = ({product} ) => {
   const {settings, updateSettings} = useSettings()
-console.log(settings);
+
 // updateSettings({"a":3})
   
   const { id, rental_price, name, image, slug, selling_price, qty, final_name, color } = product || settings;

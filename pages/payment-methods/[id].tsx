@@ -27,7 +27,7 @@ const PaymentMethodEditor: NextPage = () => {
   });
 
   const handleFormSubmit = async (values: any) => {
-    console.log(values);
+   
   };
 
   // SECTION TITLE HEADER LINK

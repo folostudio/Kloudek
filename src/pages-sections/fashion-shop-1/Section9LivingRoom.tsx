@@ -32,7 +32,7 @@ const Section9LivingRoom = (props: any) => {
   const sofas_Sectionals = props?.products?.sofas_sectionals ;
   const chairs =  props?.products?.chairs;
   const tables = props?.products?.tables;
-  console.log(sofas_Sectionals);
+
   
   const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs] : []
   

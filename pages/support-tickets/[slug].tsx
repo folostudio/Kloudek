@@ -23,7 +23,7 @@ const SupportTicketDetails: NextPage<Props> = ({ ticket }) => {
   // HANDLE FORM SUBMIT
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(event);
+
   };
 
   // SECTION TITLE HEADER LINK

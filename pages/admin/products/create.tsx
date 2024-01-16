@@ -33,7 +33,7 @@ export default function CreateProduct() {
   });
 
   const handleFormSubmit = (values: typeof INITIAL_VALUES) => {
-    console.log(values);
+   
   };
 
   return (
