@@ -160,7 +160,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         };
         const renderTimeOut =  setTimeout(() => {
           setRender(!render)
-        },1500)
+        },1000)
         fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
         return () => clearTimeout(renderTimeOut)
     }, []);
@@ -168,7 +168,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   return (
      <Box>
      {render ? <Box sx={{width:'100vw', height:'100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>
-     <img src="/assets/images/logorender.png" width='100%' alt="logo" />
+     <img src="/assets/images/logorender.png"  alt="logo" />
      </Box> :
      <ShopLayout1 showTopbar={false}>
       <SEO title="" description="Kloudek, kloudek, nội thất giá rẻ, bán nội thất, nội thất, cho thuê nội thất"/>
