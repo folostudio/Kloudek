@@ -35,6 +35,7 @@ const LivingRoom = () => {
   const [sanpham, setSanpham] = useState(null)
   const router = useRouter();
 
+  
   // Show a loading state when the fallback is rendered
   if (router.isFallback) {
     return <h1>Loading...</h1>;

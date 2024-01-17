@@ -28,15 +28,20 @@ import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 type Props = { products: any[] };
 // =============================================================
 
-const Section9LivingRoom = (props: any) => {
-  const sofas_Sectionals = props?.products?.sofas_sectionals ;
-  const chairs =  props?.products?.chairs;
-  const tables = props?.products?.tables;
-  const cabinets = props?.products?.cabinets
+const Section9LivingRoom = ({products}) => {
+  const {sofas_sectionals, cabinets, chairs, tables} = products || []
+
   
-  const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
+  // const sofas_Sectionals = props?.products?.sofas_sectionals ;
+  // const chairs =  props?.products?.chairs;
+  // const tables = props?.products?.tables;
+  // const cabinets = props?.products?.cabinets
   
-  const [allproduct, setAllProduct] = useState(sanpham1)
+  // const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
+  const sanpham = products?.length > 0 ? [...sofas_sectionals, ...cabinets, ...chairs, ...tables] : []
+  
+  
+  const [allproduct, setAllProduct] = useState(sanpham)
 
   const [page, setPage] = useState(1);
   const trendings = allproduct?.slice(
@@ -130,7 +135,7 @@ const Section9LivingRoom = (props: any) => {
     <Container sx={{ mt: 2 }}>
       <Grid  container>
         <Grid  item md={2}  px={2} py={1} xs={6}>
-          <Box onClick={() => setAllProduct(sofas_Sectionals)} sx={{display:'flex', justifyContent:'center', alignItems:'center',":hover":{cursor:'pointer'} }}>
+          <Box onClick={() => setAllProduct(sofas_sectionals)} sx={{display:'flex', justifyContent:'center', alignItems:'center',":hover":{cursor:'pointer'} }}>
             <img src="/assets/images/sofas.jpg" alt="sofa" width='100%' height={150} />
           </Box>
         </Grid>
@@ -140,7 +145,7 @@ const Section9LivingRoom = (props: any) => {
           </Box>
         </Grid>
         <Grid item md={2} px={2} py={1} xs={6}>
-        <Box sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
+        <Box onClick={() => setAllProduct(cabinets)} sx={{display:'flex', justifyContent:'center', alignItems:'center', ":hover":{cursor:'pointer'}}}>
             <img src="/assets/images/consoles.jpg" alt="sofa" width='100%' height={150}/>
           </Box>
         </Grid>
@@ -161,8 +166,30 @@ const Section9LivingRoom = (props: any) => {
         </Grid>
       </Grid>
        {/* sắp xếp giá */}
-      <Box sx={{display:'flex', justifyContent:{md:'flex-end', xs:'flex-start'}}}>
-      <Box sx={{ minWidth: 120 }}>
+   
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display:'flex',
+           alignItems:'center',
+            height: "100px",
+           
+          }}
+        >
+          {listFilter.length > 0
+            ? listFilter.map((filter, index) => (
+                <Chip
+                  key={index}
+                  label={`${filter.filter}: ${filter.value}`}
+                  onDelete={() => handleDeleteFilter(index)}
+                  style={{ marginRight: "5px" }}
+                />
+              ))
+            : ""}
+             
+      <Box sx={{ width:150 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Giá</InputLabel>
         <Select
@@ -177,28 +204,7 @@ const Section9LivingRoom = (props: any) => {
         </Select>
       </FormControl>
     </Box>
-      </Box>
-      <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            direction: { md: "row" },
-            wrap: { md: "nowrap" },
-            height: "50px",
-            alignContent: "center",
-          }}
-        >
-          {listFilter.length > 0
-            ? listFilter.map((filter, index) => (
-                <Chip
-                  key={index}
-                  label={`${filter.filter}: ${filter.value}`}
-                  onDelete={() => handleDeleteFilter(index)}
-                  style={{ marginRight: "5px" }}
-                />
-              ))
-            : ""}
+     
         </Grid>
 
         <Grid
@@ -222,7 +228,7 @@ const Section9LivingRoom = (props: any) => {
                 disablePadding
                 sx={{ maxHeight: "300px", overflowY: "auto" }}
               >
-                <Box onClick={() => setAllProduct(sofas_Sectionals)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Sofas & Sectional</Box>
+                <Box onClick={() => setAllProduct(sofas_sectionals)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Sofas & Sectional</Box>
                 <Box onClick={() => setAllProduct(chairs)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Chairs</Box>
                 <Box onClick={() => setAllProduct(tables)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tables</Box>
                 <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tvs</Box>
