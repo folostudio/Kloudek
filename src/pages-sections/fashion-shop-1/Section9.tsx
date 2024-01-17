@@ -114,9 +114,31 @@ const Section9 = (props: any) => {
 
   return (
     <Container sx={{ mt: 2 }}>
-       {/* sắp xếp giá */}
-      <Box sx={{display:'flex', justifyContent:{md:'flex-end', xs:'flex-start'}}}>
-      <Box sx={{ minWidth: 120 }}>
+      
+      <Grid container spacing={2}>
+        <Grid
+          item
+          xs={12}
+          sx={{
+            display:'flex',
+            justifyContent:'space-between',
+            height: "70px",
+            alignContent: "center",
+          }}
+        >
+          {listFilter.length > 0
+            ? listFilter.map((filter, index) => (
+                <Chip
+                  key={index}
+                  label={`${filter.filter}: ${filter.value}`}
+                  onDelete={() => handleDeleteFilter(index)}
+                  style={{ marginRight: "5px" }}
+                />
+              ))
+            : <div></div>}
+             {/* sắp xếp giá */}
+   
+      <Box sx={{ width: 120 }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Giá</InputLabel>
         <Select
@@ -131,28 +153,7 @@ const Section9 = (props: any) => {
         </Select>
       </FormControl>
     </Box>
-      </Box>
-      <Grid container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          sx={{
-            direction: { md: "row",},
-            wrap: { md: "nowrap" },
-            height: "50px",
-            alignContent: "center",
-          }}
-        >
-          {listFilter.length > 0
-            ? listFilter.map((filter, index) => (
-                <Chip
-                  key={index}
-                  label={`${filter.filter}: ${filter.value}`}
-                  onDelete={() => handleDeleteFilter(index)}
-                  style={{ marginRight: "5px" }}
-                />
-              ))
-            : ""}
+    
         </Grid>
 
         <Grid

@@ -40,6 +40,7 @@ const Section9LivingRoom = ({products}) => {
   // const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
   const sanpham = products?.length > 0 ? [...sofas_sectionals, ...cabinets, ...chairs, ...tables] : []
   
+  console.log(sanpham);
   
   const [allproduct, setAllProduct] = useState(sanpham)
 
@@ -173,9 +174,7 @@ const Section9LivingRoom = ({products}) => {
           xs={12}
           sx={{
             display:'flex',
-           alignItems:'center',
-            height: "100px",
-           
+           justifyContent:'space-between',
           }}
         >
           {listFilter.length > 0
@@ -187,9 +186,9 @@ const Section9LivingRoom = ({products}) => {
                   style={{ marginRight: "5px" }}
                 />
               ))
-            : ""}
+            : <div></div>}
              
-      <Box sx={{ width:150 }}>
+      <Box sx={{ width:{md:150, xs:'100%'} }}>
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label">Giá</InputLabel>
         <Select
@@ -212,15 +211,15 @@ const Section9LivingRoom = ({products}) => {
           md={2}
           sx={{ direction: { md: "row" }, wrap: { md: "nowrap" } }}
         >
-         <Box sx={{display:'flex', flexDirection:{md :'column', xs:'row'}, gap:2}}>
+         <Box sx={{display:'flex', flexDirection:{md :'column', xs:'column'}, gap:2}}>
          <List
-            sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+            sx={{ width: "100%", bgcolor: "background.paper" }}
             component="nav"
             aria-labelledby="nested-list-subheader"
           >
             <ListItemButton onClick={handleItemType}>
-              <ListItemText primary="Loại sản phẩm" />
-              {openColor ? <ExpandLess /> : <ExpandMore />}
+              <ListItemText  primary="Loại sản phẩm" />
+              {openItemType ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openItemType} timeout="auto" unmountOnExit>
               <List
@@ -243,7 +242,7 @@ const Section9LivingRoom = ({products}) => {
             aria-labelledby="nested-list-subheader"
           >
             <ListItemButton onClick={handleColor}>
-              <ListItemText primary="Color" />
+              <ListItemText primary="Màu" />
               {openColor ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={openColor} timeout="auto" unmountOnExit>

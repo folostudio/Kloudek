@@ -38,7 +38,7 @@ const ProductDetail = () => {
         >
         
          <Tab className="inner-tab" label="Chi tiết sản phẩm" />
-          <Tab className="inner-tab" label="Why Feather?" />
+          <Tab className="inner-tab" label="Why Kloudek?" />
        
         </StyledTabs>
 
