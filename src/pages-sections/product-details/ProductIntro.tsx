@@ -24,7 +24,7 @@ const ProductIntro = ({product} ) => {
 
 // updateSettings({"a":3})
   
-  const { id, rental_price, name, image, slug, selling_price, qty, final_name, color } = product || settings;
+  const { id, rental_price, name, image, slug, selling_price, qty, final_name, color,final_code,material } = product || settings;
   
   const toLowerCaseColor = color?.toLowerCase().normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
@@ -128,27 +128,27 @@ const ProductIntro = ({product} ) => {
   const handleCartAmountChange = (amount: number) => () => {
     if(selectedValue === "b") {
       updateSettings({
-        price : selling_price, qty: amount,color: color, name,final_name,  image, id, slug, rental_price, brand : "Mua"
+        price : selling_price, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, rental_price, brand : "Mua"
       })
       dispatch({
         type: "CHANGE_CART_AMOUNT",
-        payload: { price : selling_price,color: color, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
+        payload: { price : selling_price,color: color,final_code,material, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
       });
     }
    if(selectedValue === "a") {
     updateSettings({
-      price: totalRent, qty: amount,color: color, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
+      price: totalRent, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
     })
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price: totalRent, qty: amount,color: color, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
+      payload: { price: totalRent, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
     });
    }
   };
 
   return (
     <Container>
-      <Grid container spacing={3}>
+      <Grid container spacing={2}>
         <Grid item md={8} xs={12}>
           <Box  mb={6} gap={2} sx={{display:'flex', flexDirection:{md:'row', xs:'column-reverse'}}}>
           <Box sx={{display:'flex', justifyContent:{xs:'center',md:'flex-start'}, flexDirection:{md:'column',xs:'row'}, gap:1}} >
@@ -174,20 +174,21 @@ const ProductIntro = ({product} ) => {
               ) : ''
             ))}
           </Box>
-           <Box mx='auto'>
-          
+           <Box mx='auto' height={600} width={600} sx={{height:{md:600, xs:350, sm:700, lg:600},width:{md:600, xs:'100%', sm:700, lg:600} }}>
               <img
               alt={final_name}
               loading="eager"
               src={image && image[selectedImage] === null ? image[1] || image[2] || image[3] : image && image[selectedImage]}
-              style={{ borderRadius: '8px',objectFit:'cover', maxWidth:'100%', maxHeight:600 }}
+              style={{ borderRadius: '8px',objectFit:'fill', width:'100%', height:'100%'}}
               />
            </Box>
           </Box>
         </Grid>
         <Grid item md={4} xs={12}>
           <H1 >{final_name}</H1>
-          <H5>Color : {color}</H5>
+          <H5 color='grey'>Mã sản phẩm : {final_code}</H5>
+          <H5 color='grey'>Màu sắc : {color}</H5>
+          <H5 color='grey'>Chất liệu : {material}</H5>
           <Box sx={{borderRadius:9999, width:30,height:30, backgroundColor: finalColor , border:1,my:1}}></Box>
           <FlexBox alignItems="center" mb={1}>
             <Box>Choose how you want it</Box>
