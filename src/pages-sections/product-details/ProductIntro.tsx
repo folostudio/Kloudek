@@ -161,8 +161,7 @@ const ProductIntro = ({product} ) => {
                 minWidth={64}
                 bgcolor="white"
                 border="1px solid"
-                borderRadius="10px"
-             
+                borderRadius="10px" 
                 style={{ cursor: "pointer" }}
                 onClick={handleImageClick(ind)}
                
@@ -176,12 +175,13 @@ const ProductIntro = ({product} ) => {
             ))}
           </Box>
            <Box mx='auto'>
-           <img
+          
+              <img
               alt={final_name}
               loading="eager"
-              src={image && image[selectedImage]}
-              style={{ borderRadius: '8px', maxWidth:'100%', maxHeight:600 }}
-            />
+              src={image && image[selectedImage] === null ? image[1] || image[2] || image[3] : image && image[selectedImage]}
+              style={{ borderRadius: '8px',objectFit:'cover', maxWidth:'100%', maxHeight:600 }}
+              />
            </Box>
           </Box>
         </Grid>

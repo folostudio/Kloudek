@@ -6,7 +6,7 @@ const HoverBox = styled(Box)({
   position: "relative",
   borderRadius: "3px",
   transition: "all 0.3s",
- minHeight:250,
+  height:300,
  
   "& img": { transition: "0.3s" },
   ":hover": { img: { transform: "scale(1.1)" } },
