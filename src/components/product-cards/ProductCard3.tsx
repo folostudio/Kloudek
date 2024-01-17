@@ -39,7 +39,7 @@ const ProductCard3: any = (props : any) => {
   return (
     <Box>
       <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
-        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
+        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white',height:{lg:250,xs:330, sm:250}}}>
           <img  className="product-img" style={{objectFit:'fill',width:'100%',height:'100%'}}  alt={product?.final_name} src={product?.image[0]} />
         </HoverBox>
       </Link>

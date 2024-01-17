@@ -42,8 +42,8 @@ const ProductCard3Kloudek = (props: any) => {
   return (
     <Box>
       <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
-        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white'}}>
-          <img  className="product-img"  style={{objectFit:'fill',width:'100%',height:'100%'}} alt={product?.name} src={product?.image[0] || product?.image[1] || product?.image[2] || product?.image[3]    } />
+        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white', height:{lg:250,xs:330, sm:250}}}>
+          <img  className="product-img"  style={{objectFit:'contain',width:'100%', height:'100%'}} alt={product?.name} src={product?.image[0] || product?.image[1] || product?.image[2] || product?.image[3]    } />
         </HoverBox>
       </Link>
 
