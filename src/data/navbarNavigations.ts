@@ -116,7 +116,7 @@ const megaMenus1 = [
         { title: "Tables", url: "/furniture-rental/living-room/tables" },
         { title: "TVs", url: "/furniture-rental/living-room/tvs" },
         { title: "TV Stands", url: "/furniture-rental/living-room/tv-stands" },
-        { title: "Decor", url: "/furniture-rental/living-room/decor" },
+        { title: "Cabinets", url: "/furniture-rental/living-room/cabinets" },
       
       ],
     },

@@ -128,6 +128,8 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   const [sanpham, setSanpham] = useState(null);
   const [prsection2, setProsection2] = useState(null)
   const [render, setRender] = useState(true)
+
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

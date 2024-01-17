@@ -32,9 +32,9 @@ const Section9LivingRoom = (props: any) => {
   const sofas_Sectionals = props?.products?.sofas_sectionals ;
   const chairs =  props?.products?.chairs;
   const tables = props?.products?.tables;
-
+  const cabinets = props?.products?.cabinets
   
-  const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs] : []
+  const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
   
   const [allproduct, setAllProduct] = useState(sanpham1)
 
@@ -227,7 +227,7 @@ const Section9LivingRoom = (props: any) => {
                 <Box onClick={() => setAllProduct(tables)} px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tables</Box>
                 <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Tvs</Box>
                 <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>TV stands</Box>
-                <Box px={2} pb={1} sx={{":hover":{cursor:'pointer',color:'red'}}}>Decor</Box>
+                <Box px={2} pb={1} onClick={() => setAllProduct(cabinets)} sx={{":hover":{cursor:'pointer',color:'red'}}}>Cabinets</Box>
               </List>
             </Collapse>
           </List>
