@@ -25,17 +25,17 @@ const ProductDescription = (props : any) => {
         </Grid>
         <Grid item sm={6} md={6} xs={12}>
           <H3 mb={2}>Dimensions</H3>
+          <Box sx={{display:'flex', justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
+            <Typography fontWeight={500}><img src="/assets/images/width.svg" alt="width"/>&nbsp;&nbsp; Width</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[1]}&#34;</Typography>
+         </Box>
           <Box sx={{display:'flex',justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
-            <Typography fontWeight={500}>Depth</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[0]}</Typography>
+            <Typography fontWeight={500}><img src="/assets/images/depth.svg" alt="depth"/>&nbsp;&nbsp; Depth</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[0]}&#34;</Typography>
           </Box>
           <Box sx={{display:'flex', justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
-            <Typography fontWeight={500}>Width</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[1]}</Typography>
-          </Box>
-          <Box sx={{display:'flex', justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
-            <Typography fontWeight={500}>Height</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[2]}</Typography>
+            <Typography fontWeight={500}><img src="/assets/images/height.svg" alt="height"/>&nbsp;&nbsp; Height</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[2]}&#34;</Typography>
           </Box>
           {/* <Box sx={{display:'flex', justifyContent:'space-between'}}>
             <Typography fontWeight={500}>Depth</Typography>

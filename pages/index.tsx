@@ -24,6 +24,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../src/firebase";
 import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "contexts/AppContext";
+import Delivers from "pages-sections/fashion-shop-1/Delivers";
 
 
 const brandList = [
@@ -174,11 +175,12 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
      </Box> :
      <ShopLayout1 showTopbar={false}>
       <SEO title="" description="Kloudek, kloudek, nội thất giá rẻ, bán nội thất, nội thất, cho thuê nội thất"/>
-      <Box sx={{ backgroundColor: "#ffffff", overFlow: "hidden", mx:{md:2, xs:0} }}>
+      <Box sx={{ backgroundColor: "#ffffff", overFlow: "hidden" }}>
         {/* HERO SECTION AND SERCIVE CARDS */}
         <Section1 />
+        <Delivers/>
         {/* FLASH DEALS */}
-        <Section6 products={sanpham?.sofas_sectionals} /> 
+        {/* <Section6 products={sanpham?.sofas_sectionals} />  */}
         <Section2 flashDeals={prsection2?.bedroom} />
         {/* NEW ARRIVALS */}
         <Section3  />

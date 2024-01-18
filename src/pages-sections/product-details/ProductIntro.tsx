@@ -14,7 +14,7 @@ import Radio from '@mui/material/Radio';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import useSettings from "hooks/useSettings";
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // ================================================================
 type ProductIntroProps = { product: any };
 // ================================================================
@@ -29,9 +29,9 @@ const ProductIntro = ({product} ) => {
   const toLowerCaseColor = color?.toLowerCase().normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
   .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-  const finalColor = toLowerCaseColor === 'xanh' ? 'green' : toLowerCaseColor === 'do' ? 'red' : toLowerCaseColor === 'nau' ? 'brown' : toLowerCaseColor === 'den' ?
-  'black' : toLowerCaseColor === 'trang' ? 'white' : toLowerCaseColor === 'xam' ? 'grey' : toLowerCaseColor === 'kem' ? '#FAF0E6' : toLowerCaseColor === 'da' ? '#FFFAF0' :
-  toLowerCaseColor === 'xanh ngoc' ? '#32CD32' : toLowerCaseColor === 'xanh bien' ? 'blue' : toLowerCaseColor === 'be' ? '#DDDDDD' : toLowerCaseColor === ' nau nhat' ? '#FFD39B' : ''
+  // const finalColor = toLowerCaseColor === 'xanh' ? 'green' : toLowerCaseColor === 'do' ? 'red' : toLowerCaseColor === 'nau' ? 'brown' : toLowerCaseColor === 'den' ?
+  // 'black' : toLowerCaseColor === 'trang' ? 'white' : toLowerCaseColor === 'xam' ? 'grey' : toLowerCaseColor === 'kem' ? '#FAF0E6' : toLowerCaseColor === 'da' ? '#FFFAF0' :
+  // toLowerCaseColor === 'xanh ngoc' ? '#32CD32' : toLowerCaseColor === 'xanh bien' ? 'blue' : toLowerCaseColor === 'be' ? '#DDDDDD' : toLowerCaseColor === ' nau nhat' ? '#FFD39B' : ''
   const [selectedValue, setSelectedValue] = useState('a');
   const currencies = [
     {
@@ -174,30 +174,33 @@ const ProductIntro = ({product} ) => {
               ) : ''
             ))}
           </Box>
-           <Box mx='auto' height={600} width={600} sx={{height:{md:600, xs:350, sm:700, lg:600},width:{md:600, xs:'100%', sm:700, lg:600} }}>
+           <Box mx='auto' height={600} width={600} sx={{height:{md:600, xs:350, sm:700, lg:600},width:{md:600, xs:'100%', sm:700, lg:600},position:'relative'}}>
               <img
               alt={final_name}
               loading="eager"
               src={image && image[selectedImage] === null ? image[1] || image[2] || image[3] : image && image[selectedImage]}
-              style={{ borderRadius: '8px',objectFit:'fill', width:'100%', height:'100%'}}
+              style={{ borderRadius: '8px',objectFit:'fill', width:'100%', height:'100%',}}
               />
+              <Box sx={{position:'absolute',right:15, top:15, backgroundColor:'#F6F6F6', width:30, height:30, borderRadius:999, display:'flex', justifyContent:'center', alignItems:'center'}}>
+              <FavoriteBorderIcon sx={{  ":hover":{color:'pink', cursor:'pointer'}}}/>
+              </Box>
            </Box>
           </Box>
         </Grid>
         <Grid item md={4} xs={12}>
           <H1 >{final_name}</H1>
-          <H5 color='grey'>Mã sản phẩm : {final_code}</H5>
-          <H5 color='grey'>Màu sắc : {color}</H5>
-          <H5 color='grey'>Chất liệu : {material}</H5>
-          <Box sx={{borderRadius:9999, width:30,height:30, backgroundColor: finalColor , border:1,my:1}}></Box>
+          <Typography fontSize={13} color='grey'>Mã sản phẩm: {final_code}</Typography>
+          <Typography fontSize={13} py={1} color='grey'>Màu sắc: {color}</Typography>
+          {/* <H5 color='grey'>Chất liệu : {material}</H5> */}
+          {/* <Box sx={{borderRadius:9999, width:30,height:30, backgroundColor: finalColor , border:1,my:1}}></Box> */}
           <FlexBox alignItems="center" mb={1}>
-            <Box>Choose how you want it</Box>
+            <Box fontWeight='bold'>Choose how you want it</Box>
             {/* <H6>Xiaomi</H6> */}
           </FlexBox>
 
          <div>
          <FlexBox alignItems="center" mb={2}>
-            <Box sx={{ backgroundColor: selectedValue === 'a' ? '#FFCC99' : '#EEEEEE', width: '100%',borderRadius:2  }}>
+            <Box sx={{ backgroundColor: selectedValue === 'a' ? '#FDF6F2' : '#EEEEEE', width: '100%',borderRadius:2  }}>
               <Radio
                 checked={selectedValue === 'a'}
                 onChange={handleChange}
@@ -262,7 +265,7 @@ const ProductIntro = ({product} ) => {
             </Box>
           </FlexBox>
           <FlexBox alignItems="center" mb={2}>
-            <Box sx={{ backgroundColor:selectedValue === 'b' ? '#FFCC99' : '#EEEEEE', width: '100%', borderRadius:2 }}>
+            <Box sx={{ backgroundColor:selectedValue === 'b' ? '#FDF6F2' : '#EEEEEE', width: '100%', borderRadius:2 }}>
               <Radio
                 checked={selectedValue === 'b'}
                 onChange={handleChange}
@@ -348,7 +351,7 @@ const ProductIntro = ({product} ) => {
           ))} */}
 
           <Box pt={1} mb={3}>
-            <H2 color="primary.main" mb={0.5} lineHeight="1">
+            <H2 color='black' mb={0.5} lineHeight="1">
              {selectedValue === 'b' ? `Mua ${currency(selling_price)}đ` : `Thuê ${currency(totalRent)}đ `}
             </H2>
             {/* <Box color="inherit">Stock Available</Box> */}

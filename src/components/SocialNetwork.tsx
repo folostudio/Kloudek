@@ -41,7 +41,7 @@ export default function SocialNetwork() {
         </List>
       </Collapse>
         {open ?<img onClick={handleClick} src='/assets/images/icon_close.gif' alt='inbox' style={{objectFit:'cover', width:'50px',borderRadius:999}}/>
- :         <img onClick={handleClick} src='/assets/images/icon_inbox1.gif' alt='inbox' style={{objectFit:'cover', width:'50px',borderRadius:999}}/>
+ :         <img onClick={handleClick} src='/assets/images/iconmess.jpg' alt='inbox' style={{objectFit:'cover', width:'50px',borderRadius:999}}/>
 }
     </List>
   );

@@ -36,12 +36,9 @@ const ProductDetail = () => {
           indicatorColor="primary"
           onChange={handleOptionClick}
         >
-        
          <Tab className="inner-tab" label="Chi tiết sản phẩm" />
           <Tab className="inner-tab" label="Why Kloudek?" />
-       
         </StyledTabs>
-
         <Box mb={6}>
           {selectedOption === 0 && <ProductDescription product={state?.detail[0]} />}
           {selectedOption === 1 && <ProductReview />}
