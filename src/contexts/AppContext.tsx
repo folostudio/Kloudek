@@ -74,6 +74,7 @@ const reducer = (state: InitialState, action: ActionType) => {
       return { ...state, cart: [...cartList, cartItem] };
       case "DETAIL":
         const pd = action.payload
+        localStorage.setItem("detail", JSON.stringify(pd))
         const rs = []
         rs.push(pd)
         return { ...state , detail: rs}

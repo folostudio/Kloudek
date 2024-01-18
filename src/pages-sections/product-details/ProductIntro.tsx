@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Add, Remove } from "@mui/icons-material";
 import { Avatar, Box, Button, Chip, Container, Grid, Typography } from "@mui/material";
 import LazyImage from "components/LazyImage";
 import BazaarRating from "components/BazaarRating";
 import { H1, H2, H3, H5, H6 } from "components/Typography";
-import { useAppContext } from "contexts/AppContext";
+
 import { FlexBox, FlexRowCenter } from "../../components/flex-box";
 import Product from "models/Product.model";
 import { currency } from "lib";
@@ -15,17 +15,26 @@ import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import useSettings from "hooks/useSettings";
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useAppContext } from "contexts/AppContext";
 // ================================================================
 type ProductIntroProps = { product: any };
 // ================================================================
 
-const ProductIntro = ({product} ) => {
-  const {settings, updateSettings} = useSettings()
+const ProductIntro = () => {
+  const { state, dispatch } = useAppContext();
+  const [product, setProducts] = useState(state?.detail[0])
 
+  
+  const {settings, updateSettings} = useSettings()
 // updateSettings({"a":3})
+  useEffect(() => {
+    const detailLocalStogare = localStorage.getItem('detail') && JSON.parse(localStorage.getItem('detail'))
+    setProducts(detailLocalStogare)
+  },[])
   
-  const { id, rental_price, name, image, slug, selling_price, qty, final_name, color,final_code,material } = product || settings;
-  
+  const { kloudek_code, rental_price, name, image, selling_price, final_name, color,final_code,material } = product || [];
+  const slug = final_name
+    const id = kloudek_code
   const toLowerCaseColor = color?.toLowerCase().normalize('NFD')
   .replace(/[\u0300-\u036f]/g, '')
   .replace(/đ/g, 'd').replace(/Đ/g, 'D')
@@ -92,7 +101,7 @@ const ProductIntro = ({product} ) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
   };
-  const { state, dispatch } = useAppContext();
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectVariants, setSelectVariants] = useState(1);
   const [totalRent, setTotalRent] = useState(rental_price)
@@ -141,7 +150,7 @@ const ProductIntro = ({product} ) => {
     })
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { price: totalRent, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
+      payload: { price: totalRent || rental_price, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
     });
    }
   };
@@ -208,7 +217,7 @@ const ProductIntro = ({product} ) => {
                 name="radio-buttons"
                 inputProps={{ 'aria-label': 'A' }}
               />
-               Thuê ngay với {currency(totalRent)}đ - {selectVariants} tháng
+               Thuê ngay với {currency(totalRent || selling_price)}đ - {selectVariants} tháng
               <div style={{display:selectedValue === 'a' ? 'block' : 'none'}}>
               <Typography my={1}>- Fast, free delivery & assembly</Typography>
               <Typography my={1}>- Rent-to-own flexibility</Typography>
@@ -352,7 +361,7 @@ const ProductIntro = ({product} ) => {
 
           <Box pt={1} mb={3}>
             <H2 color='black' mb={0.5} lineHeight="1">
-             {selectedValue === 'b' ? `Mua ${currency(selling_price)}đ` : `Thuê ${currency(totalRent)}đ `}
+             {selectedValue === 'b' ? `Mua ${currency(selling_price)}đ` : `Thuê ${currency(totalRent || selling_price)}đ `}
             </H2>
             {/* <Box color="inherit">Stock Available</Box> */}
           </Box>

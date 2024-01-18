@@ -23,12 +23,12 @@ import { useAppContext } from 'contexts/AppContext';
 ;
 const ProductDetail = () => {
   const [selectedOption, setSelectedOption] = useState(0);
-    const {state } = useAppContext()    
+   
   const handleOptionClick = (_, value: any) => setSelectedOption(value);
   return (
     <ShopLayout1>
     <Box sx={{ my: 4, mx:1 }}>
-    <ProductIntro product={state?.detail[0]}/>
+    <ProductIntro />
     <Container>
     <StyledTabs
           textColor="primary"
@@ -40,7 +40,7 @@ const ProductDetail = () => {
           <Tab className="inner-tab" label="Why Kloudek?" />
         </StyledTabs>
         <Box mb={6}>
-          {selectedOption === 0 && <ProductDescription product={state?.detail[0]} />}
+          {selectedOption === 0 && <ProductDescription  />}
           {selectedOption === 1 && <ProductReview />}
         </Box>
     </Container>

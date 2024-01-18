@@ -127,7 +127,7 @@ type FashionShop1Props = {
 const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   const {state, dispatch} = useAppContext()
   const [sanpham, setSanpham] = useState(null);
-  const [prsection2, setProsection2] = useState(null)
+  // const [prsection2, setProsection2] = useState(null)
   const [render, setRender] = useState(true)
 
   
@@ -136,8 +136,8 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
       try {
         // Lấy danh sách sản phẩm từ Firestore
         const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
-        const productsection2 = await getDoc(doc(db, "rent_for_home", "bed_bath"));
-        setProsection2(productsection2.data())
+        // const productsection2 = await getDoc(doc(db, "rent_for_home", "bed_bath"));
+        // setProsection2(productsection2.data())
         // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
         // Tạo mảng mới chứa dữ liệu sản phẩm
         // const newSanpham = [];
@@ -181,7 +181,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         <Delivers/>
         {/* FLASH DEALS */}
         {/* <Section6 products={sanpham?.sofas_sectionals} />  */}
-        <Section2 flashDeals={prsection2?.bedroom} />
+        <Section2 flashDeals={sanpham?.sofas_sectionals} />
         {/* NEW ARRIVALS */}
         <Section3  />
         {/* DEALS OF THE WEEK GRID CAROUSEL */}

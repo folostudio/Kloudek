@@ -12,18 +12,18 @@ type Props = { flashDeals: any[] };
 // =============================================================
 
 const Section2: FC<Props> = ({ flashDeals }) => {
-  const [visibleSlides, setVisibleSlides] = useState(3);
+  const [visibleSlides, setVisibleSlides] = useState(4);
   const width = useWindowSize();
-  const result = flashDeals?.slice(0, 4)
+  const result = flashDeals?.slice(0, 6)
   useEffect(() => {
     if (width < 500) setVisibleSlides(1);
     else if (width < 650) setVisibleSlides(2);
     else if (width < 950) setVisibleSlides(3);
-    else setVisibleSlides(3);
+    else if(width > 950) setVisibleSlides(4);
   }, [width]);
 
   return (
-    <Box
+    <Box sx={{py:4, width:{md:'80vw', xs:'100%'}, mx:'auto'}}
     >
       <Carousel
         totalSlides={result?.length}

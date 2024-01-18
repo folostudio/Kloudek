@@ -47,7 +47,7 @@ const BlogCard2 = ({product}) => {
   return (
     <Card  sx={{ borderRadius: 0, boxShadow: 2, backgroundColor:'#EEE5DE', pb:4 }}>
       <ImageBox  m={2} maxHeight={300}>
-        <img width={580} height={342} src={product?.image[0]} alt="blog-1" />
+        <img style={{objectFit:'fill'}} width={580} height={342} src={product?.image[0]} alt="blog-1" />
 
         {/* <DateBox>
           <Paragraph width="min-content" lineHeight={1} fontWeight={600}>

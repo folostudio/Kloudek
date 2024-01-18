@@ -10,7 +10,7 @@ import { FlexBetween, FlexBox } from "components/flex-box";
 import { calculateDiscount, currency } from "lib";
 import { useAppContext } from "contexts/AppContext";
 import router from "next/router";
-
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // ========================================================
 type ProductCardProps = {
   off?: number;
@@ -25,7 +25,7 @@ type ProductCardProps = {
 // ========================================================
 
 const ProductCard3: any = (props : any) => {
-  const [favorite, setFavorite] = useState(false);
+  const [showFavorite, setShowFavorite] = useState('none');
   const product = props?.product
  ;
  const {state, dispatch} = useAppContext()
@@ -38,11 +38,16 @@ const ProductCard3: any = (props : any) => {
 
   return (
     <Box>
+      <Box onMouseLeave={() => setShowFavorite('none')} onMouseMove={() => setShowFavorite('flex')} sx={{position:'relative'}}>
       <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
-        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white',height:{lg:250,xs:330, sm:250}}}>
-          <img  className="product-img" style={{objectFit:'fill',width:'100%',height:'100%'}}  alt={product?.final_name} src={product?.image[0]} />
+        <HoverBox sx={{ borderRadius: "8px" , backgroundColor:'white', height:{lg:250,xs:330, sm:250}}}>
+          <img  className="product-img"  style={{objectFit:'contain',width:'100%', height:'100%'}} alt={product?.name} src={product?.image[0] || product?.image[1] || product?.image[2] || product?.image[3]    } />
         </HoverBox>
+        <Box sx={{position:'absolute',right:10, top:10, backgroundColor:'#F6F6F6', width:23, height:23, borderRadius:999, display: showFavorite, justifyContent:'center', alignItems:'center',}}>
+              <FavoriteBorderIcon fontSize="small" sx={{":hover":{color:'pink', cursor:'pointer'}}}/>
+              </Box>
       </Link>
+      </Box>
 
       <FlexBetween  mt={1}>
         <Box>

@@ -1,14 +1,19 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { H3 } from "components/Typography";
+import { useAppContext } from "contexts/AppContext";
 
 // ======================================================
 type ProductDescriptionProps = {};
 // ======================================================
 
-const ProductDescription = (props : any) => {
-
-  const product = props?.product
+const ProductDescription = () => {
+  const { state, dispatch } = useAppContext();
+  const [product, setProducts] = useState(state?.detail[0])
+  useEffect(() => {
+    const detailLocalStogare = localStorage.getItem('detail') && JSON.parse(localStorage.getItem('detail'))
+    setProducts(detailLocalStogare)
+  },[])
   return (
     <Box>
       <Grid container spacing={2}>

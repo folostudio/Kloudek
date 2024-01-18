@@ -29,58 +29,16 @@ const StyledBazaarCard = styled(BazaarCard)({
 });
 
 const ImageWrapper = styled(Box)(({ theme }) => ({
-  height:450,
+  height:400,
   textAlign: "center",
   position: "relative",
   display: "inline-block",
   [theme.breakpoints.down("sm")]: { display: "block" },
 }));
 
-const StyledChip = styled(Chip)({
-  zIndex: 1,
-  top: "10px",
-  left: "10px",
-  paddingLeft: 3,
-  paddingRight: 3,
-  fontWeight: 600,
-  fontSize: "10px",
-  position: "absolute",
-});
 
-const HoverIconWrapper = styled(Box)({
-  zIndex: 2,
-  top: "7px",
-  opacity: 0,
-  right: "15px",
-  display: "flex",
-  cursor: "pointer",
-  position: "absolute",
-  flexDirection: "column",
-  transition: "all 0.3s ease-in-out",
-});
 
-const ContentWrapper = styled(Box)({
-  padding: "1rem",
-  "& .title, & .categories": {
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-});
 
-// ========================================================
-type ProductCardProps = {
-  title: string;
-  slug: string;
-  price: number;
-  imgUrl: string;
-  rating?: number;
-  discount?: number;
-  id: string | number;
-  hideRating?: boolean;
-  hoverEffect?: boolean;
-  showProductSize?: boolean;
-};
 // ========================================================
 
 const ProductCard1 = (props : any) => {
@@ -106,13 +64,14 @@ const ProductCard1 = (props : any) => {
       type1: "DETAIL",
       payload: pd
     })
+    // localStorage.setItem("detail", JSON.stringify(pd))
   }
   return (
     <StyledBazaarCard >
       <ImageWrapper>
       <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
           <img
-            style={{objectFit:'cover', height:'100%', width:'100%'}}
+            style={{objectFit:'fill', height:'100%', width:'100%'}}
             src={product?.image && product?.image[0]}
             alt={product?.final_name}
           />

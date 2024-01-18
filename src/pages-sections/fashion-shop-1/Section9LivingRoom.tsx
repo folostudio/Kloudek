@@ -40,7 +40,7 @@ const Section9LivingRoom = ({products}) => {
   // const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
   const sanpham = products?.length > 0 ? [...sofas_sectionals, ...cabinets, ...chairs, ...tables] : []
   
-  console.log(sanpham);
+
   
   const [allproduct, setAllProduct] = useState(sanpham)
 
