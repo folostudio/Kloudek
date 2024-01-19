@@ -7,6 +7,8 @@ import useWindowSize from "hooks/useWindowSize";
 import Carousel from "components/carousel/Carousel";
 import { currency } from "lib";
 import { carouselStyled } from "components/carousel/styles";
+import { useAppContext } from "contexts/AppContext";
+import {useRouter} from 'next/router'
 // =======================================
 type Section8Props = { blogs: any[] };
 // =======================================
@@ -15,8 +17,15 @@ const Section8 = (props: any) => {
 
 
   const product = props?.products?.slice(7, 13)
-  
-  
+  const router = useRouter()
+  const {state, dispatch} = useAppContext()
+  const handleDetail = (pd: any ) => {
+    dispatch({
+      type1: "DETAIL",
+      payload: pd
+    })
+    router.push(`/product/${pd?.final_name}`)
+  }
 
   const width = useWindowSize();
   const [visibleSlides, setVisibleSlides] = useState(4);
@@ -36,12 +45,9 @@ const Section8 = (props: any) => {
    totalSlides={product?.length}
    visibleSlides={visibleSlides}
    infinite={true}
-
-  
-   
       >
        {product?.map((item, index) => 
-         <Box py={5} key={index}  >
+         <Box onClick={() => handleDetail(item && item)} sx={{":hover":{cursor:'pointer'}}} py={5} key={index}  >
          <img height={300} style={{objectFit:'cover'}}  src={item?.image[0] || item?.image[1] || item?.image[2] || item?.image[0]} alt='livingroom' />
          <Typography fontSize={15} fontWeight={500} pt={1}>{item?.final_name}</Typography>
          <Box py={1}>
