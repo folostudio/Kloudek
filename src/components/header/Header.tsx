@@ -22,6 +22,7 @@ import ShoppingBagOutlined from "components/icons/ShoppingBagOutlined";
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // styled component
 export const HeaderWrapper = styled(Box)(({ theme }) => ({
   zIndex: 3,
@@ -116,7 +117,9 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
               <Box component={IconButton} onClick={toggleSearchBar}>
                 <Icon.Search sx={ICON_STYLE} />
               </Box>
-
+              <Box component={IconButton}>
+                <FavoriteBorderIcon />
+              </Box>
               <Box component={IconButton} onClick={toggleDialog}>
                 <Icon.User sx={ICON_STYLE} />
               </Box>
@@ -194,6 +197,14 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
             onClick={toggleDialog}
           >
             <PersonOutline />
+          </Box>
+          <Box
+            component={IconButton}
+            p={1.25}
+            bgcolor="grey.200"
+            onClick={toggleDialog}
+          >
+            <FavoriteBorderIcon />
           </Box>
           <Box
             component={IconButton}

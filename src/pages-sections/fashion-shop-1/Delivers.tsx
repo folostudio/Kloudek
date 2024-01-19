@@ -4,7 +4,7 @@ import React from 'react'
 
 const Delivers = () => {
   return (
-    <Box pb={3} sx={{width:{md:'80vw', xs:'100%'}, mx:'auto'}}>
+    <Container maxWidth='xl' sx={{ width:{xl:'80%', xs:'100%',lg:'80%'}, pb:5}}>
         <Grid mx='auto' py={6} container>
             <Grid item md={3} xs={6}>
                 <Box sx={{display:'flex', flexDirection:{md:'row', xs:'column'}, alignItems:'center',justifyContent:{xs:'center',md:'normal'}, gap:{md:2,xs:0}, borderRight:{md:'none', xs:'1px solid gray'}, borderBottom:{md:'none', xs:'1px solid gray'}}}>
@@ -57,7 +57,7 @@ const Delivers = () => {
              
             </Grid>
         </Grid>
-    </Box>
+    </Container>
   )
 }
 

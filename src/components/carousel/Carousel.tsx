@@ -103,7 +103,7 @@ const Carousel: FC<CarouselProps> = ({
           renderDots={(props: any) => renderDots({ ...props, step, dotColor })}
         />
       )}
-
+    
      
     </StyledCarouselProvider>
   );

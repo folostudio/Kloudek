@@ -6,16 +6,10 @@ import Newsletter from "components/Newsletter";
 import ShopLayout1 from "components/layouts/ShopLayout1";
 import Section1 from "pages-sections/fashion-shop-1/Section1";
 // import Section2 from "pages-sections/fashion-shop-1/Section2";
-import Section2 from "pages-sections/market-1/Section2";
-
 import Section3 from "pages-sections/fashion-shop-1/Section3";
 import Section4 from "pages-sections/fashion-shop-1/Section4";
-import Section5 from "pages-sections/fashion-shop-1/Section5";
-import Section6 from "pages-sections/fashion-shop-1/Section6";
-import Section7 from "pages-sections/fashion-shop-1/Section7";
-import Section8 from "pages-sections/fashion-shop-1/Section8";
 import Section9 from "pages-sections/fashion-shop-2/Section9";
-import { StrictMode } from "react";
+
 import api from "utils/__api__/fashion-shop";
 import Service from "models/Service.model";
 import Product from "models/Product.model";
@@ -25,6 +19,8 @@ import { auth, db } from "../src/firebase";
 import { useEffect, useRef, useState } from "react";
 import { useAppContext } from "contexts/AppContext";
 import Delivers from "pages-sections/fashion-shop-1/Delivers";
+import ShopByRoom from "pages-sections/fashion-shop-1/ShopByRoom";
+import ShopMostPopular from "pages-sections/fashion-shop-1/ShopMostPopular";
 
 
 const brandList = [
@@ -181,7 +177,8 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
         <Delivers/>
         {/* FLASH DEALS */}
         {/* <Section6 products={sanpham?.sofas_sectionals} />  */}
-        <Section2 flashDeals={sanpham?.sofas_sectionals} />
+        <ShopByRoom/>
+        <ShopMostPopular/>
         {/* NEW ARRIVALS */}
         <Section3  />
         {/* DEALS OF THE WEEK GRID CAROUSEL */}

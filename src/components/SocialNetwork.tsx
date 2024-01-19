@@ -34,9 +34,9 @@ export default function SocialNetwork() {
     <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div"  disablePadding>
           <ListItemButton sx={{display:'flex', flexDirection:'column', borderRadius:3, backgroundColor:'transparent'}}>
-           <a href='#'><img src='/assets/images/icon_call.gif' alt='call' style={{objectFit:'cover', width:'50px',marginBottom:'3px'}}/></a>
-           <a href='#'><img src='/assets/images/icon_zalo.gif' alt='zalo' style={{objectFit:'cover', width:'50px',marginBottom:'3px'}}/></a>
-           <a href='https://www.facebook.com/kloudek'><img src='/assets/images/icon_facebook.gif' alt='mess' style={{objectFit:'cover', width:'50px',marginBottom:'3px'}}/></a>
+           <a href='#'><img src='/assets/images/icon_phone.png' alt='call' style={{objectFit:'cover', width:'40px',marginBottom:'7px'}}/></a>
+           <a href='#'><img src='/assets/images/zalo-icon.png' alt='zalo' style={{objectFit:'cover', width:'40px',marginBottom:'7px'}}/></a>
+           <a href='https://www.facebook.com/kloudek'><img src='/assets/images/icon_messenger.png' alt='mess' style={{objectFit:'cover', width:'40px',marginBottom:'7px'}}/></a>
           </ListItemButton>
         </List>
       </Collapse>

@@ -1,51 +1,59 @@
 import { FC, useEffect, useState } from "react";
-import { Box, Container, Grid } from "@mui/material";
-import { H2 } from "components/Typography";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import { H1, H2 } from "components/Typography";
 import { BlogCard2 } from "components/blog-cards";
 import Blog from "models/Blog.model";
 import useWindowSize from "hooks/useWindowSize";
 import Carousel from "components/carousel/Carousel";
-
+import { currency } from "lib";
+import { carouselStyled } from "components/carousel/styles";
 // =======================================
 type Section8Props = { blogs: any[] };
 // =======================================
 
-const Section8 = (props : any) => {
+const Section8 = (props: any) => {
 
-  
-  const product = props?.products?.slice(0,6)
 
+  const product = props?.products?.slice(7, 13)
   
+  
+
   const width = useWindowSize();
   const [visibleSlides, setVisibleSlides] = useState(4);
 
   useEffect(() => {
     if (width < 500) setVisibleSlides(1);
     else if (width < 650) setVisibleSlides(2);
-    else if (width < 950) setVisibleSlides(3);
+    else if (width < 950) setVisibleSlides(2.5);
     else setVisibleSlides(4);
   }, [width]);
   return (
-    <Box sx={{ pt: 5 , backgroundColor:'#EEE5DE'}}>
-      <H2 textAlign="center" mb={4}>
-      Discover handy tips and styling inspiration
-      </H2>
-      <Carousel
-        infinite={true}
-        visibleSlides={visibleSlides}
-        totalSlides={product?.length}
-        autoPlay={false}
-      >
 
-        {product?.map((item:any, index: any) => (
-            <BlogCard2
-            key={index}
-              product={item}
-            />
-        ))}
-     
+    <Container maxWidth='xl' sx={{ flexGrow: 1, width: { xl: '80%', xs: '100%', lg: '80%' }, mt: { md: 12, xs: 8 } }}>
+      <H1 >Shop what’s new</H1>
+      
+      <Carousel
+   totalSlides={product?.length}
+   visibleSlides={visibleSlides}
+   infinite={true}
+
+  
+   
+      >
+       {product?.map((item, index) => 
+         <Box py={5} key={index}  >
+         <img height={300} style={{objectFit:'cover'}}  src={item?.image[0] || item?.image[1] || item?.image[2] || item?.image[0]} alt='livingroom' />
+         <Typography fontSize={15} fontWeight={500} pt={1}>{item?.final_name}</Typography>
+         <Box py={1}>
+         <span  style={{fontWeight:'bold'}}>{currency(item?.rental_price)}đ/th</span> &nbsp;&nbsp;
+         <span>{currency(item?.selling_price)}đ</span> mua
+         </Box>
+         
+       </Box>
+       )}
+       
       </Carousel>
-    </Box>
+    </Container>
   );
 };
 
