@@ -45,6 +45,7 @@ const Section8 = (props: any) => {
    totalSlides={product?.length}
    visibleSlides={visibleSlides}
    infinite={true}
+   autoPlay={false}
       >
        {product?.map((item, index) => 
          <Box onClick={() => handleDetail(item && item)} sx={{":hover":{cursor:'pointer'}}} py={5} key={index}  >

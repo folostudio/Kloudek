@@ -64,7 +64,7 @@ const ProductCard7: FC<ProductCardProps> = ({
         width={140}
         height={140}
         display="block"
-        src={image[0] || "/assets/images/products/iphone-xi.png"}
+        src={image && image[0] || ""}
       />
 
       <IconButton

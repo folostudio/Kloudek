@@ -61,6 +61,9 @@ const reducer = (state: InitialState, action: ActionType) => {
         localStorage.removeItem("cart")
         return { ...state, cart: filteredCart };
       }
+      if(cartItem === "") {
+        return{...state, cart : []}
+      }
 
       // IF PRODUCT ALREADY EXITS IN CART
       if (exist) {

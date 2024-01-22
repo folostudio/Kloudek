@@ -20,12 +20,14 @@ import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDocs, collection } fr
 import { auth, db } from '../src/firebase';
 import emailjs from '@emailjs/browser';
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from "next/router";
 
 
 //----------------------------------------------------------------------
 
 
 const Cart: NextPage = () => {
+  const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
     name: '',
@@ -54,7 +56,7 @@ const Cart: NextPage = () => {
     });
   };
 
-  console.log(cartList);
+
   
 
   const handleSend = async () => {
@@ -118,13 +120,13 @@ const Cart: NextPage = () => {
           sum: Number(getTotalPrice())
         })
       })
-
+      router.push("/")
       dispatch({
         type: "CHANGE_CART_AMOUNT",
-        payload: "resetCart",
+        payload: "",
       })
       enqueueSnackbar("Đặt hàng thành công", { variant: "success" });
-      localStorage.removeItem("productCart")
+      localStorage.removeItem("cart")
       setFormData({
         name: '',
         phoneNumber: '',
@@ -150,7 +152,7 @@ const Cart: NextPage = () => {
       <Grid container spacing={3}>
         {/* CART PRODUCT LIST */}
         <Grid item md={7} xs={12}>
-          {cartList.map((item, index) => (
+          {cartList && cartList?.map((item, index) => (
             <ProductCard7 key={index} {...item} />
           ))}
             <div onClick={() => setSelectedValue('a')}>

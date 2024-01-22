@@ -244,29 +244,7 @@ const ProductIntro = () => {
                     ))}
                   </TextField>
                   <Box sx={{display:'flex'}}>
-              {/* <Button
-                color="primary"
-                variant="outlined"
-                onClick={handleAddRent}
-                sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
-              >
-                <Add fontSize="small" />
-              </Button> */}
-
-              {/* <Box fontWeight={600} fontSize="15px" my="3px" mx={3}>
-                {qtyRent}
-              </Box> */}
-
-              {/* <Button
-                color="primary"
-                variant="outlined"
-                // disabled={item.qty === 1}
-                // onClick={handleCartAmountChange(item.qty - 1, item)}
-                onClick={handleRemoveRent}
-                sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
-              >
-                <Remove fontSize="small" />
-              </Button> */}
+             
             </Box>
                 </Box>
               </Box>
@@ -308,28 +286,7 @@ const ProductIntro = () => {
                     ))}
                   </TextField>
                   <Box sx={{display:'flex'}}>
-              {/* <Button
-                color="primary"
-                variant="outlined"
-                // onClick={handleCartAmountChange(item.qty + 1, item)}
-                sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
-              >
-                <Add fontSize="small" />
-              </Button> */}
-
-              {/* <Box fontWeight={600} fontSize="15px" my="3px" mx={3}>
-                {item.qty} 1
-              </Box> */}
-
-              {/* <Button
-                color="primary"
-                variant="outlined"
-                // disabled={item.qty === 1}
-                // onClick={handleCartAmountChange(item.qty - 1, item)}
-                sx={{ height: "32px", width: "32px", borderRadius: "300px" }}
-              >
-                <Remove fontSize="small" />
-              </Button> */}
+             
             </Box>
                 </Box>
               </Box>
@@ -338,26 +295,6 @@ const ProductIntro = () => {
           </FlexBox>
          </div>
            
-          {/* 
-          {productVariants.map((variant) => (
-            <Box key={variant.id} mb={2}>
-              <H6 mb={1}>{variant.title}</H6>
-
-              {variant.values.map(({ id, value }) => (
-                <Chip
-                  key={id}
-                  label={value}
-                  onClick={handleChangeVariant(variant.title, value)}
-                  sx={{ borderRadius: "4px", mr: 1, cursor: "pointer" }}
-                  color={
-                    selectVariants[variant.title.toLowerCase()] === value
-                      ? "primary"
-                      : "default"
-                  }
-                />
-              ))}
-            </Box>
-          ))} */}
 
           <Box pt={1} mb={3}>
             <H2 color='black' mb={0.5} lineHeight="1">
