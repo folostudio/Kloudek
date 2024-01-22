@@ -104,12 +104,13 @@
 
 // export default ProductDetails;
 import ProductDetail from 'components/ProductDetail'
+import ProductIntro from 'pages-sections/product-details/ProductIntro'
 import React from 'react'
 
 const detail = () => {
   return (
     <>
-      <ProductDetail/>
+      <ProductIntro/>
     </>
   )
 }
