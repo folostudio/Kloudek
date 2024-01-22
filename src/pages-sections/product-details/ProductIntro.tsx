@@ -78,7 +78,7 @@ const ProductIntro = () => {
           // Iterate over each category in allProduct and select a random product
           for (const category of Object.keys(state.allProduct)) {
             // Ensure that only 4 items are selected
-            if (iterations < 4) {
+            if (iterations <= 4) {
               const randomProduct = getRandomItem(state.allProduct[category]);
   
               // Check if the image property is not null, undefined, or an empty string
