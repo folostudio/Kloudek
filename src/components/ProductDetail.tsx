@@ -57,7 +57,7 @@ const ProductDetail = () => {
           </Box>
         </Container>
         <Container>
-          <H1 pb={3}>Related Items</H1>
+          <H1 pb={3}>Sản phẩm gợi ý</H1>
           <Carousel
             infinite={true}
             visibleSlides={visibleSlides}
@@ -98,7 +98,7 @@ const ProductDetail = () => {
         </Container>
       {/*  */}
       <Container sx={{py:6}}>
-          <H1 pb={3}>More Accent Chairs</H1>
+          <H1 pb={3}>Sản phẩm cùng loại</H1>
           <Carousel
             infinite={true}
             visibleSlides={visibleSlides}
@@ -134,7 +134,8 @@ const ProductDetail = () => {
               <Box py={1}>
                 <span style={{ fontWeight: 'bold' }}>{currency(4511)}đ/th</span> &nbsp;&nbsp;
                 <span>{currency(4544)}đ</span> mua
-              </Box>            </Box>
+              </Box>           
+               </Box>
           </Carousel>
         </Container>  
       </Box>

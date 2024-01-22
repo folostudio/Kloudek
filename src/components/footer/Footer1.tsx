@@ -54,9 +54,29 @@ const Footer1: FC = () => {
             <img src="/assets/images/kloudek-icon.svg" alt="kloudek"/>
             </Box>
           </Grid>
-          <Grid item container sx={{display:'flex', justifyContent:'space-between'}}>
-            <Grid item></Grid>
-            <Grid item></Grid>
+          <Grid item container sx={{display:'flex', justifyContent:'space-between', mt:5, alignItems:'center'}}>
+            <Grid item>&#169;  2019-2024 Kloudek | Terms of Use & Privacy Policy</Grid>
+            <Grid item>
+            {iconList.map((item, ind) => (
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer noopenner"
+                      key={ind}
+                    >
+                      <IconButton
+                        sx={{
+                          margin: 0.5,
+                          fontSize: 12,
+                          padding: "10px",
+                          backgroundColor: "rgba(0,0,0,0.2)",
+                        }}
+                      >
+                        <item.icon fontSize="inherit" sx={{ color: "white" }} />
+                      </IconButton>
+                    </a>
+                  ))}
+            </Grid>
           </Grid>
         </Grid>
         </Container>

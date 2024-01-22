@@ -305,10 +305,9 @@ const ProductIntro = () => {
 
           {!cartItem?.qty ? (
             <Button
-              color="primary"
               variant="contained"
               onClick={handleCartAmountChange(1)}
-              sx={{ mb: 4.5, px: "1.75rem", height: 40 }}
+              sx={{ mb: 4.5, px: "1.75rem", height: 40, color:'black', backgroundColor:'#EDD055',":hover":{backgroundColor:'#EDD055'} }}
             >
               Thêm vào giỏ hàng
             </Button>
