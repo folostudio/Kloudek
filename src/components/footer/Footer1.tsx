@@ -48,7 +48,16 @@ const Footer1: FC = () => {
           <Button size='medium' variant='contained' color='dark' sx={{backgroundColor:'#ED653B', color:'white', borderRadius:999, ml:3}}>Submit</Button>
           </Box>
           </Grid>
-          <Grid item md={2}></Grid>
+          <Grid item md={2}>
+            <Box sx={{display:'flex', justifyContent:'space-between'}}>
+              <Typography></Typography>
+            <img src="/assets/images/kloudek-icon.svg" alt="kloudek"/>
+            </Box>
+          </Grid>
+          <Grid item container sx={{display:'flex', justifyContent:'space-between'}}>
+            <Grid item></Grid>
+            <Grid item></Grid>
+          </Grid>
         </Grid>
         </Container>
       </Box>

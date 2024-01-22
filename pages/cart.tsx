@@ -38,6 +38,11 @@ const Cart: NextPage = () => {
     voucher: '',
   });
   const date = new Date().toLocaleDateString()
+  const hour = new Date().toLocaleTimeString()
+ 
+  
+
+  
   const [selectedValue, setSelectedValue] = useState('a');
   const { state, dispatch } = useAppContext();
   const cartList: CartItem[] = state.cart;
@@ -107,7 +112,7 @@ const Cart: NextPage = () => {
       await updateDoc(doc(db, 'orders', 'am09mJfmXgULicYqNbm5'), {
         list: arrayUnion({
           id: uuidv4(),
-          date: Timestamp.fromDate(new Date(date)),
+          date: date + " " + hour,
           name: formData.name,
           phone: formData.phoneNumber,
           email: formData.email,
@@ -141,7 +146,7 @@ const Cart: NextPage = () => {
     } catch (error) {
       enqueueSnackbar("Có lỗi khi đặt hàng", { variant: "error" });
       // Handle errors, you can log them or show an error message
-      console.error(error);
+      console.error("báo lỗi", error);
     }
   }
 
