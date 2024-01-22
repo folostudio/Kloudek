@@ -23,6 +23,7 @@ import ProductReview from 'pages-sections/product-details/ProductReview';
 //Back-End
 import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDoc, getDocs, collection } from "firebase/firestore"; 
 import { auth, db } from '../../../src/firebase';
+import { Router, useRouter } from "next/router";
 // ================================================================
 type ProductIntroProps = { product: any };
 // ================================================================
@@ -48,6 +49,7 @@ const getRandomItem = (array) => {
 
 const ProductIntro = () => {
 
+  const router = useRouter()
   const { state, dispatch } = useAppContext();
   const [product, setProducts] = useState(state?.detail[0])
   const [selectedOption, setSelectedOption] = useState(0);
@@ -56,7 +58,14 @@ const ProductIntro = () => {
   const [randomProducts, setRandomProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
 
-  console.log('state' ,state.allProduct);
+  // console.log('state' ,state);
+
+  useEffect(() => {
+    // Kiểm tra xem state có bằng null không
+    if (state.allProduct === null) {
+      router.push('/');
+    }
+  }, [state]);
 
   const sanpham = useMemo(async () => {
     try {
