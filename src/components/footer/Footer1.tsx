@@ -27,20 +27,20 @@ const Footer1: FC = () => {
     <footer>
       <Box sx={{backgroundColor:'#FFFFFF', borderTop:"1px solid gray"}}>
         <Container>
-        <Grid container py={6} spacing={2}>
-          <Grid item md={3}>
+        <Grid container py={6} spacing={2} textAlign='center'>
+          <Grid item md={3} xs={12}>
             <H6 pb={2}>Shop</H6>
             <Typography> <Link href={"#"}>The Goods</Link></Typography>
             <Typography py={2}>  <Link href={"#"}>Kloudek for Business</Link></Typography>
             <Typography>  <Link href={"#"}>Get design help</Link></Typography>
           </Grid>
-          <Grid item md={3}>
+          <Grid item md={3} xs={12}>
           <H6 pb={2}>Help</H6>
             <Typography> <Link href={"#"}>kloudek@gmail.com</Link></Typography>
             <Typography py={2}>  <Link href={"#"}>FAQs</Link></Typography>
    
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={4} xs={12}>
           <H6 pb={2}>Be in the know</H6>
           <Typography> <Link href={"#"}>Get the latest products, promotions, and design tips in your inbox. Sign up and get 25% off your first month.</Link></Typography>
           <Box pt={2} sx={{display:'flex'}}>
@@ -48,13 +48,13 @@ const Footer1: FC = () => {
           <Button size='medium' variant='contained' color='dark' sx={{backgroundColor:'#ED653B', color:'white', borderRadius:999, ml:3}}>Submit</Button>
           </Box>
           </Grid>
-          <Grid item md={2}>
-            <Box sx={{display:'flex', justifyContent:'space-between'}}>
+          <Grid item md={2} xs={12} textAlign='center'>
+            <Box sx={{display:'flex', justifyContent:{md:'space-between', xs:'center'}}}>
               <Typography></Typography>
             <img src="/assets/images/kloudek-icon.svg" alt="kloudek"/>
             </Box>
           </Grid>
-          <Grid item container sx={{display:'flex', justifyContent:'space-between', mt:5, alignItems:'center'}}>
+          <Grid item container sx={{display:'flex', justifyContent:{md:'space-between', xs:'center'}, mt:5, alignItems:'center'}}>
             <Grid item>&#169;  2019-2024 Kloudek | Terms of Use & Privacy Policy</Grid>
             <Grid item>
             {iconList.map((item, ind) => (

@@ -198,7 +198,7 @@ const ProductIntro = () => {
         </Grid>
         <Grid item md={4} xs={12}>
           <H1 >{final_name}</H1>
-          <Typography fontSize={13} color='grey'>Mã sản phẩm: {final_code}</Typography>
+          <Typography fontSize={10} color='grey'>Mã sản phẩm: {final_code}</Typography>
           <Typography fontSize={13} py={1} color='grey'>Màu sắc: {color}</Typography>
           {/* <H5 color='grey'>Chất liệu : {material}</H5> */}
           {/* <Box sx={{borderRadius:9999, width:30,height:30, backgroundColor: finalColor , border:1,my:1}}></Box> */}
@@ -307,7 +307,7 @@ const ProductIntro = () => {
             <Button
               variant="contained"
               onClick={handleCartAmountChange(1)}
-              sx={{ mb: 4.5, px: "1.75rem", height: 40, color:'black', backgroundColor:'#EDD055',":hover":{backgroundColor:'#EDD055'} }}
+              sx={{ mb: 4.5, px: "1.75rem", height: 40, color:'black', backgroundColor:'#EDD055',":hover":{backgroundColor:'pink'} }}
             >
               Thêm vào giỏ hàng
             </Button>

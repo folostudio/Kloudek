@@ -176,9 +176,9 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
         <Box p={2.5}>
           <Button
             fullWidth
-            color="primary"
+       
             variant="contained"
-            sx={{ mb: "0.75rem", height: "40px" }}
+            sx={{ mb: "0.75rem", height: "40px", backgroundColor:'#EDD055',":hover":{backgroundColor:'pink'} }}
             onClick={handleNavigate("/cart")}
           >
             Đặt Hàng ({currency(getTotalPrice())}đ)
