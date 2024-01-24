@@ -53,7 +53,7 @@ const ProductCard7: FC<ProductCardProps> = ({
   const handleCartAmountChange = (amount: number) => () => {
     dispatch({
       type: "CHANGE_CART_AMOUNT",
-      payload: { id, name, price, image, qty: amount, slug, brand },
+      payload: { id, name, price, image, qty: amount, slug, brand ,final_name},
     });
   };
 
