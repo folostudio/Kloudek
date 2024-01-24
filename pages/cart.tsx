@@ -12,7 +12,7 @@ import CheckoutNavLayout from "components/layouts/CheckoutNavLayout";
 import { CartItem, useAppContext } from "contexts/AppContext";
 import countryList from "data/countryList";
 import { currency } from "lib";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 //Back-End
@@ -45,7 +45,8 @@ const Cart: NextPage = () => {
   
   const [selectedValue, setSelectedValue] = useState('a');
   const { state, dispatch } = useAppContext();
-  const cartList: CartItem[] = state.cart;
+  const [cartLocal, setCartLocal] = useState([])
+  const cartList =   state.cart.length == 0 ? cartLocal : state.cart
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
@@ -60,7 +61,10 @@ const Cart: NextPage = () => {
       [field]: event.target.value,
     });
   };
-
+  useEffect(() => {
+   const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
+   setCartLocal(local)
+  },[])
 
   
 

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FC, Fragment, ReactElement, useState } from "react";
+import { FC, Fragment, ReactElement, useEffect, useState } from "react";
 import { Badge, Box, Button, Dialog, Drawer, styled } from "@mui/material";
 import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
@@ -56,6 +56,8 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
   const theme = useTheme();
   const { state } = useAppContext();
+  const [cartLocal, setCartLocal] = useState([])
+  const cartList =   state.cart.length == 0 ? cartLocal : state.cart
   const [dialogOpen, setDialogOpen] = useState(false);
   const [sidenavOpen, setSidenavOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -65,7 +67,10 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
   const toggleDialog = () => setDialogOpen(!dialogOpen);
   const toggleSidenav = () => setSidenavOpen(!sidenavOpen);
   const toggleSearchBar = () => setSearchBarOpen(!searchBarOpen);
-
+  useEffect(() => {
+    const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
+    setCartLocal(local)
+   },[])
   // LOGIN AND MINICART DRAWER
   const DIALOG_DRAWER = (
     <Fragment>
@@ -125,7 +130,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
               </Box>
 
               <Box component={IconButton} onClick={toggleSidenav}>
-                <Badge badgeContent={state.cart.length} color="primary">
+                <Badge badgeContent={cartList?.length} color="primary">
                   <Icon.CartBag sx={ICON_STYLE} />
                 </Badge>
               </Box>
@@ -215,7 +220,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
             <SearchIcon />
           </Box>
 
-          <Badge badgeContent={state.cart.length} color="primary">
+          <Badge badgeContent={cartList?.length} color="primary">
             <Box
               p={1.25}
               bgcolor="grey.200"

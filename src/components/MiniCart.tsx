@@ -26,7 +26,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
   const { push } = useRouter();
   const { palette } = useTheme();
   const { state, dispatch } = useAppContext();
-  const cartList = state.cart;
+  const cartList =   state?.cart.length == 0 ? localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")): state.cart : state.cart
 
   const handleCartAmountChange = (amount: number, product) => () => {
     dispatch({
@@ -36,7 +36,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
   };
 
   const getTotalPrice = () => {
-    return cartList.reduce((accum, item) => accum + item.price * item.qty, 0);
+    return cartList?.reduce((accum, item) => accum + item.price * item.qty, 0);
   };
 
   const handleNavigate = (path: string) => () => {
@@ -91,7 +91,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
           </FlexBox>
         )}
 
-        {cartList.map((item: CartItem) => (
+        {cartList?.map((item: CartItem) => (
           <FlexBox
             py={2}
             px={2.5}
@@ -172,7 +172,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
         ))}
       </Box>
 
-      {cartList.length > 0 && (
+      {cartList?.length > 0 && (
         <Box p={2.5}>
           <Button
             fullWidth

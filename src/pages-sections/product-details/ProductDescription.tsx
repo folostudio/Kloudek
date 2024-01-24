@@ -32,15 +32,15 @@ const ProductDescription = () => {
           <H3 mb={2}>Dimensions</H3>
           <Box sx={{display:'flex', justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
             <Typography fontWeight={500}><img src="/assets/images/width.svg" alt="width"/>&nbsp;&nbsp; Width</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[1]}&#34;</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[1] && product?.dimensions[1]}&#34;</Typography>
          </Box>
           <Box sx={{display:'flex',justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
             <Typography fontWeight={500}><img src="/assets/images/depth.svg" alt="depth"/>&nbsp;&nbsp; Depth</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[0]}&#34;</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[0] && product?.dimensions[0]}&#34;</Typography>
           </Box>
           <Box sx={{display:'flex', justifyContent:'space-between', borderBottom: '1px solid silver', py:1}}>
             <Typography fontWeight={500}><img src="/assets/images/height.svg" alt="height"/>&nbsp;&nbsp; Height</Typography>
-            <Typography fontWeight={500}>{product?.dimensions[2]}&#34;</Typography>
+            <Typography fontWeight={500}>{product?.dimensions[2] && product?.dimensions[2]}&#34;</Typography>
           </Box>
           {/* <Box sx={{display:'flex', justifyContent:'space-between'}}>
             <Typography fontWeight={500}>Depth</Typography>

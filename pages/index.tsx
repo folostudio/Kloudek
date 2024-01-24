@@ -13,7 +13,7 @@ import Section9 from "pages-sections/fashion-shop-2/Section9";
 import api from "utils/__api__/fashion-shop";
 import Service from "models/Service.model";
 import Product from "models/Product.model";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
+import { collection, collectionGroup, doc, getDoc, getDocs, onSnapshot, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../src/firebase";
 import { useEffect, useRef, useState } from "react";
@@ -125,14 +125,15 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
   const [sanpham, setSanpham] = useState(null);
   // const [prsection2, setProsection2] = useState(null)
   const [render, setRender] = useState(true)
-
-  
+ 
+ 
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Lấy danh sách sản phẩm từ Firestore
         const querySnapshot = await getDoc(doc(db, "rent_for_home", "living_room"));
-        // const productsection2 = await getDoc(doc(db, "rent_for_home", "bed_bath"));
+         const productsection2 = await getDoc(doc(db, "rent_for_home", "bed_bath"));
         // setProsection2(productsection2.data())
         // const querySnapshot = await getDocs(collection(db, "rent_for_home"));
         // Tạo mảng mới chứa dữ liệu sản phẩm
@@ -146,7 +147,7 @@ const FashionShop1: NextPage<FashionShop1Props> = (props) => {
       //  setSanpham(querySnapshot.data())
        dispatch({
         type2 : "ALL_PRODUCT",
-        payload: querySnapshot.data()
+        payload: {...querySnapshot.data(), ...productsection2.data()}
       })
      setSanpham(querySnapshot.data())
       dispatch({

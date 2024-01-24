@@ -24,6 +24,7 @@ import ProductReview from 'pages-sections/product-details/ProductReview';
 import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDoc, getDocs, collection } from "firebase/firestore"; 
 import { auth, db } from '../../../src/firebase';
 import { Router, useRouter } from "next/router";
+
 // ================================================================
 type ProductIntroProps = { product: any };
 // ================================================================
@@ -51,13 +52,14 @@ const ProductIntro = () => {
 
   const router = useRouter()
   const { state, dispatch } = useAppContext();
-  const [product, setProducts] = useState(state?.detail[0])
+  const [product, setProducts] = useState(state?.detail || JSON.parse(localStorage.getItem('detail')))
   const [selectedOption, setSelectedOption] = useState(0);
   const width = useWindowSize();
   const [visibleSlides, setVisibleSlides] = useState(4);
   const [randomProducts, setRandomProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
-
+  console.log(product);
+  
   // console.log('state' ,state);
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const ProductIntro = () => {
                   type: category,
                   final_code: randomProduct.final_code,
                   final_name: randomProduct.final_name,
-                  image: randomProduct.image[0],
+                  image: randomProduct.image,
                   selling_price: randomProduct.selling_price,
                   rental_price: randomProduct.rental_price,
                 });
@@ -124,17 +126,17 @@ const ProductIntro = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const lastSpaceIndex = final_name.lastIndexOf(' ');
-      const extractedSubstring = final_name.substring(lastSpaceIndex + 1);
+      const lastSpaceIndex = final_name?.lastIndexOf(' ');
+      const extractedSubstring = final_name?.substring(lastSpaceIndex + 1);
       try {
-        if (state.allProduct && Object.keys(state.allProduct).length > 0) {
+        if (state?.allProduct && Object.keys(state?.allProduct).length > 0) {
           let filteredProducts = [];
           // Iterate over each category in allProduct and filter products based on final_name
-          for (const category of Object.keys(state.allProduct)) {
-            const categoryProducts = state.allProduct[category];
+          for (const category of Object.keys(state?.allProduct)) {
+            const categoryProducts = state?.allProduct[category];
             // Filter products where final_name includes "Sofa" and image[0] is not null/undefined/empty
             const sofaProducts = categoryProducts.filter(
-              product => product.final_name.includes(extractedSubstring) && product.image[0]
+              product => product.final_name?.includes(extractedSubstring) && product?.image[0]
             );
             // Add filtered products to the array
             filteredProducts = [...filteredProducts, ...sofaProducts];
@@ -153,7 +155,7 @@ const ProductIntro = () => {
     fetchData();  // Invoke the fetchData function
   }, []);
   
-  console.log(filterProducts);
+
   
   // Function to shuffle an array
   const shuffleArray = (array) => {
@@ -175,10 +177,7 @@ const ProductIntro = () => {
 
   const {settings, updateSettings} = useSettings()
 // updateSettings({"a":3})
-  useEffect(() => {
-    const detailLocalStogare = localStorage.getItem('detail') && JSON.parse(localStorage.getItem('detail'))
-    setProducts(detailLocalStogare)
-  },[])
+
   
   const { kloudek_code, rental_price, name, image, selling_price, final_name, color,final_code,material } = product || [];
   const slug = final_name
@@ -211,7 +210,13 @@ const ProductIntro = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedValue(event.target.value);
   };
-
+  const handleDetail = (pd: any ) => {
+    dispatch({
+      type1: "DETAIL",
+      payload: pd
+    })
+    setProducts(pd)
+  }
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectVariants, setSelectVariants] = useState(1);
   const [totalRent, setTotalRent] = useState(rental_price)
@@ -243,18 +248,18 @@ const ProductIntro = () => {
   // HANDLE CHANGE CART
   const handleCartAmountChange = (amount: number) => () => {
     if(selectedValue === "b") {
-      updateSettings({
-        price : selling_price, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, rental_price, brand : "Mua"
-      })
+      // updateSettings({
+      //   price : selling_price, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, rental_price, brand : "Mua"
+      // })
       dispatch({
         type: "CHANGE_CART_AMOUNT",
         payload: { price : selling_price,color: color,final_code,material, qty: amount, name,final_name,  image, id, slug, rental_price, brand : "Mua"},
       });
     }
     if(selectedValue === "a") {
-      updateSettings({
-        price: totalRent, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
-      })
+      // updateSettings({
+      //   price: totalRent, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`
+      // })
       dispatch({
         type: "CHANGE_CART_AMOUNT",
         payload: { price: totalRent || rental_price, qty: amount,color: color,final_code,material, name,final_name,  image, id, slug, brand:`Thuê ${selectVariants} tháng`  },
@@ -483,15 +488,19 @@ const ProductIntro = () => {
             autoPlay={false}
             spacing='30px'
           >
-            {randomProducts.map((product, index) => (
+            {randomProducts?.map((product, index) => (
+           
               <Box key={index} sx={{ ":hover": { cursor: 'pointer' } }}>
-                <img style={{ minHeight: 250, maxHeight: 250, maxWidth: '100%', objectFit: 'cover' }} src={product.image} alt={product.final_name} />
+                  <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
+                <img style={{ minHeight: 250, maxHeight: 250, maxWidth: '100%', objectFit: 'fill' }} src={product.image[0] || product.image[1] || product.image[2] || product.image[3]} alt={product.final_name} />
                 <Typography fontSize={15} fontWeight={500} pt={1}>{product.final_name}</Typography>
                 <Box py={1}>
                   <span style={{ fontWeight: 'bold' }}>{currency(product.rental_price)}đ/th</span> &nbsp;&nbsp;
                   <span>{currency(product.selling_price)}đ</span> mua
                 </Box>
+                </Link>
               </Box>
+         
             ))}
           </Carousel>
         </Container>
@@ -510,6 +519,7 @@ const ProductIntro = () => {
 
     return (
       <Box key={index} sx={{ ":hover": { cursor: 'pointer' } }}>
+         <Link onClick={() => handleDetail(product && product)}  href={`/product/${product?.final_name}`}>
         {firstValidImageIndex !== -1 && (
           <img
             style={{ minHeight: 250, maxHeight: 250, maxWidth: '100%', objectFit: 'cover' }}
@@ -522,6 +532,7 @@ const ProductIntro = () => {
           <span style={{ fontWeight: 'bold' }}>{currency(product.rental_price)}đ/th</span> &nbsp;&nbsp;
           <span>{currency(product.selling_price)}đ</span> mua
         </Box>
+        </Link>
       </Box>
     );
   })}

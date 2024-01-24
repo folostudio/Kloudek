@@ -58,10 +58,11 @@ const reducer = (state: InitialState, action: ActionType) => {
 
       if (cartItem.qty < 1) {
         const filteredCart = cartList.filter((item) => item.id !== cartItem.id);
-        localStorage.removeItem("cart")
+        localStorage.setItem("cart",JSON.stringify(filteredCart))
         return { ...state, cart: filteredCart };
       }
       if(cartItem === "") {
+        localStorage.setItem("cart", JSON.stringify([]))
         return{...state, cart : []}
       }
 
@@ -70,17 +71,16 @@ const reducer = (state: InitialState, action: ActionType) => {
         const newCart = cartList.map((item) =>
           item.id === cartItem.id ? { ...item, qty: cartItem.qty } : item
         );
-
+        localStorage.setItem("cart", JSON.stringify(newCart))
         return { ...state, cart: newCart };
       }
-
+      localStorage.setItem("cart", JSON.stringify([...cartList, cartItem]))
       return { ...state, cart: [...cartList, cartItem] };
       case "DETAIL":
         const pd = action.payload
         localStorage.setItem("detail", JSON.stringify(pd))
-        const rs = []
-        rs.push(pd)
-        return { ...state , detail: rs}
+   
+        return { ...state , detail: pd}
       case "ALL_PRODUCT" :
         const result = action.payload
         return {...state, allProduct : result}

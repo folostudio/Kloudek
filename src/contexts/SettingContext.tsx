@@ -37,7 +37,7 @@ const SettingsProvider = ({ children }: settingsProviderProps) => {
     const getItem = window.localStorage.getItem("cart");
 
     if (getItem) setSettings(JSON.parse(getItem));
-    return () => window.localStorage.removeItem("cart")
+
   }, [state.cart]);
 
   return (
