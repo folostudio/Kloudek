@@ -58,7 +58,7 @@ const ProductIntro = () => {
   const [visibleSlides, setVisibleSlides] = useState(4);
   const [randomProducts, setRandomProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
-  console.log(product);
+
   
   // console.log('state' ,state);
 

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -26,7 +26,8 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
   const { push } = useRouter();
   const { palette } = useTheme();
   const { state, dispatch } = useAppContext();
-  const cartList =   state?.cart.length == 0 ? localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")): state.cart : state.cart
+  const [cartLocal, setCartLocal] = useState([])
+  const cartList =   state.cart.length == 0 ? cartLocal : state.cart
 
   const handleCartAmountChange = (amount: number, product) => () => {
     dispatch({
@@ -43,7 +44,10 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
     toggleSidenav();
     push(path);
   };
-
+  useEffect(() => {
+    const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
+    setCartLocal(local)
+   },[])
   return (
     <Box width="100%" maxWidth={480}>
       <Box
