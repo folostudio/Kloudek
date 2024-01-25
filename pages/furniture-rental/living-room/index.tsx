@@ -34,7 +34,7 @@ const LivingRoom = () => {
   const {state, dispatch} = useAppContext()
   const [sanpham, setSanpham] = useState(null)
   const router = useRouter();
-
+  const [render, setRender] = useState(true)
   
   // Show a loading state when the fallback is rendered
   if (router.isFallback) {
@@ -55,15 +55,25 @@ const LivingRoom = () => {
             console.error("Error fetching data:", error);
         }
         };
+        const renderTimeOut =  setTimeout(() => {
+          setRender(!render)
+        },1000)
         fetchData(); // Gọi hàm fetchData để thực hiện truy vấn dữ liệu khi component được mount
+        return () => clearTimeout(renderTimeOut)
     }, []);
   return (
-    <ShopLayout1>
+    <Box>
+    {render ? <Box sx={{width:'100vw', height:'100vh', display:'flex', justifyContent:'center', alignItems:'center'}}>
+     <img src="/assets/images/logorender.png"  alt="logo" />
+     </Box> :
+     <ShopLayout1>
       <SEO title="living room" description="livingroom"/>
       <Box sx={{ my: 4}}>
       <Section9LivingRoom products={sanpham} />
       </Box>
     </ShopLayout1>
+    }
+    </Box>
   );
 };
 
