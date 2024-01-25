@@ -164,6 +164,7 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
         {content}
         <Button
           sx={{ position: "absolute", bottom: 0, width: "100%", p: 4 }}
+          onClick={() => router.push('/')}
         >
           Đăng xuất
         </Button>
@@ -203,6 +204,7 @@ const DashboardSidebar: FC<DashboardSidebarProps> = (props) => {
       {content}
         <Button
           sx={{ position: "absolute", bottom: 0, width: "100%", p: 4 }}
+          onClick={() => router.push('/')}
         >
           Đăng xuất
         </Button>
