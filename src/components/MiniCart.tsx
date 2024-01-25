@@ -47,7 +47,7 @@ const MiniCart: FC<MiniCartProps> = ({ toggleSidenav }) => {
   useEffect(() => {
     const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
     setCartLocal(local)
-   },[])
+   },[state.cart])
   return (
     <Box width="100%" maxWidth={480}>
       <Box
