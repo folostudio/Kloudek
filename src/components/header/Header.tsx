@@ -70,7 +70,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
   useEffect(() => {
     const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
     setCartLocal(local)
-   },[])
+   },[state.cart])
   // LOGIN AND MINICART DRAWER
   const DIALOG_DRAWER = (
     <Fragment>

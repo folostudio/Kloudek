@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { NextPage } from "next";
 import { useSnackbar } from "notistack";
-import { Box, Button, Card, Divider, Grid, Radio, TextField, Typography } from "@mui/material";
+import { Box, Button, Card, Divider, FormControl, Grid, InputLabel, OutlinedInput, Radio, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import MenuItem from "@mui/material/MenuItem";
 import SEO from "components/SEO";
@@ -16,17 +16,40 @@ import { useEffect, useState } from "react";
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 //Back-End
-import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDocs, collection } from "firebase/firestore"; 
+import { arrayUnion, doc, setDoc, updateDoc, Timestamp, getDocs, collection } from "firebase/firestore";
 import { auth, db } from '../src/firebase';
 import emailjs from '@emailjs/browser';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from "next/router";
-
+import { Theme, useTheme } from '@mui/material/styles';
+import axios from "axios";
 
 //----------------------------------------------------------------------
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
 
 const Cart: NextPage = () => {
+
+  const [personName, setPersonName] = useState<string[]>([]);
+
+  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+    const {
+      target: { value },
+    } = event;
+    setPersonName(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
   const router = useRouter()
   const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
@@ -39,17 +62,24 @@ const Cart: NextPage = () => {
   });
   const date = new Date().toLocaleDateString()
   const hour = new Date().toLocaleTimeString()
- 
-  
 
-  
   const [selectedValue, setSelectedValue] = useState('a');
   const { state, dispatch } = useAppContext();
   const [cartLocal, setCartLocal] = useState([])
-  const cartList =   state.cart.length == 0 ? cartLocal : state.cart
+ 
+  
+  const [province, setProvince] = useState([])
+  const [tinh, setTinh] = useState('')
+  const [district, setDistrict] = useState([])
+  const [nameDistrict, setNameDistrict] = useState('')
+  const [wards, setWards] = useState([])
+  const [nameWard, setNameWard] = useState('')
+  const cartList = state.cart.length == 0 ? cartLocal : state.cart
+ 
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedValue(event.target.value);
+  const handleChangeProvince = (event: SelectChangeEvent) => {
+    setTinh(event.target.value as string);
+
   };
 
   const getTotalPrice = () =>
@@ -62,11 +92,22 @@ const Cart: NextPage = () => {
     });
   };
   useEffect(() => {
-   const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
-   setCartLocal(local)
-  },[])
+   
+    const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
+    setCartLocal(local)
+  }, [state.cart])
 
-  
+  useEffect(() => {
+    const getDataProvince = async () => {
+      try {
+        const resultData = await axios.get("https://provinces.open-api.vn/api/?depth=3")
+        setProvince(resultData.data)
+      } catch (error) {
+
+      }
+    }
+    getDataProvince()
+  },[])
 
   const handleSend = async () => {
     if (formData.name == '') {
@@ -85,13 +126,25 @@ const Cart: NextPage = () => {
       enqueueSnackbar("Vui lòng nhập địa chỉ", { variant: "error" });
       return
     }
+    if (tinh == '') {
+      enqueueSnackbar("Vui lòng chọn tỉnh", { variant: "error" });
+      return
+    }
+    if (nameDistrict == '') {
+      enqueueSnackbar("Vui lòng chọn huyện", { variant: "error" });
+      return
+    }
+    if (nameWard == '') {
+      enqueueSnackbar("Vui lòng chọn xã", { variant: "error" });
+      return
+    }
     const emailContent = `
       Thông tin : 
 
         Tên: ${formData.name}
         Sđt: ${formData.phoneNumber}
         Email: ${formData.email}
-        Địa chỉ: ${formData.address}
+        Địa chỉ: ${tinh + "," + district + "," + wards + "," + formData.address}
         Ghi chú: ${formData.note}
 
       Giỏ hàng:
@@ -120,7 +173,7 @@ const Cart: NextPage = () => {
           name: formData.name,
           phone: formData.phoneNumber,
           email: formData.email,
-          address: formData.address,
+          address:`${tinh + "," + district + "," + wards + "," + formData.address}`,
           note: formData.note,
           voucher: formData.voucher,
           products: cartList.map(item => item.name),
@@ -144,6 +197,9 @@ const Cart: NextPage = () => {
         note: '',
         voucher: '',
       });
+      setTinh('')
+      setNameDistrict('')
+      setNameWard('')
       // Handle the response, you can log it or show a success message
       // console.log(response);
       // Optionally, reset the form or perform other actions
@@ -164,51 +220,51 @@ const Cart: NextPage = () => {
           {cartList && cartList?.map((item, index) => (
             <ProductCard7 key={index} {...item} />
           ))}
-            <div onClick={() => setSelectedValue('a')}>
-            <Box sx={{ backgroundColor: selectedValue === 'a'? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "a" ? '1px solid blue' : 'none', mb:2, ":hover":{cursor:'pointer'}  }}>
-              <Box sx={{display:'flex', alignItems:'center', py:2}}>
-              <Radio
-                checked={selectedValue === 'a'}
-                onChange={handleChange}
-                value="a"
-                name="radio-buttons"
-                inputProps={{ 'aria-label': 'A' }}
-              />
-              <LocalShippingIcon/>
+          <div onClick={() => setSelectedValue('a')}>
+            <Box sx={{ backgroundColor: selectedValue === 'a' ? "#F0FFFF" : "none", width: '100%', borderRadius: 5, outline: selectedValue === "a" ? '1px solid blue' : 'none', mb: 2, ":hover": { cursor: 'pointer' } }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', py: 2 }}>
+                <Radio
+                  checked={selectedValue === 'a'}
+                  onChange={handleChange}
+                  value="a"
+                  name="radio-buttons"
+                  inputProps={{ 'aria-label': 'A' }}
+                />
+                <LocalShippingIcon />
                 <Box ml={2}>
-                <Typography fontWeight={500}>COD</Typography>
-              <Typography fontWeight={500}>Thanh toán tại điểm giao hàng</Typography>
+                  <Typography fontWeight={500}>COD</Typography>
+                  <Typography fontWeight={500}>Thanh toán tại điểm giao hàng</Typography>
                 </Box>
               </Box>
-              <div style={{display:selectedValue === 'a' ? 'block' : 'none', paddingLeft:'20px', paddingBottom:'5px'}}>
-              <Typography fontWeight={500} mb={1}>- Quý khách thanh toán cho nhân viên giao nhận toàn bộ hoặc phần còn lại của giá trị đơn hàng đã mua (nếu đã đặt cọc)</Typography>
-              <Typography fontWeight={500} mb={1}>- Hình thức thanh toán này chỉ thực hiện với các đơn hàng có địa chỉ giao hàng tại nội thành thành phố Hà Nội (trong phạm vi bán kính 30 km tính từ nơi mua hàng).</Typography>
-              <Typography fontWeight={500} mb={1}>- Nếu địa điểm giao hàng ngay tại nơi thanh toán, nhân viên giao hàng của chúng tôi sẽ thu tiền khi giao hàng.</Typography>
+              <div style={{ display: selectedValue === 'a' ? 'block' : 'none', paddingLeft: '20px', paddingBottom: '5px' }}>
+                <Typography fontWeight={500} mb={1}>- Quý khách thanh toán cho nhân viên giao nhận toàn bộ hoặc phần còn lại của giá trị đơn hàng đã mua (nếu đã đặt cọc)</Typography>
+                <Typography fontWeight={500} mb={1}>- Hình thức thanh toán này chỉ thực hiện với các đơn hàng có địa chỉ giao hàng tại nội thành thành phố Hà Nội (trong phạm vi bán kính 30 km tính từ nơi mua hàng).</Typography>
+                <Typography fontWeight={500} mb={1}>- Nếu địa điểm giao hàng ngay tại nơi thanh toán, nhân viên giao hàng của chúng tôi sẽ thu tiền khi giao hàng.</Typography>
               </div>
             </Box>
-            </div>
-            <div onClick={() => setSelectedValue('b')}>
-            <Box sx={{ backgroundColor: selectedValue === 'b'? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "b" ? '1px solid blue' : 'none',mb:2,":hover":{cursor:'pointer'}  }}>
-              <Box sx={{display:'flex', alignItems:'center', py:2}}>
-              <Radio
-                checked={selectedValue === 'b'}
-                onChange={handleChange}
-                value="b"
-                name="radio-buttons"
-                inputProps={{ 'aria-label': 'B' }}
-              />
-              <QrCodeScannerIcon/>
+          </div>
+          <div onClick={() => setSelectedValue('b')}>
+            <Box sx={{ backgroundColor: selectedValue === 'b' ? "#F0FFFF" : "none", width: '100%', borderRadius: 5, outline: selectedValue === "b" ? '1px solid blue' : 'none', mb: 2, ":hover": { cursor: 'pointer' } }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', py: 2 }}>
+                <Radio
+                  checked={selectedValue === 'b'}
+                  onChange={handleChange}
+                  value="b"
+                  name="radio-buttons"
+                  inputProps={{ 'aria-label': 'B' }}
+                />
+                <QrCodeScannerIcon />
                 <Box ml={2}>
-                <Typography fontWeight={500}>Chuyển khoản</Typography>
-              <Typography fontWeight={500}>Thanh toán chuyển khoản thủ công</Typography>
+                  <Typography fontWeight={500}>Chuyển khoản</Typography>
+                  <Typography fontWeight={500}>Thanh toán chuyển khoản thủ công</Typography>
                 </Box>
               </Box>
-              <div style={{display:selectedValue === 'b' ? 'block' : 'none', paddingLeft:'20px',paddingBottom:'5px'}}>
-              <Typography fontWeight={500} mb={1}>- Nếu địa điểm giao hàng là ngoại thành, ngoại tỉnh hoặc nội thành thành phố Hà Nội nhưng khác với địa điểm thanh toán (trong trường hợp Quý khách gửi quà, gửi hàng cho bạn bè, đối tác …) chúng tôi sẽ thu tiền trước 100% giá trị đơn hàng + phí vận chuyển theo cước phí tính trong chinh sách vận chuyển bằng phương thức chuyển khoản trước khi giao hàng</Typography>
+              <div style={{ display: selectedValue === 'b' ? 'block' : 'none', paddingLeft: '20px', paddingBottom: '5px' }}>
+                <Typography fontWeight={500} mb={1}>- Nếu địa điểm giao hàng là ngoại thành, ngoại tỉnh hoặc nội thành thành phố Hà Nội nhưng khác với địa điểm thanh toán (trong trường hợp Quý khách gửi quà, gửi hàng cho bạn bè, đối tác …) chúng tôi sẽ thu tiền trước 100% giá trị đơn hàng + phí vận chuyển theo cước phí tính trong chinh sách vận chuyển bằng phương thức chuyển khoản trước khi giao hàng</Typography>
               </div>
             </Box>
-            </div>
-           {/* <div onClick={()=> setSelectedValue('c')}>
+          </div>
+          {/* <div onClick={()=> setSelectedValue('c')}>
            <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2 ,":hover":{cursor:'pointer'} }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
@@ -229,7 +285,7 @@ const Cart: NextPage = () => {
               </div>
             </Box>
            </div> */}
-            {/* <div onClick={() => setSelectedValue('d')}>
+          {/* <div onClick={() => setSelectedValue('d')}>
             <Box sx={{ backgroundColor: '#F0FFFF', width: '100%',borderRadius:5, outline: '1px solid blue',mb:2,":hover":{cursor:'pointer'}  }}>
               <Box sx={{display:'flex', alignItems:'center', py:2}}>
               <Radio
@@ -250,26 +306,26 @@ const Cart: NextPage = () => {
               </div>
             </Box>
             </div> */}
-            <div onClick={() => setSelectedValue('e')}>
-            <Box sx={{ backgroundColor: selectedValue === 'e' ? "#F0FFFF" : "none", width: '100%',borderRadius:5, outline: selectedValue === "e" ? '1px solid blue' : 'none',mb:2 ,":hover":{cursor:'pointer'} }}>
-              <Box sx={{display:'flex', alignItems:'center', py:2}}>
-              <Radio
-                checked={selectedValue === 'e'}
-                onChange={handleChange}
-                value="e"
-                name="radio-buttons"
-                inputProps={{ 'aria-label': 'E' }}
-              />
-                <img width={30} src="/assets/images/noidia.png" alt="vnpay"/>
+          <div onClick={() => setSelectedValue('e')}>
+            <Box sx={{ backgroundColor: selectedValue === 'e' ? "#F0FFFF" : "none", width: '100%', borderRadius: 5, outline: selectedValue === "e" ? '1px solid blue' : 'none', mb: 2, ":hover": { cursor: 'pointer' } }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', py: 2 }}>
+                <Radio
+                  checked={selectedValue === 'e'}
+                  onChange={handleChange}
+                  value="e"
+                  name="radio-buttons"
+                  inputProps={{ 'aria-label': 'E' }}
+                />
+                <img width={30} src="/assets/images/noidia.png" alt="vnpay" />
                 <Box ml={2}>
-                <Typography fontWeight={500}>Thẻ nội địa việt nam</Typography>
-              <Typography fontWeight={500}>Thanh toán tự đồng bằng thẻ ngân hàng nội địa</Typography>
+                  <Typography fontWeight={500}>Thẻ nội địa việt nam</Typography>
+                  <Typography fontWeight={500}>Thanh toán tự đồng bằng thẻ ngân hàng nội địa</Typography>
                 </Box>
               </Box>
-              <div style={{display:selectedValue === 'e' ? 'block' : 'none', paddingLeft:'20px',paddingBottom:'5px'}}>
-              <Typography fontWeight={500} mb={1}>- Ngân hàng NCB</Typography>
-              <Typography fontWeight={500} mb={1}>- Số thẻ 9704198526191432198</Typography>
-              <Typography fontWeight={500} mb={1}>- Tên chủ thẻ NGUYEN VAN A</Typography>
+              <div style={{ display: selectedValue === 'e' ? 'block' : 'none', paddingLeft: '20px', paddingBottom: '5px' }}>
+                <Typography fontWeight={500} mb={1}>- Ngân hàng NCB</Typography>
+                <Typography fontWeight={500} mb={1}>- Số thẻ 9704198526191432198</Typography>
+                <Typography fontWeight={500} mb={1}>- Tên chủ thẻ NGUYEN VAN A</Typography>
               </div>
             </Box>
           </div>
@@ -340,7 +396,7 @@ const Cart: NextPage = () => {
               placeholder="Số điện thoại"
               value={formData.phoneNumber}
               onChange={handleInputChange('phoneNumber')}
-              sx={{my:1}}
+              sx={{ my: 1 }}
             />
             <TextField
               fullWidth
@@ -351,9 +407,59 @@ const Cart: NextPage = () => {
               value={formData.email}
               onChange={handleInputChange('email')}
             />
+            <Box sx={{ display: 'flex', gap: 1, mt: 1 }}>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Tỉnh</InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={tinh}
+                  label="Tỉnh"
+                  onChange={handleChangeProvince}
+                  MenuProps={MenuProps}
+
+                >
+                  {province.map((item, index) => (
+                    <MenuItem onClick={() => setDistrict(item.districts)} key={index} value={item.name}>{item.name}</MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Huyện</InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={nameDistrict}
+                  label="Huyện"
+                  onChange={(e) => setNameDistrict(e.target.value)}
+                  MenuProps={MenuProps}
+
+                >
+                  {district.length > 0 ? district?.map((item, index) => (
+                    <MenuItem onClick={() => setWards(item.wards)} key={index} value={item.name}>{item.name}</MenuItem>
+                  )): <Typography textAlign='center'>Chọn tỉnh</Typography>}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Xã</InputLabel>
+                <Select
+                  labelId="demo-multiple-name-label"
+                  id="demo-multiple-name"
+                  value={nameWard}
+                  label="Xã"
+                  onChange={(e) => setNameWard(e.target.value)}
+                  MenuProps={MenuProps}
+
+                >
+                  {wards.length > 0 ? wards.map((item, index) => (
+                    <MenuItem key={index} value={item.name}>{item.name}</MenuItem>
+                  )): <Typography textAlign='center'>Chọn huyện</Typography>}
+                </Select>
+              </FormControl>
+            </Box>
             <TextField
               fullWidth
-              sx={{my:1}}
+              sx={{ my: 1 }}
               size="small"
               variant="outlined"
               placeholder="Địa chỉ"
@@ -459,9 +565,6 @@ const Cart: NextPage = () => {
   );
 };
 
-const stateList = [
-  { value: "new-york", label: "New York" },
-  { value: "chicago", label: "Chicago" },
-];
+
 
 export default Cart;
