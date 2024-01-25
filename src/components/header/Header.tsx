@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { FC, Fragment, ReactElement, useEffect, useState } from "react";
-import { Badge, Box, Button, Dialog, Drawer, styled } from "@mui/material";
+import { FC, Fragment, ReactElement, useState, useEffect } from "react";
+import { Avatar, Badge, Box, Button, Dialog, Drawer, styled } from "@mui/material";
 import Container from "@mui/material/Container";
 import { useTheme } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -23,6 +23,10 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+//
+import { onAuthStateChanged } from "firebase/auth";
+import { auth, db } from '../../firebase';
+
 // styled component
 export const HeaderWrapper = styled(Box)(({ theme }) => ({
   zIndex: 3,
@@ -56,21 +60,45 @@ type HeaderProps = {
 const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
   const theme = useTheme();
   const { state } = useAppContext();
-  const [cartLocal, setCartLocal] = useState([])
-  const cartList =   state.cart.length == 0 ? cartLocal : state.cart
   const [dialogOpen, setDialogOpen] = useState(false);
   const [sidenavOpen, setSidenavOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("xs"));
   const downMd = useMediaQuery(theme.breakpoints.down(1150));
 
+  const [user, setUser] = useState(null);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (authUser) {
+        // Người dùng đã đăng nhập
+        setUser(authUser);
+      } else {
+        // Người dùng chưa đăng nhập
+        setUser(null);
+      }
+    });
+
+    // Cleanup function
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  console.log(user);
+  
+
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOut(auth);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const toggleDialog = () => setDialogOpen(!dialogOpen);
   const toggleSidenav = () => setSidenavOpen(!sidenavOpen);
   const toggleSearchBar = () => setSearchBarOpen(!searchBarOpen);
-  useEffect(() => {
-    const local = localStorage.getItem("cart") && JSON.parse(localStorage.getItem("cart"))
-    setCartLocal(local)
-   },[state.cart])
+
   // LOGIN AND MINICART DRAWER
   const DIALOG_DRAWER = (
     <Fragment>
@@ -126,11 +154,13 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
                 <FavoriteBorderIcon />
               </Box>
               <Box component={IconButton} onClick={toggleDialog}>
-                <Icon.User sx={ICON_STYLE} />
+                {user === null ? <Icon.User sx={ICON_STYLE} /> :
+                  <Avatar src={user.photoURL} sx={{width: 24, height: 24}} />
+                }
               </Box>
 
               <Box component={IconButton} onClick={toggleSidenav}>
-                <Badge badgeContent={cartList?.length} color="primary">
+                <Badge badgeContent={state.cart.length} color="primary">
                   <Icon.CartBag sx={ICON_STYLE} />
                 </Badge>
               </Box>
@@ -201,8 +231,11 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
             bgcolor="grey.200"
             onClick={toggleDialog}
           >
-            <PersonOutline />
+            {user === null ? <PersonOutline /> :
+              <Avatar src={user.photoURL} sx={{width: 24, height: 24}} />
+            }
           </Box>
+
           <Box
             component={IconButton}
             p={1.25}
@@ -211,6 +244,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
           >
             <FavoriteBorderIcon />
           </Box>
+
           <Box
             component={IconButton}
             p={1.25}
@@ -220,7 +254,7 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
             <SearchIcon />
           </Box>
 
-          <Badge badgeContent={cartList?.length} color="primary">
+          <Badge badgeContent={state.cart.length} color="primary">
             <Box
               p={1.25}
               bgcolor="grey.200"
