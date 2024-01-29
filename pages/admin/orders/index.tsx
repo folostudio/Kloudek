@@ -123,8 +123,8 @@ export default function OrderList({ orders }: OrderListProps) {
               />
 
               <TableBody>
-                {filteredList.map((order) => (
-                  <OrderRow order={order} key={order.id} />
+                {filteredList.map((order, index) => (
+                  <OrderRow title='am09mJfmXgULicYqNbm5' order={order} setRender={setRender} key={index} />
                 ))}
               </TableBody>
             </Table>

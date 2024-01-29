@@ -55,15 +55,15 @@ const Login = () => {
     <Wrapper elevation={3} passwordVisibility={passwordVisibility}>
       <form onSubmit={handleSubmit}>
         <BazaarImage
-          src="/assets/images/bazaar-black-sm.svg"
-          sx={{ m: "auto" }}
+          src="logoKloudek.png"
+          sx={{ m: "auto", maxHeight: '70px' }}
         />
 
-        <H1 textAlign="center" mt={1} mb={4} fontSize={16}>
-          Welcome To Bazaar
+        <H1 textAlign="center" mt={2} mb={4} fontSize={16}>
+          Kloudek xin chào!
         </H1>
 
-        <BazaarTextField
+        {/* <BazaarTextField
           mb={1.5}
           fullWidth
           name="email"
@@ -112,21 +112,21 @@ const Login = () => {
           sx={{ height: 44 }}
         >
           Login
-        </Button>
+        </Button> */}
       </form>
 
       <SocialButtons />
 
-      <FlexRowCenter mt="1.25rem">
+      {/* <FlexRowCenter mt="1.25rem">
         <Box>Don&apos;t have account?</Box>
         <Link href="/signup">
           <H6 ml={1} borderBottom="1px solid" borderColor="grey.900">
             Sign Up
           </H6>
         </Link>
-      </FlexRowCenter>
+      </FlexRowCenter> */}
 
-      <FlexBox
+      {/* <FlexBox
         justifyContent="center"
         bgcolor="grey.200"
         borderRadius="4px"
@@ -139,7 +139,7 @@ const Login = () => {
             Reset It
           </H6>
         </Link>
-      </FlexBox>
+      </FlexBox> */}
     </Wrapper>
   );
 };
