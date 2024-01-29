@@ -84,7 +84,6 @@ const Header: FC<HeaderProps> = ({ isFixed, className, searchInput }) => {
     };
   }, []);
 
-  console.log(user);
   
 
   // const handleSignOut = async () => {

@@ -8,7 +8,7 @@ import { useSnackbar } from "notistack";
 // back-end
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/router";
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 // =======================================
 type SocialButtonsProps = {
@@ -31,7 +31,7 @@ const SocialButtons: FC<SocialButtonsProps> = (props) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       const user = result.user;
-      Cookies.set('accessToken', token, { secure: true });
+      // Cookies.set('accessToken', token, { secure: true });
       // Handle successful login, e.g., update UI or send user to the next page
       enqueueSnackbar("Đăng nhập thành công", { variant: "success" });
       

@@ -23,6 +23,8 @@ import Product from "models/Product.model";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
+import useWindowSize from "hooks/useWindowSize";
+import Carousel from "components/carousel/Carousel";
 
 // =============================================================
 type Props = { products: any[] };
@@ -30,7 +32,15 @@ type Props = { products: any[] };
 
 const Section9LivingRoom = ({ products }) => {
   const { sofas_sectionals, cabinets, chairs, tables } = products || [];
+  const width = useWindowSize();
+  const [visibleSlides, setVisibleSlides] = useState(4);
 
+  useEffect(() => {
+    if (width < 500) setVisibleSlides(1.5);
+    else if (width < 650) setVisibleSlides(2);
+    else if (width < 950) setVisibleSlides(3);
+    else setVisibleSlides(4);
+  }, [width]);
   // const sanpham1 = sofas_Sectionals && chairs && tables ?  [ ...sofas_Sectionals, ...tables, ...chairs, ...cabinets] : []
 
   const [allproduct, setAllProduct] = useState(
@@ -168,7 +178,14 @@ const Section9LivingRoom = ({ products }) => {
 
   return (
     <Container sx={{ mt: 2 }}>
-      <Box display="flex" justifyContent="space-between" padding={0}>
+ 
+      <Carousel
+        infinite={true}
+        visibleSlides={visibleSlides}
+        totalSlides={4}
+        autoPlay={false}
+        spacing='30px'
+      >
         {productImages.map((product, index) => (
           <Box key={index} onClick={() => setAllProduct(product.type)}>
             <img
@@ -179,8 +196,7 @@ const Section9LivingRoom = ({ products }) => {
             />
           </Box>
         ))}
-      </Box>
-
+        </Carousel>
       <Grid
         container
         spacing={2}
