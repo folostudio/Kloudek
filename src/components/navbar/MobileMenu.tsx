@@ -11,7 +11,7 @@ import { H6 } from "components/Typography";
 import Scrollbar from "components/Scrollbar";
 import { NavLink } from "components/nav-link";
 import navbarNavigations from "data/navbarNavigations";
-
+import { LanguageSwitcher } from "../lang-switcher";
 const MobileMenu: FC = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
 
@@ -59,8 +59,8 @@ const MobileMenu: FC = () => {
               }}
             >
               <H6>{item.title}</H6>
+          
             </AccordionSummary>
-
             <Box mx={2}>{renderLevels(item.child)}</Box>
           </Accordion>
         );
@@ -98,6 +98,7 @@ const MobileMenu: FC = () => {
         sx={{ zIndex: 15001 }}
       >
         <Box sx={{ width: "100vw", height: "100%", position: "relative" }}>
+       
           <Scrollbar autoHide={false} sx={{ height: "100vh" }}>
             <Box
               maxWidth={500}
@@ -107,6 +108,9 @@ const MobileMenu: FC = () => {
               px={5}
               py={8}
             >
+              <Box  sx={{ position: "absolute", left: 30, top: 15 }}>
+              <LanguageSwitcher/>
+              </Box>
               <IconButton
                 onClick={() => setOpenDrawer(false)}
                 sx={{ position: "absolute", right: 30, top: 15 }}

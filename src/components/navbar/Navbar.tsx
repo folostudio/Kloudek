@@ -26,7 +26,7 @@ import MegaMenu2 from "./MegaMenu2";
 import useSettings from "hooks/useSettings";
 import navbarNavigations from "data/navbarNavigations";
 import InputLabel from '@mui/material/InputLabel';
-
+import { LanguageSwitcher } from "../lang-switcher";
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { Translation } from "react-i18next";
@@ -230,6 +230,7 @@ const Navbar: FC<NavbarProps> = ({
                   sx={{ py: "0.5rem", minWidth: "230px" }}
                   elevation={3}
                 >
+                
                   {renderNestedNav(nav.child)}
                 </BazaarCard>
               </ParentNavItem>
@@ -270,7 +271,8 @@ const Navbar: FC<NavbarProps> = ({
           {/* Horizontal menu */}
           <FlexBox gap={4}>{renderNestedNav(navbarNavigations, true)}</FlexBox>
           <FlexBox gap={3}>
-          <div id="google_translate_element"></div>
+          {/* <div id="google_translate_element"></div> */}
+          <LanguageSwitcher />
             {/* <Typography>Test</Typography>
             <Typography>Test1</Typography> */}
             {/* <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>

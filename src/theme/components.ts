@@ -42,6 +42,12 @@ export const components: Components = {
         zIndex: "99999999 !important",
         background: `${theme.palette.primary.main} !important`,
       },
+      ".skiptranslate": {
+        display: "none !important"
+      },
+      "body": {
+          top: "0px !important"
+      }
     }),
   },
   MuiInputLabel: {
